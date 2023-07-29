@@ -28,6 +28,7 @@ const Main = () => {
     const [ergdata, setErgData] = useState<HodlERGInterfaceData | null>(null);
 
     useEffect(() => {
+        console.log(BANK_SINGLETON_TOKEN_ID);
         explorerClient(isMainnet)
             .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID)
             .then((res) => {
