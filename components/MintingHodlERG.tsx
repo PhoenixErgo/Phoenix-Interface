@@ -51,7 +51,7 @@ const MintingHodlERG = () => {
   }, []);
 
   useEffect(() => {
-    if (!isNaN(mintAmount) && bankBox) {
+    if (!isNaN(mintAmount) && mintAmount >= 0.001 && bankBox) {
       const mintAmountBigInt = BigInt(mintAmount * 1e9);
       const hodlBankContract = new HodlBankContract(bankBox);
       const ep = hodlBankContract.mintAmount(mintAmountBigInt);
@@ -62,7 +62,7 @@ const MintingHodlERG = () => {
   }, [mintAmount]);
 
   const handleClick = async () => {
-    if (mintAmount <= 0) {
+    if (mintAmount < 0.001) {
       return;
     }
     if (!(await getWalletConn())) {
@@ -80,7 +80,7 @@ const MintingHodlERG = () => {
 
     receiverErgoTree = receiverErgoTree.substring(2);
 
-    const mintAmountBigInt = BigInt(mintAmount);
+    const mintAmountBigInt = BigInt(mintAmount * 1e9);
     const bankBoxRes = await explorerClient(
         isMainnet
     ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID);
@@ -88,7 +88,7 @@ const MintingHodlERG = () => {
     const hodlBankContract = new HodlBankContract(bankBox);
 
     const nanoErgsPrice = hodlBankContract.mintAmount(
-        mintAmountBigInt * UIMultiplier
+        mintAmountBigInt
     );
 
     const outBox = new OutputBuilder(
