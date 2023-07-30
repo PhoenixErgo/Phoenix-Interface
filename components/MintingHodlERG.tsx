@@ -52,9 +52,9 @@ const MintingHodlERG = () => {
 
   useEffect(() => {
     if (!isNaN(mintAmount) && bankBox) {
-      const mintAmountBigInt = BigInt(mintAmount);
+      const mintAmountBigInt = BigInt(mintAmount * 1e9);
       const hodlBankContract = new HodlBankContract(bankBox);
-      const ep = hodlBankContract.mintAmount(mintAmountBigInt * UIMultiplier);
+      const ep = hodlBankContract.mintAmount(mintAmountBigInt);
       setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
     } else {
       setErgPrice(0);
