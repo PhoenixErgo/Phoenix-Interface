@@ -1,4 +1,5 @@
 import {Configuration, DefaultApiFactory} from "@/blockchain/ergo/explorerApi";
+import {ErgoAddress, Network} from "@fleet-sdk/core";
 
 
 export const isMainnet = false;
@@ -18,12 +19,10 @@ export const EXPLORER_URL = (isMainnet: boolean): string => (
         : process.env.NEXT_PUBLIC_TESTNET_EXPLORER_URL
 )!?.replace(/[\\/]+$/, '');
 
-export const PROXY_ADDRESS = (isMainnet: boolean): string => (
-    isMainnet
-        ? process.env.NEXT_PUBLIC_PROXY_ADDRESS_MAINNET!
-        : process.env.NEXT_PUBLIC_PROXY_ADDRESS_TESTNET!
-)
-
+export const PROXY_ADDRESS = (isMainnet: boolean): string => {
+    const ergoTree = process.env.NEXT_PUBLIC_PROXY_ERGO_TREE!;
+    return isMainnet ? ErgoAddress.fromErgoTree(ergoTree, Network.Mainnet).toString() : ErgoAddress.fromErgoTree(ergoTree, Network.Testnet).toString();
+}
 export const HODL_ERG_TOKEN_ID = process.env.NEXT_PUBLIC_HODL_ERG!;
 export const BANK_SINGLETON_TOKEN_ID = process.env.NEXT_PUBLIC_BANK_SINGLETON!;
 export const MIN_TX_OPERATOR_FEE = process.env.NEXT_PUBLIC_MIN_TX_OPERATOR_FEE!;
