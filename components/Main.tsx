@@ -5,11 +5,7 @@ import MintingHodlERG from "./MintingHodlERG";
 import BurningHoldERG from "./BurningHoldERG";
 import Loader from "./Loader";
 import {
-    ItemsB
-} from "@/blockchain/ergo/explorerApi";
-import {
     BANK_SINGLETON_TOKEN_ID,
-    EXPLORER_API_URL,
     explorerClient,
     isMainnet,
     precision,
@@ -52,7 +48,8 @@ const Main = () => {
                     circulatingSupply: circulatingSupplyUI.toString(),
                     tvl: tvlUI.toString(),
                 });
-            });
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     if (!ergdata) {
