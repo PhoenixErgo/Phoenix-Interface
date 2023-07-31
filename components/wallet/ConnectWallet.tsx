@@ -521,6 +521,7 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                 color: 'white',
                 border: '1px solid #434343',
                 fontFamily: `'Vela Sans', sans-serif`,
+                background: '#1D1D1D !important',
               }}
               className="flex items-center"
             >
@@ -529,7 +530,7 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                   style={{
                     color: 'white',
                     borderRadius: 5,
-                    background: '#1D1D1D',
+                    background: '#1D1D1D !important',
                     marginLeft: 10,
                     padding: '3px 10px',
                     fontFamily: `'Vela Sans', sans-serif`,
@@ -553,12 +554,14 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                 color: 'white',
                 border: '1px solid #434343',
                 fontFamily: `'Vela Sans', sans-serif`,
+                // background: '#1D1D1D',
               }}
               className="flex items-center"
             >
               <div className="flex">
                 <span
                   style={{
+                    color:'black',
                     padding: '3px 0px',
                     fontFamily: `'Vela Sans', sans-serif`,
                   }}
@@ -596,20 +599,13 @@ const ConnectWallet: React.FC = ({ props }: any) => {
             </Button>
           )
         ) : (
-          <Button
-            type="primary"
-            size="large"
-            ghost
-            style={{
-              color: '#7066C5',
-              border: '1px solid #434343',
-              background: '#191735',
-              paddingRight: 15,
-              fontFamily: `'Vela Sans', sans-serif`,
-            }}
-          >
-            Connect wallet
-          </Button>
+            <button
+                    type="button"
+                    className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"
+                >
+                    CONNECT WALLET
+                </button>
+
         )}
       </Space>
 
@@ -645,7 +641,8 @@ const ConnectWallet: React.FC = ({ props }: any) => {
       >
         {ergoPay ? (
           <div style={{ fontFamily: `'Space Grotesk', sans-serif` }}>
-            <div className="d-flex align-items-center">
+            <div style={{display: 'flex',
+              alignItems: 'center'}}>
               <Image alt="img" height="32" width="32" src={ErgoLogoWhite} />
               <h3 className="ms-3 m-0">ErgoPay</h3>
             </div>
@@ -658,9 +655,12 @@ const ConnectWallet: React.FC = ({ props }: any) => {
               </p>
             </div>
             <div
-              className={`d-flex align-items-center justify-content-between ${commonStyle.ergoBalanceDiv}`}
+                style={{display: 'flex',
+                  alignItems: 'center',  justifyContent: 'space-between'}}
+              className={`${commonStyle.ergoBalanceDiv}`}
             >
-              <div className="d-flex align-items-center">
+              <div style={{display: 'flex',
+                alignItems: 'center'}}>
                 <ErgoIcon />
                 <p className={commonStyle.ergoBalanceText}>
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
@@ -679,7 +679,9 @@ const ConnectWallet: React.FC = ({ props }: any) => {
               </p>
             </div>
             <div
-              className={`flex align-items-center justify-between ${commonStyle.ergoBalanceDiv}`}
+                style={{display: 'flex',
+                  alignItems: 'center',  justifyContent: 'space-between'}}
+              className={`${commonStyle.ergoBalanceDiv}`}
             >
               <p className={commonStyle.ergoBalanceAdd}>
                 {defaultAddress?.slice(0, 18) +
@@ -727,7 +729,8 @@ const ConnectWallet: React.FC = ({ props }: any) => {
           </div>
         ) : (
           <div style={{ fontFamily: `'Space Grotesk', sans-serif` }}>
-            <div className="d-flex align-items-center">
+            <div style={{display: 'flex',
+              alignItems: 'center'}}>
               <Image alt="img" height="32" width="32" src={NautilusLogo} />
               <h5 className="ms-3 m-0">Nautilus Wallet</h5>
             </div>
@@ -741,9 +744,12 @@ const ConnectWallet: React.FC = ({ props }: any) => {
               </p>
             </div>
             <div
-              className={`d-flex align-items-center justify-content-between ${commonStyle.ergoBalanceDiv}`}
+                style={{display: 'flex',
+                  alignItems: 'center',  justifyContent: 'space-between'}}
+              className={`${commonStyle.ergoBalanceDiv}`}
             >
-              <div className="d-flex align-items-center">
+              <div style={{display: 'flex',
+                alignItems: 'center'}}>
                 <ErgoIcon />
                 <p className={commonStyle.ergoBalanceText}>
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
@@ -828,9 +834,12 @@ const ConnectWallet: React.FC = ({ props }: any) => {
               {walletData.map((item: Token) => (
                 <div
                   key={item.tokenId}
-                  className={`d-flex align-items-center justify-content-between ${commonStyle.ergoTokenBalanceDiv}`}
+                  style={{display: 'flex',
+                    alignItems: 'center',  justifyContent: 'space-between'}}
+                  className={`${commonStyle.ergoTokenBalanceDiv}`}
                 >
-                  <div className="d-flex align-items-center">
+                  <div style={{display: 'flex',
+                    alignItems: 'center'}} >
                     <Image
                       src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/light/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {

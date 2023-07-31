@@ -37,9 +37,8 @@ const Main = () => {
                 >
                     CONNECT WALLET
                 </button> */}
-                {/* <ConnectWallet /> */}
             </div>
-            {/*<ConnectWallet />*/}
+
             <div className="primary-gradient w-full py-3 text-center">
                 <p className="border-bottom text-white font-medium text-lg uppercase relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:w-[130%] after:bg-white after:h-1 inline-block">
                     HODLERG 3%

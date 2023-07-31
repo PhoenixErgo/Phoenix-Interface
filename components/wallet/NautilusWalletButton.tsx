@@ -10,7 +10,7 @@ const NautilusWalletButton = ({
 }: any) => {
   return (
     <div className={commonStyle.walletButton} onClick={connectNautilus}>
-      <div className={`d-flex align-items-center  justify-content-between`}>
+      <div className={`flex items-center  justify-between`}>
         {isLoading ? (
           <div className="flex justify-center">
             <div className="flex justify-center">
