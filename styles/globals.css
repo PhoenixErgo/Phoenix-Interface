@@ -16,16 +16,15 @@ html,
 body {
   padding: 0;
   margin: 0;
-  /*font-family: 'Akira Expanded', serif;*/
   font-family: 'Inter', sans-serif;
   background: #0d0f19;
   overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+/*a {*/
+/*  color: inherit;*/
+/*  text-decoration: none;*/
+/*}*/
 
 * {
   box-sizing: border-box;

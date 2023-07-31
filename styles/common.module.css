@@ -104,14 +104,10 @@
 
 .headerWallet {
     display: flex;
-    flex-direction: row;
     font-weight: bold;
-    /*height: 45px;*/
     width: 100%;
     margin: 0 auto;
     border-radius: 5px;
-    /* this is just to show the border of the item, something temporal */
-    display: flex;
     flex-direction: column;
     align-content: center;
     align-items: center;

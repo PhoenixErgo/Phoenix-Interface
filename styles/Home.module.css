@@ -5,7 +5,7 @@
   color: white;
   /*font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,*/
   /*Bitstream Vera Sans Mono, Courier New, monospace;*/
-  font-family: 'Akira Expanded';
+  font-family: 'Inter', sans-serif;
   height: max-content;
   width: auto;
 }
