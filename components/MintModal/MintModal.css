@@ -1,0 +1,18 @@
+.mint .modal-content {
+    background: url('../../images/2_ergosapiens_background_v1.png');
+    font-family: Oxanium, sans-serif;
+    color: red;
+    align-items: center;
+    border-width: 8px;
+    border-style: solid;
+    border-image: linear-gradient(to right, red, purple);
+    border-image-slice: 1;
+}
+
+.close-btn {
+    background: #fff;
+    color: red;
+    border: 2px solid red;
+    border-radius: 3px;
+    padding: 5px 10px;
+}

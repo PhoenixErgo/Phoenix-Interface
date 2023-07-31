@@ -1,0 +1,274 @@
+.container {
+  padding: 48px 46px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navLinks {
+  font-weight: 800;
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+}
+
+.sideBarLink {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 21px;
+  letter-spacing: 0.3px;
+  text-align: left;
+  margin-bottom: 32px;
+  text-decoration: none;
+  color: white;
+}
+
+.banner {
+  padding-left: 48px;
+  padding-top: 100px;
+}
+
+.sideBarLink:hover {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 21px;
+  letter-spacing: 0.3px;
+  text-align: left;
+  margin-bottom: 32px;
+  text-decoration: none;
+  color: white;
+}
+
+.walletButton {
+  cursor: pointer;
+}
+
+.navLinks:hover {
+  color: white;
+}
+
+.bannerHeaderText {
+  width: 743px;
+  height: 296px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 74px;
+  color: #ffffff;
+}
+
+.colorText {
+  color: #e041e7;
+}
+
+.bannerText {
+  padding-top: 32px;
+
+  height: 144px;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  color: #ffffff;
+  /*padding-top: 328;*/
+}
+
+.bannerButtons {
+  margin-top: 32px;
+  background-color: #e041e7;
+  width: 320px;
+  height: 64px;
+  padding: 18px 32px 18px 32px;
+  gap: 16px;
+  border-radius: 12px;
+  color: #ffffff;
+  line-height: 28px;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.75px;
+  text-align: center;
+  border: none;
+}
+
+.payButton {
+  background-color: #e041e7;
+  width: 320px;
+  height: 64px;
+  padding: 18px 32px 18px 32px;
+  gap: 16px;
+  border-radius: 12px;
+  color: #ffffff;
+  line-height: 28px;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.75px;
+  text-align: center;
+  border: none;
+}
+
+.bannerButtons:hover,
+.payButton:hover {
+  background-color: #e041e7;
+  width: 320px;
+  height: 64px;
+  padding: 18px 32px 18px 32px;
+  gap: 16px;
+  border-radius: 12px;
+  color: #ffffff;
+  line-height: 28px;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.75px;
+  text-align: center;
+}
+
+/* .bannerImage {
+    margin-top: 221px;
+    margin-right: 180px;
+} */
+
+.sellBanner {
+  margin-top: 140px;
+  padding-left: 80px;
+  /*width: 1069px;*/
+  /* height: 148px; */
+  /* 
+   
+    color: #FFFFFF; */
+  /* margin-left: 50px; */
+}
+
+.sellBannerHeader {
+  /* font-weight: 800px;
+    line-height: 74px;
+    font-size: 64px;
+    text-align: center; */
+  color: #ffffff;
+  font-size: 64px;
+  line-height: 74px;
+  font-weight: 800;
+  font-style: normal;
+  text-align: center;
+}
+
+.sellBannerHeading {
+  font-family: 'Inter', sans-serif;
+  padding-top: 124px;
+  color: #fdd200;
+  font-weight: 700;
+  font-size: 18px;
+  font-style: normal;
+}
+
+.sellBannerHeaderText {
+  font-family: 'Inter', sans-serif;
+  margin-top: 32px;
+  margin-bottom: 33px;
+  line-height: 40px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.carouselTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 60px;
+  padding-top: 54px;
+  text-align: center;
+}
+
+.sellText {
+  color: #c2c3c5;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.homeCollection {
+  margin-top: 180px;
+  padding-bottom: 89px;
+  background: linear-gradient(
+    153.13deg,
+    #e041e7 -58.04%,
+    rgba(224, 65, 231, 0) 115.41%
+  );
+}
+
+.homeCollectionHeader {
+  margin-top: 97;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 55px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.homeCollectionText {
+  font-family: 'Inter', sans-serif;
+  padding: 32px 126px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 36px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.homeWorkText {
+  margin-top: 145px;
+  margin-bottom: 60px;
+  color: #ffffff;
+  font-size: 64px;
+  line-height: 74px;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.lightIconStyle {
+  margin-right: 30px;
+}
+
+.homeFooter {
+  font-family: 'Inter', sans-serif;
+  padding-left: 74px;
+  padding-right: 74px;
+  padding-bottom: 10px;
+  background-color: #212c39;
+}
+
+.paymentNumber {
+  font-family: 'Inter', sans-serif;
+}
+
+.homeFooterText {
+  font-family: 'Inter', sans-serif;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 26px;
+  height: 26px;
+  /* margin-bottom: 56px; */
+}
+
+.carouselQ {
+  height: 48px;
+  width: 27px;
+  background: linear-gradient(to right, #3c1e46, #ae37b6, #634b6f, #c63cce);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.homeTeamHeader {
+  color: #ffffff;
+  margin-top: 91px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 74px;
+}
+
+.homeTeamImage {
+  margin-top: 56px;
+}

@@ -1,0 +1,24 @@
+.progressBar {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 30px;
+  }
+  
+  .progress {
+    background-color: #007bff;
+    height: 100%;
+    position: relative;
+  }
+  
+  .btn {
+    background-color: white;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    color: #007bff;
+    font-size: 14px;
+    width: 40px;
+    position: absolute;
+    cursor: pointer;
+  }
