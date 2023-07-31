@@ -7,8 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const notify = () => toast("Wow so easy!");
-
   return (
     <>
       <Head>
