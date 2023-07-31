@@ -47,7 +47,11 @@ const MintingHodlERG = () => {
         .then((res) => {
           setBankBox(res.data.items![0] as OutputInfo);
         })
-        .catch((err) => setBankBox(null));
+        .catch((err) => {
+          toast.dismiss();
+          toast.warn("error getting bank box", noti_option_close("try-again"));
+          setBankBox(null);
+        });
   }, []);
 
   useEffect(() => {
@@ -57,15 +61,21 @@ const MintingHodlERG = () => {
       const ep = hodlBankContract.mintAmount(mintAmountBigInt);
       setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
     } else {
+      toast.dismiss();
+      toast.warn("error calculating price", noti_option_close("try-again"));
       setErgPrice(0);
     }
   }, [mintAmount]);
 
   const handleClick = async () => {
     if (mintAmount < 0.001) {
+      toast.dismiss();
+      toast.warn("min 0.001 ERG", noti_option_close("try-again"));
       return;
     }
     if (!(await getWalletConn())) {
+      toast.dismiss();
+      toast.warn("unable to get wallet connection", noti_option_close("try-again"));
       return;
     }
     const txBuilding_noti = toast.loading("Please wait...", noti_option);

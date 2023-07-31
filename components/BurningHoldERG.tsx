@@ -48,7 +48,11 @@ const BurningHoldERG = () => {
         .then((res) => {
           setBankBox(res.data.items![0] as OutputInfo);
         })
-        .catch((err) => setBankBox(null));
+        .catch((err) => {
+          toast.dismiss();
+          toast.warn("error getting bank box", noti_option_close("try-again"));
+          setBankBox(null)
+        });
   }, []);
 
   const minBoxValue = BigInt(1000000);
@@ -57,19 +61,23 @@ const BurningHoldERG = () => {
   const proxyAddress = PROXY_ADDRESS(isMainnet);
 
   useEffect(() => {
-    if (!isNaN(burnAmount) && bankBox) {
+    if (!isNaN(burnAmount) && burnAmount >= 0.001 && bankBox) {
       const burnAmountBigInt = BigInt(burnAmount * 1e9);
       const hodlBankContract = new HodlBankContract(bankBox);
       const ep =
           hodlBankContract.burnAmount(burnAmountBigInt).expectedAmountWithdrawn;
       setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
     } else {
+      toast.dismiss();
+      toast.warn("error calculating price", noti_option_close("try-again"));
       setErgPrice(0);
     }
   }, [burnAmount]);
 
   const handleClick = async () => {
-    if (burnAmount <= 0) {
+    if (burnAmount < 0.001) {
+      toast.dismiss();
+      toast.warn("min 0.001 ERG", noti_option_close("try-again"));
       return;
     }
     if (!(await getWalletConn())) {
