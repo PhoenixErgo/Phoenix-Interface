@@ -10,9 +10,7 @@ import {
   PROXY_ADDRESS,
   UIMultiplier,
 } from "@/blockchain/ergo/constants";
-import {
-  OutputInfo
-} from "@/blockchain/ergo/explorerApi";
+import { OutputInfo } from "@/blockchain/ergo/explorerApi";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
   getWalletConn,
@@ -43,15 +41,15 @@ const MintingHodlERG = () => {
 
   useEffect(() => {
     explorerClient(isMainnet)
-        .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID)
-        .then((res) => {
-          setBankBox(res.data.items![0] as OutputInfo);
-        })
-        .catch((err) => {
-          toast.dismiss();
-          toast.warn("error getting bank box", noti_option_close("try-again"));
-          setBankBox(null);
-        });
+      .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID)
+      .then((res) => {
+        setBankBox(res.data.items![0] as OutputInfo);
+      })
+      .catch((err) => {
+        toast.dismiss();
+        toast.warn("error getting bank box", noti_option_close("try-again"));
+        setBankBox(null);
+      });
   }, []);
 
   useEffect(() => {
@@ -75,7 +73,10 @@ const MintingHodlERG = () => {
     }
     if (!(await getWalletConn())) {
       toast.dismiss();
-      toast.warn("unable to get wallet connection", noti_option_close("try-again"));
+      toast.warn(
+        "unable to get wallet connection",
+        noti_option_close("try-again")
+      );
       return;
     }
     const txBuilding_noti = toast.loading("Please wait...", noti_option);
@@ -85,25 +86,23 @@ const MintingHodlERG = () => {
     const creationHeight = await ergo!.get_current_height();
 
     let receiverErgoTree = ErgoAddress.fromBase58(
-        String(changeAddress)
+      String(changeAddress)
     ).ergoTree;
 
     receiverErgoTree = receiverErgoTree.substring(2);
 
     const mintAmountBigInt = BigInt(mintAmount * 1e9);
     const bankBoxRes = await explorerClient(
-        isMainnet
+      isMainnet
     ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID);
     const bankBox = bankBoxRes.data.items![0];
     const hodlBankContract = new HodlBankContract(bankBox);
 
-    const nanoErgsPrice = hodlBankContract.mintAmount(
-        mintAmountBigInt
-    );
+    const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
 
     const outBox = new OutputBuilder(
-        nanoErgsPrice + minTxOperatorFee + minerFee,
-        proxyAddress
+      nanoErgsPrice + minTxOperatorFee + minerFee,
+      proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
       R5: "0e20" + BANK_SINGLETON_TOKEN_ID,
@@ -114,12 +113,12 @@ const MintingHodlERG = () => {
 
     try {
       const unsignedTransaction = new TransactionBuilder(creationHeight)
-          .from(inputs) // add inputs
-          .to(outBox)
-          .sendChangeTo(changeAddress) // set change address
-          .payFee(minerFee) // set fee
-          .build()
-          .toEIP12Object();
+        .from(inputs) // add inputs
+        .to(outBox)
+        .sendChangeTo(changeAddress) // set change address
+        .payFee(minerFee) // set fee
+        .build()
+        .toEIP12Object();
 
       signAndSubmitTx(unsignedTransaction, ergo, txBuilding_noti);
     } catch (error) {
@@ -131,39 +130,39 @@ const MintingHodlERG = () => {
   };
 
   return (
-      <>
-        <div className="max-w-md mx-auto mb-10 lg:mb-0">
-          <h4 className="text-black text-xl font-medium">Minting hodlERG</h4>
-          <p className="text-black my-3">
-            Mint hodlERG with no fees. You have the freedom to mint as much as you
-            desire at the current price. it's important to note that the minting
-            process does not directly affect the token's pricing dynamics.
-          </p>
+    <>
+      <div className="max-w-md mx-auto mb-10 lg:mb-0">
+        <h4 className="text-black text-xl font-medium">Minting hodlERG</h4>
+        <p className="text-black my-3 min-h-[100px]">
+          Mint hodlERG with no fees. You have the freedom to mint as much as you
+          desire at the current price. it's important to note that the minting
+          process does not directly affect the token's pricing dynamics.
+        </p>
 
-          <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
-            <div className="flex flex-col w-full h-full">
-              <input
-                  className="w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"
-                  placeholder="Amount"
-                  type="number"
-                  onChange={(event) =>
-                      setMintAmount(parseFloat(event.target.value))
-                  }
-              />
-              <span className="text-black font-medium text-md pl-4 mt-2">
+        <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
+          <div className="flex flex-col w-full h-full">
+            <input
+              className="w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"
+              placeholder="Amount"
+              type="number"
+              onChange={(event) =>
+                setMintAmount(parseFloat(event.target.value))
+              }
+            />
+            <span className="text-black font-medium text-md pl-4 mt-2">
               {`${ergPrice} ERG`}
             </span>
-            </div>
-
-            <button
-                className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
-                onClick={handleClick}
-            >
-              MINT HODLERG
-            </button>
           </div>
+
+          <button
+            className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
+            onClick={handleClick}
+          >
+            MINT HODLERG
+          </button>
         </div>
-      </>
+      </div>
+    </>
   );
 };
 
