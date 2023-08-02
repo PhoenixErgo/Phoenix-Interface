@@ -61,7 +61,7 @@ const Main = () => {
     <>
       <Navbar />
       <div className="min-h-[70vh]">
-        <div className="container mx-auto px-3 lg:px-5 my-10 sm:flex items-center justify-between space-y-4 sm:space-x-4 xl:space-x-10">
+        <div className="container mx-auto px-3 lg:px-5 my-10 sm:flex items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 xl:space-x-10">
           <HeaderCards
             title="Current price"
             text={`${ergdata.currentPrice} ERG`}
