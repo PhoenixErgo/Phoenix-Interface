@@ -9,8 +9,7 @@ const Footer = () => {
         <div className="grid w-full text-white place-content-center gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-4 container mx-auto  px-3 lg:px-5">
           <div>
             <LogoFooter />
-            <p className="mt-[18px] lg:ml-4 ">Nautilus Team</p>
-            <p className="opacity-70 lg:ml-4 mt-1.5">Ad augusta per angusta</p>
+            <p className="mt-[18px] lg:ml-4 ">Phoenix Team</p>
           </div>
           <div>
             <h4 className="font-bold uppercase pb-3 ">Open Source</h4>
