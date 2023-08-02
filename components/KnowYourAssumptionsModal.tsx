@@ -1,16 +1,25 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+const KYA_STORAGE_KEY = "knowYourAssumptionsAccepted";
 
 export default function KnowYourAssumptionsModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
+    localStorage.setItem(KYA_STORAGE_KEY, "true");
   }
 
   function openModal() {
     setIsOpen(true);
   }
+
+  useEffect(() => {
+    const isKYAAccepted = localStorage.getItem(KYA_STORAGE_KEY);
+    if (!isKYAAccepted) {
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <>
