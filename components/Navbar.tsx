@@ -1,6 +1,7 @@
 import React from "react";
 import SettingPopup from "./SettingPopup";
 import { Logo } from "./Logo";
+import {getWalletConnection} from "@/blockchain/ergo/walletUtils/utils";
 
 const Navbar = () => {
   return (
@@ -13,6 +14,7 @@ const Navbar = () => {
           <button
             type="button"
             className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"
+            onClick={() => getWalletConnection()}
           >
             CONNECT WALLET
           </button>
