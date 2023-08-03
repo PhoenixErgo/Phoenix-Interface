@@ -25,7 +25,8 @@ export const PROXY_ADDRESS = (isMainnet: boolean): string => {
 }
 export const HODL_ERG_TOKEN_ID = process.env.NEXT_PUBLIC_HODL_ERG!;
 export const BANK_SINGLETON_TOKEN_ID = process.env.NEXT_PUBLIC_BANK_SINGLETON!;
-export const MIN_TX_OPERATOR_FEE = process.env.NEXT_PUBLIC_MIN_TX_OPERATOR_FEE!;
+export const MIN_TX_OPERATOR_FEE = BigInt(process.env.NEXT_PUBLIC_MIN_TX_OPERATOR_FEE!);
+export const MIN_MINER_FEE = BigInt(process.env.NEXT_PUBLIC_MIN_MINER_FEE!);
 
 export const UIMultiplier: bigint = BigInt(1e9);
 export const precisionBigInt: bigint = BigInt(1000000);
