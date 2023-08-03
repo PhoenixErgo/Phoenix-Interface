@@ -2,7 +2,7 @@ import {Configuration, DefaultApiFactory} from "@/blockchain/ergo/explorerApi";
 import {ErgoAddress, Network} from "@fleet-sdk/core";
 
 
-export const isMainnet = false;
+export const isMainnet = true;
 export const NODE_API_URL = (isMainnet: boolean): string => (
     isMainnet
         ? process.env.NEXT_PUBLIC_MAINNET_NODE_URL
