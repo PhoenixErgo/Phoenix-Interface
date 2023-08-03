@@ -65,11 +65,11 @@ const MintingHodlERG = () => {
   }, [mintAmount]);
 
   const handleClick = async () => {
-    let minTxOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
+    let txOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
     let minerFee = BigInt(MIN_MINER_FEE);
 
     if(localStorageKeyExists("txOperatorFee")){
-        minTxOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
+        txOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
     }
 
     if(localStorageKeyExists("minerFee")){
@@ -117,7 +117,7 @@ const MintingHodlERG = () => {
     const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
 
     const outBox = new OutputBuilder(
-      nanoErgsPrice + minTxOperatorFee + minerFee,
+      nanoErgsPrice + txOperatorFee + minerFee,
       proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
@@ -125,6 +125,7 @@ const MintingHodlERG = () => {
       R6: "0e20" + HODL_ERG_TOKEN_ID(isMainnet),
       R7: SConstant(SLong(minBoxValue)),
       R8: SConstant(SLong(minerFee)),
+      R9: SConstant(SLong(txOperatorFee))
     });
 
     try {

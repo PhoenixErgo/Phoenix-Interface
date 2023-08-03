@@ -74,11 +74,11 @@ const BurningHoldERG = () => {
   }, [burnAmount]);
 
   const handleClick = async () => {
-    let minTxOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
+    let txOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
     let minerFee = BigInt(MIN_MINER_FEE);
 
     if(localStorageKeyExists("txOperatorFee")){
-      minTxOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
+      txOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
     }
 
     if(localStorageKeyExists("minerFee")){
@@ -112,7 +112,7 @@ const BurningHoldERG = () => {
 
     const burnAmountBigInt = BigInt(burnAmount * 1e9);
 
-    const outBox = new OutputBuilder(minTxOperatorFee + minerFee, proxyAddress)
+    const outBox = new OutputBuilder(txOperatorFee + minerFee, proxyAddress)
       .addTokens({
         tokenId: HODL_ERG_TOKEN_ID(isMainnet),
         amount: burnAmountBigInt,
@@ -123,6 +123,7 @@ const BurningHoldERG = () => {
         R6: "0e20" + HODL_ERG_TOKEN_ID(isMainnet),
         R7: SConstant(SLong(minBoxValue)),
         R8: SConstant(SLong(minerFee)),
+        R9: SConstant(SLong(txOperatorFee))
       });
 
     try {
