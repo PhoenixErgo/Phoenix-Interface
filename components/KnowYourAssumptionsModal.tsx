@@ -76,7 +76,7 @@ export default function KnowYourAssumptionsModal() {
                         <ul className="list-inside">
                           <li>
                             - We don't log, collect, profile, share or sell your
-                            data;
+                            data.
                           </li>
                           <li>
                             {" "}
@@ -85,7 +85,7 @@ export default function KnowYourAssumptionsModal() {
                             have status «
                             <span className="font-semibold">
                               confirmed
-                            </span>»;{" "}
+                            </span>».{" "}
                           </li>
                           <li>
                             {" "}
@@ -97,13 +97,13 @@ export default function KnowYourAssumptionsModal() {
                             >
                               explorer
                             </a>
-                            ;{" "}
+                            .{" "}
                           </li>
                           <li>
                             {" "}
                             -{" "}
                             <a
-                              href="https://github.com/capt-nemo429/Phoenix-ui"
+                              href="https://github.com/PhoenixErgo"
                               target="_blank"
                               className="transition-all duration-200 ease-in-out hover:text-opacity-80 text-primary"
                             >
@@ -114,7 +114,7 @@ export default function KnowYourAssumptionsModal() {
                         </ul>
                       </div>
                       <p className="font-bold">
-                        Nautilus Team doesn't guarantee the absence of bugs and
+                        The Phoenix Finance doesn't guarantee the absence of bugs and
                         errors.
                       </p>
                       <p className="font-bold">
@@ -122,23 +122,33 @@ export default function KnowYourAssumptionsModal() {
                         NO assistance can offered if a user is hacked or cheated
                         out of passwords, currency or private keys.{" "}
                       </p>
-                      <p className="font-bold">
-                        {" "}
-                        This is a BETA version, we recommend that you DO NOT use
-                        it to make large transactions!{" "}
-                      </p>
                       <div>
                         <span className="font-bold">
                           By accepting these KYA, you agree that:{" "}
                         </span>
                         <ul className="list-decimal list-inside indent-xs">
                           <li>
-                            You will use the product at your own peril and risk;
+                            You will use the product at your own risk.
                           </li>
-                          <li>Only YOU are responsible for your assets;</li>
+                          <li>Only YOU are responsible for your assets.</li>
                           <li>
                             Only YOU are responsible for securely storing your
                             recovery phrase.
+                          </li>
+                          <li>
+                            Our UI does not provide the option for slippage tolerance,
+                            you will receive the corresponding amount of hodlERG/ERG
+                            based on the price calculated at transaction execution time.
+                          </li>
+                          <li>
+                            Our UI uses a proxy contract to interact with the hodlERG bank,
+                            not your wallet UTxOs. This means that we have a transaction execution
+                            bot which processes all transactions that interact with the bank.
+                          </li>
+                          <li>
+                            If funds are stuck in the proxy, there is the option to refund ERG/hodlERG
+                            as long as our bot does not use the proxy to execute a transaction before
+                            you are able to execute the refund.
                           </li>
                         </ul>
                       </div>
