@@ -9,7 +9,7 @@ import {
   BANK_SINGLETON_TOKEN_ID,
   explorerClient,
   HODL_ERG_TOKEN_ID,
-  isMainnet,
+  isMainnet, MIN_MINER_FEE,
   MIN_TX_OPERATOR_FEE,
   precision,
   precisionBigInt,
@@ -36,6 +36,7 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { SignedTransaction } from "@fleet-sdk/common";
+import {hasDecimals, localStorageKeyExists} from "@/common/utils";
 
 const BurningHoldERG = () => {
   const [burnAmount, setBurnAmount] = useState<number>(0);
@@ -56,12 +57,10 @@ const BurningHoldERG = () => {
   }, []);
 
   const minBoxValue = BigInt(1000000);
-  const minTxOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
-  const minerFee = BigInt(1000000);
   const proxyAddress = PROXY_ADDRESS(isMainnet);
 
   useEffect(() => {
-    if (!isNaN(burnAmount) && burnAmount >= 0.001 && bankBox) {
+    if (!isNaN(burnAmount) && burnAmount >= 0.001 && !hasDecimals(burnAmount * 1e9) && bankBox) {
       const burnAmountBigInt = BigInt(burnAmount * 1e9);
       const hodlBankContract = new HodlBankContract(bankBox);
       const ep =
@@ -75,9 +74,25 @@ const BurningHoldERG = () => {
   }, [burnAmount]);
 
   const handleClick = async () => {
+    let minTxOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
+    let minerFee = BigInt(MIN_MINER_FEE);
+
+    if(localStorageKeyExists("txOperatorFee")){
+      minTxOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
+    }
+
+    if(localStorageKeyExists("minerFee")){
+      minerFee = BigInt(localStorage.getItem("minerFee")!);
+    }
+
     if (burnAmount < 0.001) {
       toast.dismiss();
       toast.warn("min 0.001 ERG", noti_option_close("try-again"));
+      return;
+    }
+    if(hasDecimals(burnAmount * 1e9)) {
+      toast.dismiss();
+      toast.warn("max 9 decimals", noti_option_close("try-again"));
       return;
     }
     if (!(await getWalletConn())) {
