@@ -150,6 +150,9 @@ export default function KnowYourAssumptionsModal() {
                             as long as our bot does not use the proxy to execute a transaction before
                             you are able to execute the refund.
                           </li>
+                          <li>
+                            If you would prefer to interact with the bank box directly, use this UI: https://app.hodlcoin.co.in/
+                          </li>
                         </ul>
                       </div>
                     </div>
