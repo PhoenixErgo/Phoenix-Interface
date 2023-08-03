@@ -40,7 +40,7 @@ const MintingHodlERG = () => {
 
   useEffect(() => {
     explorerClient(isMainnet)
-      .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID)
+      .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
       .then((res) => {
         setBankBox(res.data.items![0] as OutputInfo);
       })
@@ -110,7 +110,7 @@ const MintingHodlERG = () => {
     const mintAmountBigInt = BigInt(mintAmount * 1e9);
     const bankBoxRes = await explorerClient(
       isMainnet
-    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID);
+    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
     const bankBox = bankBoxRes.data.items![0];
     const hodlBankContract = new HodlBankContract(bankBox);
 
@@ -121,8 +121,8 @@ const MintingHodlERG = () => {
       proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
-      R5: "0e20" + BANK_SINGLETON_TOKEN_ID,
-      R6: "0e20" + HODL_ERG_TOKEN_ID,
+      R5: "0e20" + BANK_SINGLETON_TOKEN_ID(isMainnet),
+      R6: "0e20" + HODL_ERG_TOKEN_ID(isMainnet),
       R7: SConstant(SLong(minBoxValue)),
       R8: SConstant(SLong(minerFee)),
     });

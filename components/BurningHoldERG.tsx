@@ -45,7 +45,7 @@ const BurningHoldERG = () => {
 
   useEffect(() => {
     explorerClient(isMainnet)
-      .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID)
+      .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
       .then((res) => {
         setBankBox(res.data.items![0] as OutputInfo);
       })
@@ -114,13 +114,13 @@ const BurningHoldERG = () => {
 
     const outBox = new OutputBuilder(minTxOperatorFee + minerFee, proxyAddress)
       .addTokens({
-        tokenId: HODL_ERG_TOKEN_ID,
+        tokenId: HODL_ERG_TOKEN_ID(isMainnet),
         amount: burnAmountBigInt,
       })
       .setAdditionalRegisters({
         R4: receiverErgoTree,
-        R5: "0e20" + BANK_SINGLETON_TOKEN_ID,
-        R6: "0e20" + HODL_ERG_TOKEN_ID,
+        R5: "0e20" + BANK_SINGLETON_TOKEN_ID(isMainnet),
+        R6: "0e20" + HODL_ERG_TOKEN_ID(isMainnet),
         R7: SConstant(SLong(minBoxValue)),
         R8: SConstant(SLong(minerFee)),
       });
