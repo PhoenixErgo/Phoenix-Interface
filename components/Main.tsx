@@ -38,9 +38,9 @@ const Main = () => {
 
         const currentPriceUI =
           Number((currentPrice * precisionBigInt) / UIMultiplier) / precision;
-        const circulatingSupplyUI =
-          Number((circulatingSupply * precisionBigInt) / UIMultiplier) /
-          precision;
+
+        const circulatingSupplyUI = (Number(((circulatingSupply - BigInt(bankBox.assets![1].amount)) * precisionBigInt) / UIMultiplier) / precision)
+
         const tvlUI =
           Number((tvl * precisionBigInt) / UIMultiplier) / precision;
 
@@ -67,7 +67,7 @@ const Main = () => {
             text={`${ergdata.currentPrice} ERG`}
           />
           <HeaderCards
-            title="Circulating supply"
+            title="Emission amount"
             text={`${ergdata.circulatingSupply} hodlERG`}
           />
           <HeaderCards title="TVL" text={`${ergdata.tvl} ERG`} />
