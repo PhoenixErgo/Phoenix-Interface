@@ -61,6 +61,16 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                    className="transition-all duration-200 ease-in-out hover:text-opacity-80"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://t.me/hodlCoinGame"
+                >
+                  Telegram
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://github.com/PhoenixErgo"
                   className="transition-all duration-200 ease-in-out hover:text-opacity-80"
                   target="_blank"
