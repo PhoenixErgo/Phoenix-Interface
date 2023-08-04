@@ -26,6 +26,16 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                    href="https://eprint.iacr.org/2023/1029"
+                    className="transition-all duration-200 ease-in-out hover:text-opacity-80"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  HodlCoin Game Paper
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://github.com/PhoenixErgo/Phoenix-Interface"
                   className="transition-all duration-200 ease-in-out hover:text-opacity-80"
                   target="_blank"
