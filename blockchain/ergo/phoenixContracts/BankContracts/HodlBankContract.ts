@@ -57,6 +57,22 @@ export class HodlBankContract {
         return BigInt(this.contractBox.value);
     }
 
+    getHodlERGReserveAmount(): bigint {
+        return BigInt(this.contractBox.assets![1].amount);
+    }
+
+    getBoxBlockHeight(): number {
+        return this.contractBox.settlementHeight;
+    }
+
+    getHodlERG3EmissionAmount(): bigint {
+        return this.getTotalTokenSupply() - this.getHodlERGReserveAmount();
+    }
+
+    getProtocolFeesCollected(): bigint {
+        return this.getTVL() -  this.getHodlERG3EmissionAmount();
+    }
+
     getHodlERGPrice(): bigint {
         const reserveIn = BigInt(this.contractBox.value);
         const totalTokenSupply = this.getTotalTokenSupply();

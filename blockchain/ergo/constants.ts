@@ -33,6 +33,9 @@ export const UIMultiplier: bigint = BigInt(1e9);
 export const precisionBigInt: bigint = BigInt(1000000);
 export const precision: number = 1000000;
 
+export const apiPrecisionBigInt: bigint = BigInt(1e9);
+export const apiPrecision: number = 1e9;
+
 export const explorerClient = (isMainnet: boolean) => {
     const explorerConf = new Configuration({
         basePath: EXPLORER_API_URL(isMainnet),
