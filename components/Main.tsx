@@ -33,13 +33,12 @@ const Main = () => {
         const hodlBankContract = new HodlBankContract(bankBox);
 
         const currentPrice = hodlBankContract.mintAmount(BigInt(1e9));
-        const circulatingSupply = hodlBankContract.getTotalTokenSupply();
         const tvl = hodlBankContract.getTVL();
 
         const currentPriceUI =
           Number((currentPrice * precisionBigInt) / UIMultiplier) / precision;
 
-        const circulatingSupplyUI = (Number(((circulatingSupply - BigInt(bankBox.assets![1].amount)) * precisionBigInt) / UIMultiplier) / precision)
+        const circulatingSupplyUI = (Number((hodlBankContract.getHodlERG3EmissionAmount() * precisionBigInt) / UIMultiplier) / precision)
 
         const tvlUI =
           Number((tvl * precisionBigInt) / UIMultiplier) / precision;
