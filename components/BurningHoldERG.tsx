@@ -35,7 +35,6 @@ import {
   SLong,
   TransactionBuilder,
 } from "@fleet-sdk/core";
-import { SignedTransaction } from "@fleet-sdk/common";
 import {hasDecimals, localStorageKeyExists} from "@/common/utils";
 
 const BurningHoldERG = () => {
