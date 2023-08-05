@@ -14,6 +14,8 @@ import {
 } from "@/blockchain/ergo/constants";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
+import Hodlerg from "./Hodlerg";
+import Refund from "./Refund";
 
 interface HodlERGInterfaceData {
   currentPrice: string;
@@ -22,6 +24,8 @@ interface HodlERGInterfaceData {
 }
 
 const Main = () => {
+  const [activeTab, setActiveTab] = useState("hodlerg");
+
   const [ergdata, setErgData] = useState<HodlERGInterfaceData | null>(null);
 
   useEffect(() => {
@@ -39,7 +43,12 @@ const Main = () => {
         const currentPriceUI =
           Number((currentPrice * precisionBigInt) / UIMultiplier) / precision;
 
-        const circulatingSupplyUI = (Number(((circulatingSupply - BigInt(bankBox.assets![1].amount)) * precisionBigInt) / UIMultiplier) / precision)
+        const circulatingSupplyUI =
+          Number(
+            ((circulatingSupply - BigInt(bankBox.assets![1].amount)) *
+              precisionBigInt) /
+              UIMultiplier
+          ) / precision;
 
         const tvlUI =
           Number((tvl * precisionBigInt) / UIMultiplier) / precision;
@@ -59,25 +68,9 @@ const Main = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="min-h-[70vh]">
-        <div className="container mx-auto px-3 lg:px-5 my-10 sm:flex items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 xl:space-x-10">
-          <HeaderCards
-            title="Current price"
-            text={`${ergdata.currentPrice} ERG`}
-          />
-          <HeaderCards
-            title="Emission amount"
-            text={`${ergdata.circulatingSupply} hodlERG`}
-          />
-          <HeaderCards title="TVL" text={`${ergdata.tvl} ERG`} />
-        </div>
-        <div className="lg:flex items-start px-3 my-10 lg:my-20">
-          <MintingHodlERG />
-          <BurningHoldERG />
-        </div>
-      </div>
-
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === "hodlerg" && <Hodlerg ergdata={ergdata} />}
+      {activeTab === "refund" && <Refund />}
       <Footer />
     </>
   );
