@@ -114,8 +114,8 @@ export default function KnowYourAssumptionsModal() {
                         </ul>
                       </div>
                       <p className="font-bold">
-                        The Phoenix Finance doesn't guarantee the absence of
-                        bugs and errors.
+                        The Phoenix Finance doesn't guarantee the absence of bugs and
+                        errors.
                       </p>
                       <p className="font-bold">
                         {" "}
@@ -127,41 +127,31 @@ export default function KnowYourAssumptionsModal() {
                           By accepting these KYA, you agree that:{" "}
                         </span>
                         <ul className="list-decimal list-inside indent-xs">
-                          <li>You will use the product at your own risk.</li>
+                          <li>
+                            You will use the product at your own risk.
+                          </li>
                           <li>Only YOU are responsible for your assets.</li>
                           <li>
                             Only YOU are responsible for securely storing your
                             recovery phrase.
                           </li>
                           <li>
-                            Our UI does not provide the option for slippage
-                            tolerance, you will receive the corresponding amount
-                            of hodlERG/ERG based on the price calculated at
-                            transaction execution time.
+                            Our UI does not provide the option for slippage tolerance,
+                            you will receive the corresponding amount of hodlERG/ERG
+                            based on the price calculated at transaction execution time.
                           </li>
                           <li>
-                            Our UI uses a proxy contract to interact with the
-                            hodlERG bank, not your wallet UTxOs. This means that
-                            we have a transaction execution bot which processes
-                            all transactions that interact with the bank.
+                            Our UI uses a proxy contract to interact with the hodlERG bank,
+                            not your wallet UTxOs. This means that we have a transaction execution
+                            bot which processes all transactions that interact with the bank.
                           </li>
                           <li>
-                            If funds are stuck in the proxy, there is the option
-                            to refund ERG/hodlERG as long as our bot does not
-                            use the proxy to execute a transaction before you
-                            are able to execute the refund.
+                            If funds are stuck in the proxy, there is the option to refund ERG/hodlERG
+                            as long as our bot does not use the proxy to execute a transaction before
+                            you are able to execute the refund.
                           </li>
                           <li>
-                            If you would prefer to interact with the bank box
-                            directly, use this UI:{" "}
-                            <a
-                              className="text-primary font-medium"
-                              href="https://app.hodlcoin.co.in/"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              https://app.hodlcoin.co.in/
-                            </a>
+                            If you would prefer to interact with the bank box directly, use this UI: https://app.hodlcoin.co.in/
                           </li>
                         </ul>
                       </div>
