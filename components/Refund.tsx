@@ -12,8 +12,6 @@ import {Amount, Box, ErgoAddress, FEE_CONTRACT, OutputBuilder, TokenAmount, Tran
 import {TransactionInfo} from "@/blockchain/ergo/explorerApi";
 import {Asset, ErgoTransaction, ErgoTransactionOutput} from "@/types/nodeApi";
 import {getUnConfirmedOrConfirmedTx, outputInfoToErgoTransactionOutput} from "@/blockchain/ergo/apiHelper";
-import {RECOMMENDED_MIN_FEE_VALUE} from "@fleet-sdk/core/src/builder/transactionBuilder";
-
 const Refund = () => {
   const [proxyAddressForm, setProxyAddressForm] = React.useState<string>("");
   const [transactionIDForm, setTxIdForm] = React.useState<string>("");
