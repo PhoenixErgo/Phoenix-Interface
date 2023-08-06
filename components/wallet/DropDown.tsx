@@ -78,13 +78,15 @@ const DropDown: React.FC = () => {
           type="primary"
           ghost
           size="large"
+
           style={{
             color: 'white',
-            border: '1px solid #434343',
+            border: 'none',
             paddingRight: 15,
-            background: '#141414',
+            backgroundImage: 'linear-gradient( to right, rgba(208, 0, 0, 1), rgba(255, 122, 0, 1) )',
             fontFamily: `'Space Grotesk', sans-serif`,
           }}
+
         >
           <Space
             style={{

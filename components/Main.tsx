@@ -5,6 +5,7 @@ import MintingHodlERG from './MintingHodlERG';
 import BurningHoldERG from './BurningHoldERG';
 import Loader from './Loader';
 import ConnectWallet from './wallet/ConnectWallet';
+import DropDown from "./wallet/DropDown";
 
 interface ErgData {
     currentprice: string;
@@ -30,7 +31,11 @@ const Main = () => {
         <>
             <div className="flex container items-center justify-between mx-auto px-3 lg:px-5 py-4">
                 <Logo />
-                 <ConnectWallet />
+                <div className="flex container items-center justify-end">
+                    <DropDown/>
+                    <ConnectWallet />
+                </div>
+
                 {/* <button
                     type="button"
                     className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"
