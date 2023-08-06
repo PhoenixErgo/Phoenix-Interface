@@ -42,3 +42,8 @@ export const explorerClient = (isMainnet: boolean) => {
     });
     return DefaultApiFactory(explorerConf);
 }
+export const NEXT_PUBLIC_NEST_API_URL = (isMainnet: boolean) =>  (
+    isMainnet
+        ? process.env.NEXT_PUBLIC_NEST_MAINNET_API
+        : process.env.NEXT_PUBLIC_NEST_TESTNET_API
+)!?.replace(/[\\/]+$/, '');
