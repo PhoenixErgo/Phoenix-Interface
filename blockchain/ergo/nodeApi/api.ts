@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErgoTransaction } from '../../../types/nodeApi';
+import {ErgoTransaction} from "../../../types/nodeApi";
 
 
 export class NodeApi{

@@ -225,3 +225,18 @@ export const msToMinutes = (ms: number) => {
   const oneMinuteInMs = 60000;
   return Math.floor(ms / oneMinuteInMs);
 };
+
+
+export async function getShortLink(base64Txn: string): Promise<string | undefined> {
+  try{
+    const res = await axios.get(`${NEXT_PUBLIC_NEST_API_URL}/ergopay/generateShortLink/${base64Txn}`);
+    const shortCode = res.data.shortCode;
+    if(shortCode === 'null'){
+      return undefined;
+    }
+    return `https://ergopay.liliumergo.io/${res.data.shortCode}`;
+  } catch (error){
+    console.log(error);
+    return undefined;
+  }
+}
