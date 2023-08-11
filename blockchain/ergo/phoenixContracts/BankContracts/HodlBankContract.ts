@@ -1,4 +1,5 @@
-import { OutputInfo } from "@/blockchain/ergo/explorerApi";
+
+import {OutputInfo} from "../../explorerApi";
 
 interface BurnAmount {
     expectedAmountWithdrawn: bigint;

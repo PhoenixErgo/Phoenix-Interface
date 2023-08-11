@@ -1,7 +1,7 @@
-import {OutputInfo, RegisterType, TransactionInfo} from "@/blockchain/ergo/explorerApi";
-import {ErgoTransaction, ErgoTransactionOutput, Registers} from "@/types/nodeApi";
-import {explorerClient, NODE_API_URL} from "@/blockchain/ergo/constants";
-import {NodeApi} from "@/blockchain/ergo/nodeApi/api";
+import {OutputInfo, RegisterType, TransactionInfo} from "./explorerApi";
+import {ErgoTransaction, ErgoTransactionOutput, Registers} from "../../types/nodeApi";
+import {explorerClient, NODE_API_URL} from "./constants";
+import {NodeApi} from "./nodeApi/api";
 
 
 export async function getUnConfirmedOrConfirmedTx(
