@@ -1,0 +1,20 @@
+@import url('https://fonts.cdnfonts.com/css/akira-expanded');
+
+.body {
+  background: #0d0f19;
+  color: white;
+  /*font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,*/
+  /*Bitstream Vera Sans Mono, Courier New, monospace;*/
+  font-family: 'Inter', sans-serif;
+  height: max-content;
+  width: auto;
+}
+
+.bodyContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.mainContent {
+  flex-grow: 1;
+}

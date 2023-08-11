@@ -1,4 +1,4 @@
-import {Configuration, DefaultApiFactory} from "@/blockchain/ergo/explorerApi";
+import {Configuration, DefaultApiFactory} from "./explorerApi";
 import {ErgoAddress, Network} from "@fleet-sdk/core";
 
 

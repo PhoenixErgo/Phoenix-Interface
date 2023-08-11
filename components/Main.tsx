@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import HeaderCards from "./HeaderCards";
-import MintingHodlERG from "./MintingHodlERG";
-import BurningHoldERG from "./BurningHoldERG";
 import Loader from "./Loader";
 import Navbar from "./Navbar";
 import {
@@ -11,12 +8,12 @@ import {
     precision,
     precisionBigInt,
     UIMultiplier,
-} from "@/blockchain/ergo/constants";
-import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
+} from "../blockchain/ergo/constants";
+import { HodlBankContract } from "../blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
 import Hodlerg from "./Hodlerg";
 import Refund from "./Refund";
-import { WebsocketContext } from "@/components/Contexts/WebsocketContext";
+import {WebsocketContext} from "./Contexts/WebsocketContext";
 
 interface HodlERGInterfaceData {
     currentPrice: string;
