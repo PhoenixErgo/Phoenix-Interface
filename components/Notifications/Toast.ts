@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { EXPLORER_URL } from '../../blockchain/ergo/api';
+import { EXPLORER_URL } from '@/blockchain/ergo/constants';
 
 export const noti_option: any = {
   position: 'top-right',
@@ -64,14 +64,14 @@ export const installNautilus:any = {
 };
 
 export const txSubmmited = (txHash: string, isMainnet: boolean) =>
-  toast.success(`Transaction submitted (click me)`, {
-    position: 'top-right',
-    autoClose: false,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: true,
-    draggable: false,
-    progress: undefined,
-    theme: 'dark',
-    onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
-  });
+    toast.success(`Transaction submitted (click me)`, {
+      position: 'top-right',
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: 'dark',
+      onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
+    });

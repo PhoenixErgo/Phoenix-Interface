@@ -117,7 +117,7 @@ input[type='number'] {
 }
 
 .ant-modal .ant-modal-content{
- border-radius: 16px;
+  border-radius: 16px;
   border: 1px solid #434343;
 }
 .ant-modal-close-x{
