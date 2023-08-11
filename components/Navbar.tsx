@@ -1,7 +1,8 @@
 import React from "react";
 import SettingPopup from "./SettingPopup";
 import { Logo } from "./Logo";
-import { getWalletConnection } from "@/blockchain/ergo/walletUtils/utils";
+import ConnectWallet from "@/components/wallet/ConnectWallet";
+import DropDown from "@/components/wallet/DropDown";
 
 interface IProps {
   activeTab: string;
@@ -17,13 +18,15 @@ const Navbar = (props: IProps) => {
 
         <div className="flex items-center space-x-4">
           <SettingPopup />
-          <button
-            type="button"
-            className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"
-            onClick={() => getWalletConnection()}
-          >
-            CONNECT WALLET
-          </button>
+            <DropDown/>
+          {/*<button*/}
+          {/*  type="button"*/}
+          {/*  className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"*/}
+          {/*  onClick={() => getWalletConnection()}*/}
+          {/*>*/}
+          {/*  CONNECT WALLET*/}
+          {/*</button>*/}
+            <ConnectWallet />
         </div>
       </nav>
       <div className="primary-gradient w-full py-3 text-center flex items-center space-x-12 sm:space-x-20 justify-center">
