@@ -15,7 +15,7 @@ const DisconnectNautilusWalletButton = ({
         size="large"
         block
         style={{
-          color: 'white',
+          color: 'black',
           fontFamily: `'Vela Sans', sans-serif`,
           marginTop: 15,
         }}

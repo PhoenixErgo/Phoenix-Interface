@@ -3,6 +3,7 @@ import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, Space } from 'antd';
 import ErgoIcon from '../Common/ErgoIcon';
+import ErgoIconModal from "../Common/ErgoIconModal";
 
 const items: MenuProps['items'] = [
   {
@@ -11,7 +12,7 @@ const items: MenuProps['items'] = [
     key: '1',
     style: {
       width: 150,
-      color: 'white',
+      // color: 'white',
       fontFamily: `'Space Grotesk', sans-serif`,
     },
   },
@@ -19,10 +20,10 @@ const items: MenuProps['items'] = [
     title: 'Ergo',
     label: 'Ergo',
     key: '2',
-    icon: <ErgoIcon />,
+    icon: <ErgoIconModal />,
     style: {
       width: 150,
-      color: 'white',
+      // color: 'white',
       fontFamily: `'Space Grotesk', sans-serif`,
     },
   },
@@ -31,10 +32,10 @@ const items: MenuProps['items'] = [
     title: 'Ergo Testnet',
     label: 'Ergo Testnet',
     key: '3',
-    icon: <ErgoIcon />,
+    icon: <ErgoIconModal />,
     style: {
       width: 150,
-      color: 'white',
+      // color: 'white',
       fontFamily: `'Space Grotesk', sans-serif`,
     },
   },
