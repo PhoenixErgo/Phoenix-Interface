@@ -92,9 +92,13 @@ input[type='number'] {
   color: black;
 }
 .ant-tabs-tab-btn{
-  color: black !important;
+  /*color: black !important;*/
   font-size: 16px;
 }
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: white;
+}
+
 .ant-btn.ant-btn-lg{
   padding-right: 4px;
 }
