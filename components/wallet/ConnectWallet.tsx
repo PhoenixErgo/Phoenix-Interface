@@ -1,24 +1,22 @@
-import React, { MouseEventHandler, useContext, useEffect, useRef, useState } from 'react';
-import { Button, Modal, Space, Tabs, TabsProps, Tooltip } from 'antd';
+import React, {MouseEventHandler, useContext, useEffect, useRef, useState} from 'react';
+import {Button, Modal, Space, Tabs, TabsProps, Tooltip} from 'antd';
 import NautilusWalletButton from './NautilusWalletButton';
-import ErgoPayButton from './ErgoPayButton';
 import Image from 'next/image';
 import commonStyle from '../../styles/common.module.css';
 import NautilusLogo from '../../public/NautilusLogo.png';
 import ErgoLogoWhite from '../../public/symbol_bold__1080px__white.png';
 import DisconnectNautilusWalletButton from './DisconnectNautilusWalletButton';
 import ErgoIcon from '../Common/ErgoIcon';
-import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowUpRightFromSquare,
-  faCopy,
-} from '@fortawesome/free-solid-svg-icons';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { ErgoDexService } from './ergoDexService';
-import { EXPLORER_API_URL, EXPLORER_URL, rateLimitedCoinGeckoERGUSD } from '../../blockchain/ergo/api';
-import { WebsocketContext } from '../Contexts/WebsocketContext';
-import { ErgoAddress, Network } from '@fleet-sdk/core';
+import {toast} from 'react-toastify';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowUpRightFromSquare, faCopy,} from '@fortawesome/free-solid-svg-icons';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import {ErgoDexService} from './ergoDexService';
+import {EXPLORER_API_URL, EXPLORER_URL, rateLimitedCoinGeckoERGUSD} from '../../blockchain/ergo/api';
+import {WebsocketContext} from '../Contexts/WebsocketContext';
+import {ErgoAddress, Network} from '@fleet-sdk/core';
+import ErgoPayWalletModal from "./ErgoPayWalletModal";
+import ErgoIconModal from "../Common/ErgoIconModal";
 
 interface TokenBalance {
   tokenId: string;
@@ -388,16 +386,22 @@ const ConnectWallet: React.FC = ({ props }: any) => {
     },
     {
       key: '2',
-      disabled: true,
+      // disabled: true,
       label: `ErgoPay`,
       children: (
-        <ErgoPayButton
-          setIsModalOpen={setIsModalOpen}
-          connectErgoPay={connectErgoPay}
-          ergoPay={ergoPay}
-          setErgoPay={setErgoPay}
-          activeKey={activeKey}
-        />
+        // <ErgoPayButton
+        //   setIsModalOpen={setIsModalOpen}
+        //   connectErgoPay={connectErgoPay}
+        //   ergoPay={ergoPay}
+        //   setErgoPay={setErgoPay}
+        //   activeKey={activeKey}
+        // />
+          <ErgoPayWalletModal
+              setIsModalOpen={setIsModalOpen}
+              connectErgoPay={connectErgoPay}
+              ergoPay={ergoPay}
+              setErgoPay={setErgoPay}
+              activeKey={activeKey}/>
       ),
     },
   ];
@@ -570,9 +574,9 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                 </span>
                 <button
                   style={{
-                    color: 'white',
                     borderRadius: 5,
-                    background: '#1D1D1D',
+                    background: '#FAFAFA',
+                    color:'black',
                     marginLeft: 10,
                     padding: '3px 10px',
                     fontFamily: `'Vela Sans', sans-serif !important`,
@@ -750,7 +754,7 @@ const ConnectWallet: React.FC = ({ props }: any) => {
             >
               <div style={{display: 'flex',
                 alignItems: 'center'}}>
-                <ErgoIcon />
+                <ErgoIconModal />
                 <p className={commonStyle.ergoBalanceText}>
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </p>
@@ -799,7 +803,6 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                   <a
                     href={externalLink}
                     target="_blank"
-                    style={{ color: 'white' }}
                     rel="noreferrer"
                   >
                     <Tooltip
@@ -863,7 +866,8 @@ const ConnectWallet: React.FC = ({ props }: any) => {
                     <small
                       className="m-0 flex justify-end"
                       style={{
-                        color: '#A6A6A6',
+                        // color: '#A6A6A6',
+                        color: 'black',
                       }}
                     >
                       ${item.usdValue === 0 ? '0.00' : item.usdValue}
