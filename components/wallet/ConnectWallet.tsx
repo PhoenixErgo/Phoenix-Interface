@@ -108,8 +108,6 @@ const ConnectWallet: React.FC<IProps> = (props) => {
       return () => {
         msgSubscription.unsubscribe();
       };
-    } else {
-      socket!.disconnect();
     }
   }, [walletConnected]);
 

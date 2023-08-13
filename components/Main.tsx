@@ -34,6 +34,25 @@ const Main = () => {
 
 
     useEffect(() => {
+        const socket = io(NEXT_PUBLIC_NEST_API_URL(isMainnet!));
+        setSocket(socket);
+
+
+        const msgSubscription = fromEvent(socket, 'new_block').subscribe(
+            (msg) => {
+                setLastBlock(msg);
+                console.log('Received message: ', msg);
+            },
+        );
+
+        return () => {
+            msgSubscription.unsubscribe();
+        };
+
+    }, []);
+
+
+    useEffect(() => {
         const isMainnet = localStorage.getItem('IsMainnet')
             ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
             : true;
@@ -45,20 +64,6 @@ const Main = () => {
         if (walletConfig && walletConfig.walletName === 'nautilus') {
             getWalletConnection();
         }
-
-        const sock = io(NEXT_PUBLIC_NEST_API_URL(isMainnet!));
-        setSocket(sock);
-
-        const msgSubscription = fromEvent(sock, 'new_block').subscribe(
-            (msg) => {
-                setLastBlock(msg);
-                console.log('Received message:', msg);
-            },
-        );
-
-        return () => {
-            msgSubscription.unsubscribe();
-        };
 
     }, []);
 
