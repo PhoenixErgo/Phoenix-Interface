@@ -39,7 +39,7 @@ import { fromEvent } from 'rxjs';
 import {io, Socket} from 'socket.io-client';
 import {EXPLORER_API_URL, EXPLORER_URL} from "@/blockchain/ergo/constants";
 import {DefaultEventsMap} from "@socket.io/component-emitter";
-import ErgoIconModal from "@/Components/Common/ErgoIconModal";
+import ErgoIconModal from "@/components/Common/ErgoIconModal";
 
 interface Token {
   tokenId: string;
