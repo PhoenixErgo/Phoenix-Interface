@@ -312,7 +312,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       ghost
                       style={{
                         color:'black',
-                        border: '1px solid #434343',
+                        border: '1px solid #D9D9D9',
                         fontFamily: `'Vela Sans', sans-serif`,
                       }}
                       className="flex items-center"
@@ -489,7 +489,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 {walletAssets.length > 0 && (
                     <div>
                       <p
-                          className="mb-2 mt-4"
+                          className="mb-2 mt-4 font-bold"
                           style={{ fontFamily: `'Vela Sans', sans-serif` }}
                       >
                         Tokens
@@ -583,7 +583,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     </p>
                   </div>
                   <div>
-                    <p className="m-0">${ergUSDValue}</p>
+                    <p className="m-0" style={{color:'#949494'}}>${ergUSDValue}</p>
                   </div>
                 </div>
 
@@ -648,7 +648,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 {walletAssets.length > 0 && (
                     <div>
                       <p
-                          className="mb-2 mt-4"
+                          className="mb-2 mt-4 font-bold"
                           style={{ fontFamily: `'Vela Sans', sans-serif` }}
                       >
                         Tokens
@@ -689,13 +689,13 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                           </div>
                         </div>
                         <div>
-                          <p className="m-0">
+                          <p className="m-0 font-bold">
                             {numberWithCommas(item.amount, item.decimals)}
                           </p>
                           <small
                               className="m-0 flex justify-end"
                               style={{
-                                color: 'black',
+                                color: '#949494',
                               }}
                           >
                             ${item.usdValue === 0 ? '0.00' : item.usdValue}
