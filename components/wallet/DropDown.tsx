@@ -56,6 +56,8 @@ const DropDown: React.FC = () => {
     }
 
     setValue(selectedTitle);
+    localStorage.removeItem('walletConfig')
+    window.location.reload();
   };
 
   useEffect(() => {

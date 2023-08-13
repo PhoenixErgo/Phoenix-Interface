@@ -3,17 +3,21 @@ import Loader from "./Loader";
 import Navbar from "./Navbar";
 import {
     BANK_SINGLETON_TOKEN_ID,
-    explorerClient,
-    isMainnet,
+    explorerClient, NEXT_PUBLIC_NEST_API_URL,
     precision,
     precisionBigInt,
     UIMultiplier,
-} from "../blockchain/ergo/constants";
-import { HodlBankContract } from "../blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
+} from "@/blockchain/ergo/constants";
+import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
 import Hodlerg from "./Hodlerg";
 import Refund from "./Refund";
+import { fromEvent } from 'rxjs';
 import {WebsocketContext} from "./Contexts/WebsocketContext";
+import {io, Socket} from "socket.io-client";
+import {DefaultEventsMap} from "@socket.io/component-emitter";
+import {getWalletConfig} from "@/blockchain/ergo/wallet/utils";
+import {getWalletConnection} from "@/blockchain/ergo/walletUtils/utils";
 
 interface HodlERGInterfaceData {
     currentPrice: string;
@@ -22,29 +26,49 @@ interface HodlERGInterfaceData {
 }
 
 const Main = () => {
+    const [isMainnet, setIsMainnet] = useState<boolean>(true);
     const [activeTab, setActiveTab] = useState("hodlerg");
     const [ergdata, setErgData] = useState<HodlERGInterfaceData | null>(null);
     const [lastBlock, setLastBlock] = useState(null);
 
-    const socket = useContext(WebsocketContext);
-    const sock = socket(isMainnet);
-    const startSocket = async () => {
-        sock.on("connect", () => {
-            console.log("Connected!");
-        });
+    const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | undefined>(undefined);
 
-        sock.on("new_block", (data: any) => {
-            console.log("new block:", data);
-            setLastBlock(data);
-        });
-    };
 
     useEffect(() => {
-        startSocket();
+        const isMainnet = localStorage.getItem('IsMainnet')
+            ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
+            : true;
+
+        setIsMainnet(isMainnet);
+
+        const walletConfig = getWalletConfig();
+
+        if (walletConfig && walletConfig.walletName === 'nautilus') {
+            getWalletConnection();
+        }
+
+        const sock = io(NEXT_PUBLIC_NEST_API_URL(isMainnet!));
+        setSocket(sock);
+
+        const msgSubscription = fromEvent(sock, 'new_block').subscribe(
+            (msg) => {
+                setLastBlock(msg);
+                console.log('Received message:', msg);
+            },
+        );
+
+        return () => {
+            msgSubscription.unsubscribe();
+        };
+
     }, []);
 
     useEffect(() => {
-        console.log(BANK_SINGLETON_TOKEN_ID(isMainnet));
+        const isMainnet = localStorage.getItem('IsMainnet')
+            ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
+            : true;
+
+        // console.log(BANK_SINGLETON_TOKEN_ID(isMainnet));
         explorerClient(isMainnet)
             .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
             .then((res) => {
@@ -81,7 +105,7 @@ const Main = () => {
 
     return (
         <>
-            <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Navbar activeTab={activeTab} setActiveTab={setActiveTab} socket={socket} />
             {activeTab === "hodlerg" && <Hodlerg ergdata={ergdata} />}
             {activeTab === "refund" && <Refund />}
             <Footer />

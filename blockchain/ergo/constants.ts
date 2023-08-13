@@ -2,7 +2,6 @@ import {Configuration, DefaultApiFactory} from "./explorerApi";
 import {ErgoAddress, Network} from "@fleet-sdk/core";
 
 
-export const isMainnet = true;
 export const NODE_API_URL = (isMainnet: boolean): string => (
     isMainnet
         ? process.env.NEXT_PUBLIC_MAINNET_NODE_URL
