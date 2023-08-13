@@ -13,7 +13,6 @@ import Footer from "./Footer";
 import Hodlerg from "./Hodlerg";
 import Refund from "./Refund";
 import { fromEvent } from 'rxjs';
-import {WebsocketContext} from "./Contexts/WebsocketContext";
 import {io, Socket} from "socket.io-client";
 import {DefaultEventsMap} from "@socket.io/component-emitter";
 import {getWalletConfig} from "@/blockchain/ergo/wallet/utils";
