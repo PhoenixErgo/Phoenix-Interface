@@ -88,11 +88,11 @@ const ErgoPayButton = ({ setIsModalOpen, connectErgoPay, activeKey, isMainnet }:
                     </svg>
                 </div>
             </div>
-            <p className="text-center text-white">
+            <p className="text-center">
                 Waiting for connection with ErgoPay
             </p>
 
-            <h5 className="text-center text-white">Scan QR code</h5>
+            <h5 className="text-center">Scan QR code</h5>
 
             {/*  qr code*/}
             <div className="flex justify-center">
@@ -114,7 +114,7 @@ const ErgoPayButton = ({ setIsModalOpen, connectErgoPay, activeKey, isMainnet }:
             <div className="flex justify-center mt-4">
                 <Button
                     block
-                    style={{ color: "white", fontFamily: `'Space Grotesk', sans-serif` }}
+                    style={{  fontFamily: `'Space Grotesk', sans-serif` }}
                     onClick={() => {
                         navigator.clipboard.writeText(link);
                         handleCopyText('Copied to clipboard!');
@@ -126,7 +126,10 @@ const ErgoPayButton = ({ setIsModalOpen, connectErgoPay, activeKey, isMainnet }:
 
                 <Button
                     block
-                    style={{ color: "white", fontFamily: `'Space Grotesk', sans-serif` }}
+                    style={{ border: 'none',
+                        color: 'white',
+                        background: '#6F65C5',
+                        fontFamily: `'Space Grotesk', sans-serif` }}
                     onClick={openLink}
                     className="ml-2"
                 >
