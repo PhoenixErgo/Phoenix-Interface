@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/*@font-face {*/
+/*  font-family: 'Vela Sans';*/
+/*  src: url('../public/VelaSans-Regular.ttf') format('truetype');*/
+/*  !* Additional font properties (e.g., font-weight, font-style) can be added here *!*/
+/*}*/
+
 .primary-gradient {
   background-image: linear-gradient(
           to right,

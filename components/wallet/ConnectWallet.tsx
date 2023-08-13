@@ -39,6 +39,7 @@ import { fromEvent } from 'rxjs';
 import {io, Socket} from 'socket.io-client';
 import {EXPLORER_API_URL, EXPLORER_URL} from "@/blockchain/ergo/constants";
 import {DefaultEventsMap} from "@socket.io/component-emitter";
+import ErgoIconModal from "@/Components/Common/ErgoIconModal";
 
 interface Token {
   tokenId: string;
@@ -405,7 +406,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 <div>
                   <p
                       className="mb-2 mt-4"
-                      style={{ fontFamily: `'Vela Sans', sans-serif` }}
+                      style={{ fontFamily: `'Vela Sans', sans-serif`, fontWeight:'bold'  }}
                   >
                     Total balance
                   </p>
@@ -416,7 +417,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     className={`${commonStyle.ergoBalanceDiv}`}
                 >
                   <div className="d-flex align-items-center">
-                    <ErgoIcon />
+                    <ErgoIconModal />
                     <p className={commonStyle.ergoBalanceText}>
                       {numberWithCommas(parseInt(ergBalance), 9)} ERG
                     </p>
@@ -430,7 +431,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 <div>
                   <p
                       className="mb-2 mt-4"
-                      style={{ fontFamily: `'Vela Sans', sans-serif` }}
+                      style={{ fontFamily: `'Vela Sans', sans-serif`,fontWeight:'bold' }}
                   >
                     Active address
                   </p>
@@ -558,13 +559,13 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 <div style={{display: 'flex',
                   alignItems: 'center'}}>
                   <Image alt="img" height="32" width="32" src={NautilusLogo} />
-                  <h5 className="ms-3 m-0">Nautilus Wallet</h5>
+                  <h5 className="ms-3 m-0" style={{fontSize:18,fontWeight:'bold'}}>Nautilus Wallet</h5>
                 </div>
 
                 <div>
                   <p
                       className="mb-2 mt-4"
-                      style={{ fontFamily: `'Vela Sans', sans-serif` }}
+                      style={{ fontFamily: `'Vela Sans', sans-serif`, fontWeight:'bold' }}
                   >
                     Total balance
                   </p>
@@ -576,7 +577,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 >
                   <div style={{display: 'flex',
                     alignItems: 'center'}}>
-                    <ErgoIcon />
+                    <ErgoIconModal />
                     <p className={commonStyle.ergoBalanceText}>
                       {numberWithCommas(parseInt(ergBalance), 9)} ERG
                     </p>
@@ -589,7 +590,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 <div>
                   <p
                       className="mb-2 mt-4"
-                      style={{ fontFamily: `'Vela Sans', sans-serif` }}
+                      style={{ fontFamily: `'Vela Sans', sans-serif`,fontWeight:'bold'  }}
                   >
                     Active address
                   </p>
@@ -631,7 +632,6 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                               walletAddress ? walletAddress[0] : ''
                           }`}
                           target="_blank"
-                          style={{ color: 'white' }}
                           rel="noreferrer"
                       >
                         <Tooltip
