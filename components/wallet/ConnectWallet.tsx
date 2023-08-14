@@ -6,6 +6,7 @@ import Image from 'next/image';
 import commonStyle from '../../styles/common.module.css';
 import NautilusLogo from '../../public/NautilusLogo.png';
 import ErgoLogoWhite from '../../public/symbol_bold__1080px__white.png';
+import ErgoLogoDark from '../../public/ergo-icon.png';
 import DisconnectNautilusWalletButton from './DisconnectNautilusWalletButton';
 import ErgoIcon from '../Common/ErgoIcon';
 import { toast } from 'react-toastify';
@@ -276,8 +277,8 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       size="large"
                       ghost
                       style={{
-                        color: 'white',
-                        border: '1px solid #434343',
+                        color: 'black',
+                        border: '1px solid #D9D9D9',
                         fontFamily: `'Vela Sans', sans-serif`,
                         background: '#1D1D1D !important',
                       }}
@@ -286,16 +287,16 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     <div className="flex">
                       <button
                           style={{
-                            color: 'white',
+                            color: 'black',
                             borderRadius: 5,
                             background: '#1D1D1D !important',
-                            marginLeft: 10,
+                            // marginLeft: 10,
                             padding: '3px 10px',
                             fontFamily: `'Vela Sans', sans-serif`,
                           }}
                       >
                         <div className="flex">
-                          <Image alt="img" width="25" src={ErgoLogoWhite} />
+                          <Image style={{marginRight:10}} alt="img" width="25" src={ErgoLogoDark} />
                           <div style={{ fontFamily: `'Vela Sans', sans-serif` }}>
                             {reduceAddress(walletAddress![0])}
                           </div>
@@ -398,8 +399,8 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               <div style={{ fontFamily: `'Space Grotesk', sans-serif` }}>
                 <div style={{display: 'flex',
                   alignItems: 'center'}}>
-                  <Image alt="img" height="32" width="32" src={ErgoLogoWhite} />
-                  <h3 className="ms-3 m-0">ErgoPay</h3>
+                  <Image alt="img" height="32" width="32" src={ErgoLogoDark} />
+                  <h3 className="ms-3 m-0 font-bold" style={{fontSize:18}}>ErgoPay</h3>
                 </div>
                 <div>
                   <p
@@ -414,7 +415,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       alignItems: 'center',  justifyContent: 'space-between'}}
                     className={`${commonStyle.ergoBalanceDiv}`}
                 >
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center">
                     <ErgoIconModal />
                     <p className={commonStyle.ergoBalanceText}>
                       {numberWithCommas(parseInt(ergBalance), 9)} ERG
@@ -470,7 +471,6 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                               walletAddress![0]
                           }`}
                           target="_blank"
-                          style={{ color: 'white' }}
                           rel="noreferrer"
                       >
                         <Tooltip
@@ -505,9 +505,9 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                   {walletAssets.map((item: Token) => (
                       <div
                           key={item.tokenId}
-                          className={`d-flex align-items-center justify-content-between ${commonStyle.ergoTokenBalanceDiv}`}
+                          className={`flex items-center justify-between ${commonStyle.ergoTokenBalanceDiv}`}
                       >
-                        <div className="d-flex align-items-center">
+                        <div className="flex items-center">
                           <Image
                               src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/light/${item.tokenId}.svg`}
                               onError={({ currentTarget }) => {
