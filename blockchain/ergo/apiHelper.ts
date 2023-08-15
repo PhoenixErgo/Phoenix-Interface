@@ -1,7 +1,7 @@
-import {OutputInfo, RegisterType, TransactionInfo} from "@/blockchain/ergo/explorerApi";
+import {OutputInfo, RegisterType, TransactionInfo} from "./explorerApi";
 import {ErgoTransaction, ErgoTransactionOutput, Registers} from "@/types/nodeApi";
-import {explorerClient, NODE_API_URL} from "@/blockchain/ergo/constants";
-import {NodeApi} from "@/blockchain/ergo/nodeApi/api";
+import {explorerClient, NODE_API_URL} from "./constants";
+import {NodeApi} from "./nodeApi/api";
 
 
 export async function getUnConfirmedOrConfirmedTx(
@@ -18,36 +18,4 @@ export async function getUnConfirmedOrConfirmedTx(
             return {} as TransactionInfo;
         }
     }
-}
-
-export function outputInfoToErgoTransactionOutput(
-    output: OutputInfo,
-): ErgoTransactionOutput {
-    return {
-        boxId: output.boxId,
-        value: output.value,
-        ergoTree: output.ergoTree,
-        creationHeight: output.creationHeight,
-        assets: output.assets!.map((token) => ({
-            tokenId: token.tokenId,
-            amount: token.amount,
-        })),
-        additionalRegisters: (
-            Object.keys(output.additionalRegisters) as RegisterType[]
-        ).reduce(
-            (
-                obj: Partial<Record<RegisterType, string>>,
-                key: RegisterType,
-            ): Registers => {
-                if (output.additionalRegisters[key]) {
-                    obj[key] = output.additionalRegisters[key]?.serializedValue;
-                }
-                return obj;
-            },
-            {} as Partial<Record<RegisterType, string>>,
-        ),
-        transactionId: output.transactionId,
-        index: output.index,
-        spentTransactionId: output.spentTransactionId,
-    };
 }

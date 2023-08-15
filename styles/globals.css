@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/*@font-face {*/
+/*  font-family: 'Vela Sans';*/
+/*  src: url('../public/VelaSans-Regular.ttf') format('truetype');*/
+/*  !* Additional font properties (e.g., font-weight, font-style) can be added here *!*/
+/*}*/
+
 .primary-gradient {
   background-image: linear-gradient(
           to right,
@@ -52,7 +61,7 @@ input[type='number'] {
 }
 
 .ant-dropdown .ant-dropdown-menu {
-  background: #141414;
+  /*background: #141414;*/
   /*margin-left: 30px;*/
   /*border-radius: 20px;*/
 }
@@ -71,8 +80,8 @@ input[type='number'] {
   justify-content: space-between;
 }
 .ant-modal-content{
-  background: #141414 !important;
-  color: white;
+  background: #fff !important;
+  color: black;
   border-radius: 15px;
   box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d
 }
@@ -89,12 +98,16 @@ input[type='number'] {
   border-radius: 10px;
 }
 .ant-modal-close-x{
-  color: white;
+  color: black;
 }
 .ant-tabs-tab-btn{
-  color: white !important;
+  /*color: black !important;*/
   font-size: 16px;
 }
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: white;
+}
+
 .ant-btn.ant-btn-lg{
   padding-right: 4px;
 }

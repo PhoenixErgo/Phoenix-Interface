@@ -1,5 +1,6 @@
 import { OutputInfo } from "@/blockchain/ergo/explorerApi";
 
+
 interface BurnAmount {
     expectedAmountWithdrawn: bigint;
     devFeeAmount: bigint;

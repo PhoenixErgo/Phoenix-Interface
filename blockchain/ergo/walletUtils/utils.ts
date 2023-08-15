@@ -1,7 +1,23 @@
 import {installNautilus, noti_option_close, txSubmmited} from "@/components/Notifications/Toast";
 import {Id, toast} from "react-toastify";
-import {isMainnet} from "@/blockchain/ergo/constants";
 import {SignedTransaction} from "@nautilus-js/eip12-types";
+import {walletLocalStorage} from "@/components/wallet/ConnectWallet";
+import {MOutputInfo, OutputInfo, RegisterType} from "@/blockchain/ergo/explorerApi";
+import {ErgoTransactionOutput, Registers} from "@/types/nodeApi";
+
+
+export const isErgoDappWalletConnected = async () => {
+    if ((window as any).ergoConnector) {
+        if ((window as any).ergoConnector.nautilus) {
+            return (await (window as any).ergoConnector.nautilus.isConnected()) as boolean;
+        }
+    }
+    return false;
+};
+
+export const checkWalletConnection = async (walletConfig: walletLocalStorage | undefined) => {
+    return walletConfig ? walletConfig.walletName === "ergopay" ? true : await isErgoDappWalletConnected() : await isErgoDappWalletConnected();
+};
 
 
 export const getWalletConnection = async () => {
@@ -28,7 +44,7 @@ export const getWalletConn = async () => {
     return true;
 };
 
-export const signAndSubmitTx = async (unsignedTransaction: any, ergo: any, txBuilding_noti: Id) => {
+export const signAndSubmitTx = async (unsignedTransaction: any, ergo: any, txBuilding_noti: Id, isMainnet: boolean) => {
     let signedTransaction: SignedTransaction;
 
     try {
@@ -56,3 +72,35 @@ export const signAndSubmitTx = async (unsignedTransaction: any, ergo: any, txBui
     toast.dismiss();
     txSubmmited(hash, isMainnet);
 };
+
+export function outputInfoToErgoTransactionOutput(
+    output: OutputInfo | MOutputInfo,
+): ErgoTransactionOutput {
+    return {
+        boxId: output.boxId,
+        value: output.value,
+        ergoTree: output.ergoTree,
+        creationHeight: output.creationHeight,
+        assets: output.assets!.map((token) => ({
+            tokenId: token.tokenId,
+            amount: token.amount,
+        })),
+        additionalRegisters: (
+            Object.keys(output.additionalRegisters) as RegisterType[]
+        ).reduce(
+            (
+                obj: Partial<Record<RegisterType, string>>,
+                key: RegisterType,
+            ): Registers => {
+                if (output.additionalRegisters[key]) {
+                    obj[key] = output.additionalRegisters[key]?.serializedValue;
+                }
+                return obj;
+            },
+            {} as Partial<Record<RegisterType, string>>,
+        ),
+        transactionId: output.transactionId,
+        index: output.index,
+        spentTransactionId: output.spentTransactionId,
+    };
+}

@@ -1,20 +1,28 @@
-import React from "react";
-import { getWalletConn } from "@/blockchain/ergo/walletUtils/utils";
+import React, {useEffect, useState} from "react";
+import {getWalletConn, outputInfoToErgoTransactionOutput} from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
 import {
   noti_option,
   noti_option_close, txSubmmited,
 } from "@/components/Notifications/Toast";
 import { isHex } from "@fleet-sdk/common";
-import {isMainnet} from "@/blockchain/ergo/constants";
 import {SignedTransaction} from "@nautilus-js/eip12-types";
 import {Amount, Box, ErgoAddress, FEE_CONTRACT, OutputBuilder, TokenAmount, TransactionBuilder} from "@fleet-sdk/core";
 import {TransactionInfo} from "@/blockchain/ergo/explorerApi";
 import {Asset, ErgoTransaction, ErgoTransactionOutput} from "@/types/nodeApi";
-import {getUnConfirmedOrConfirmedTx, outputInfoToErgoTransactionOutput} from "@/blockchain/ergo/apiHelper";
+import {getUnConfirmedOrConfirmedTx} from "@/blockchain/ergo/apiHelper";
 const Refund = () => {
+  const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [proxyAddressForm, setProxyAddressForm] = React.useState<string>("");
   const [transactionIDForm, setTxIdForm] = React.useState<string>("");
+
+  useEffect(() => {
+    const isMainnet = localStorage.getItem('IsMainnet')
+        ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
+        : true;
+
+    setIsMainnet(isMainnet);
+  }, []);
 
   const handleClick = async () => {
     if (!(await getWalletConn())) {

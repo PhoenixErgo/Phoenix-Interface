@@ -3,7 +3,7 @@ import {
   BANK_SINGLETON_TOKEN_ID,
   explorerClient,
   HODL_ERG_TOKEN_ID,
-  isMainnet, MIN_MINER_FEE,
+  MIN_MINER_FEE,
   MIN_TX_OPERATOR_FEE,
   precision,
   precisionBigInt,
@@ -13,7 +13,8 @@ import {
 import { OutputInfo } from "@/blockchain/ergo/explorerApi";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
-  getWalletConn,
+  checkWalletConnection,
+  getWalletConn, getWalletConnection, isErgoDappWalletConnected,
   signAndSubmitTx,
 } from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
@@ -22,6 +23,7 @@ import {
   noti_option_close,
 } from "@/components/Notifications/Toast";
 import {
+  Amount, Box,
   ErgoAddress,
   OutputBuilder,
   SConstant,
@@ -29,16 +31,35 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import {hasDecimals, localStorageKeyExists} from "@/common/utils";
+import {getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
+import assert from "assert";
+import {getTxReducedB64Safe} from "@/blockchain/ergo/ergopay/reducedTxn";
+import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
+import {outputInfoToErgoTransactionOutput} from "@/blockchain/ergo/walletUtils/utils";
 
 const MintingHodlERG = () => {
+  const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [mintAmount, setMintAmount] = useState<number>(0);
   const [bankBox, setBankBox] = useState<OutputInfo | null>(null);
   const [ergPrice, setErgPrice] = useState<number>(0);
+  const [proxyAddress, setProxyAddress] = useState<string>('');
 
   const minBoxValue = BigInt(1000000);
-  const proxyAddress = PROXY_ADDRESS(isMainnet);
+
+  const [isModalErgoPayOpen, setIsModalErgoPayOpen] = useState<boolean>(false);
+  const [ergoPayLink, setErgoPayLink] = useState<string>('');
+  const [ergoPayTxId, setErgoPayTxId] = useState<string>('');
+
 
   useEffect(() => {
+
+    const isMainnet = localStorage.getItem('IsMainnet')
+        ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
+        : true;
+
+    setIsMainnet(isMainnet);
+    setProxyAddress(PROXY_ADDRESS(isMainnet));
+
     explorerClient(isMainnet)
       .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
       .then((res) => {
@@ -68,6 +89,8 @@ const MintingHodlERG = () => {
     let txOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
     let minerFee = BigInt(MIN_MINER_FEE);
 
+    const walletConfig = getWalletConfig();
+
     if(localStorageKeyExists("txOperatorFee")){
         txOperatorFee = BigInt(localStorage.getItem("txOperatorFee")!);
     }
@@ -87,19 +110,25 @@ const MintingHodlERG = () => {
       toast.warn("max 9 decimals", noti_option_close("try-again"));
       return;
     }
-    if (!(await getWalletConn())) {
+
+    if (!(await checkWalletConnection(walletConfig))) {
       toast.dismiss();
-      toast.warn(
-        "unable to get wallet connection",
-        noti_option_close("try-again")
-      );
+      toast.warn('please connect wallet', noti_option_close('try-again'));
       return;
     }
+
+    assert(walletConfig !== undefined)
+
+    const isErgoPay = walletConfig.walletName === "ergopay";
+
     const txBuilding_noti = toast.loading("Please wait...", noti_option);
 
-    const inputs = await ergo!.get_utxos();
-    const changeAddress = await ergo!.get_change_address();
-    const creationHeight = await ergo!.get_current_height();
+    const changeAddress = walletConfig.walletAddress[0]
+    const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks()).data.items![0].height
+
+
+    const inputs = isErgoPay ? (await explorerClient(isMainnet).getApiV1BoxesUnspentUnconfirmedByaddressP1(changeAddress)).data!.filter(item => item.address === changeAddress).map(outputInfoToErgoTransactionOutput).map(item => item as unknown as Box<Amount>) : await ergo!.get_utxos();
+
 
     let receiverErgoTree = ErgoAddress.fromBase58(
       String(changeAddress)
@@ -137,7 +166,32 @@ const MintingHodlERG = () => {
         .build()
         .toEIP12Object();
 
-      signAndSubmitTx(unsignedTransaction, ergo, txBuilding_noti);
+      if(isErgoPay){
+        const [txId, ergoPayTx] = await getTxReducedB64Safe(
+            unsignedTransaction,
+            explorerClient(isMainnet)
+        );
+        if(ergoPayTx === null){
+          toast.dismiss();
+          toast.warn('issue getting ergopay transaction', noti_option_close('try-again'));
+          return;
+        }
+        const url = await getShortLink(ergoPayTx, "nft%20purchase", isMainnet);
+        if(!url){
+          toast.dismiss();
+          toast.warn('issue getting ergopay transaction', noti_option_close('try-again'));
+          return;
+        }
+        console.log(url);
+        setErgoPayTxId(txId!);
+        setErgoPayLink(url);
+        window.document.documentElement.classList.add('overflow-hidden');
+        setIsModalErgoPayOpen(true);
+        toast.dismiss();
+        return;
+      }
+
+      signAndSubmitTx(unsignedTransaction, ergo, txBuilding_noti, isMainnet);
     } catch (error) {
       console.log(error);
       toast.dismiss();
@@ -177,6 +231,15 @@ const MintingHodlERG = () => {
           >
             MINT HODLERG
           </button>
+          {
+              isModalErgoPayOpen &&  <ErgoPayWalletModal
+                  isModalOpen={isModalErgoPayOpen}
+                  setIsModalOpen={setIsModalErgoPayOpen}
+                  ergoPayLink={ergoPayLink}
+                  txid={ergoPayTxId}
+                  isMainnet={isMainnet}
+              ></ErgoPayWalletModal>
+          }
         </div>
       </div>
     </>
