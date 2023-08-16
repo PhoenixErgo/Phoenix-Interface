@@ -1,17 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Ubuntu&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
-/*@font-face {*/
-/*  font-family: 'Vela Sans';*/
-/*  src: url('../public/VelaSans-Regular.ttf') format('truetype');*/
-/*  !* Additional font properties (e.g., font-weight, font-style) can be added here *!*/
-/*}*/
 
 .primary-gradient {
   background-image: linear-gradient(
@@ -25,7 +14,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: #0d0f19;
   overflow-x: hidden;
 }
@@ -56,59 +45,55 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
 .ant-dropdown .ant-dropdown-menu {
-  /*background: #141414;*/
+  background: #141414;
   /*margin-left: 30px;*/
   /*border-radius: 20px;*/
 }
-.ant-dropdown-menu-title-content{
+.ant-dropdown-menu-title-content {
   margin-left: 10px;
 }
 
-.ant-tabs-nav-wrap{
+.ant-tabs-nav-wrap {
   border: 1px solid darkgrey;
   border-radius: 15px;
 }
-.ant-tabs-nav::before{
+.ant-tabs-nav::before {
   border: none !important;
 }
-.ant-tabs-nav-wrap{
+.ant-tabs-nav-wrap {
   justify-content: space-between;
 }
-.ant-modal-content{
-  background: #fff !important;
-  color: black;
+.ant-modal-content {
+  background: #141414 !important;
+  color: white;
   border-radius: 15px;
-  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
+  0 9px 28px 8px #0000000d;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active{
+.ant-tabs-tab.ant-tabs-tab-active {
   z-index: 1;
   color: white !important;
-
 }
-.ant-tabs-ink-bar.ant-tabs-ink-bar-animated{
-  background: #7066C5;
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  background: #7066c5;
   height: 100% !important;
   color: white !important;
   border-radius: 10px;
 }
-.ant-modal-close-x{
-  color: black;
-}
-.ant-tabs-tab-btn{
-  /*color: black !important;*/
-  font-size: 16px;
-}
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+.ant-modal-close-x {
   color: white;
 }
-
-.ant-btn.ant-btn-lg{
+.ant-tabs-tab-btn {
+  color: white !important;
+  font-size: 16px;
+}
+.ant-btn.ant-btn-lg {
   padding-right: 4px;
 }
 
@@ -118,26 +103,25 @@ input[type='number'] {
   justify-content: space-between;
   width: 100%;
   margin: 4px;
-
 }
 .ant-tabs-tab {
   width: 50%;
   justify-content: center;
 }
 
-.ant-tabs .ant-tabs-tab{
+.ant-tabs .ant-tabs-tab {
   padding: 6px 0;
 }
 
-.ant-modal .ant-modal-content{
+.ant-modal .ant-modal-content {
   border-radius: 16px;
   border: 1px solid #434343;
 }
-.ant-modal-close-x{
+.ant-modal-close-x {
   font-size: 20px !important;
 }
-.connectWalletBtn{
-  font-family: 'Space Grotesk', sans-serif !important;
+.connectWalletBtn {
+  font-family: "Space Grotesk", sans-serif !important;
 }
 
 ::-webkit-scrollbar {
