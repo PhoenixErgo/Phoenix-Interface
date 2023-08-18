@@ -16,6 +16,8 @@ import {
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { InfoCircleOutlined } from "@ant-design/icons";
+
 import {
   Configuration,
   DefaultApiFactory,
@@ -42,6 +44,7 @@ import { io, Socket } from "socket.io-client";
 import { EXPLORER_API_URL, EXPLORER_URL } from "@/blockchain/ergo/constants";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import ErgoIconModal from "@/components/Common/ErgoIconModal";
+import { InfoIcon } from "../SettingPopup";
 
 interface Token {
   tokenId: string;
@@ -449,20 +452,39 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 </p>
               </div>
               <div>
-                <p className="m-0 text-[14px] sm:text-[16px] font-medium text-black">
+                <p className="m-0 text-[12px] font-medium text-[#595959]">
                   ${numberWithCommas(parseInt(ergBalance), 9)}
                 </p>
               </div>
             </div>
-            <div>
+            <div className="flex items-center mb-2 mt-4">
               <p
-                className="mb-2 mt-4 text-[14px] sm:text-[16px] font-semibold text-black"
+                className="text-[14px] font-semibold text-black"
                 style={{
                   fontFamily: `'Vela Sans', sans-serif`,
                 }}
               >
                 Active address
-              </p>
+              </p>{" "}
+              <Tooltip
+                placement="top"
+                title="Copy Address to clipboard."
+                className={commonStyle.addressIcons}
+              >
+                <svg
+                  className="ml-1 cursor-pointer"
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="info-circle"
+                  width="1em"
+                  height="1em"
+                  fill="#BFBFBF"
+                  aria-hidden="true"
+                >
+                  <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
+                  <path d="M464 336a48 48 0 1096 0 48 48 0 10-96 0zm72 112h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V456c0-4.4-3.6-8-8-8z"></path>
+                </svg>
+              </Tooltip>
             </div>
             <div
               style={{
