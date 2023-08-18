@@ -3,8 +3,8 @@ import SettingPopup from "./SettingPopup";
 import { Logo } from "./Logo";
 import ConnectWallet from "@/components/wallet/ConnectWallet";
 import DropDown from "@/components/wallet/DropDown";
-import {Socket} from "socket.io-client";
-import {DefaultEventsMap} from "@socket.io/component-emitter";
+import { Socket } from "socket.io-client";
+import { DefaultEventsMap } from "@socket.io/component-emitter";
 
 interface IProps {
   activeTab: string;
@@ -21,17 +21,17 @@ const Navbar = (props: IProps) => {
 
         <div className="flex items-center space-x-4">
           <SettingPopup />
-            <DropDown/>
-          {/*<button*/}
-          {/*  type="button"*/}
-          {/*  className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-3 sm:px-5 py-2 sm:py-2.5"*/}
-          {/*  onClick={() => getWalletConnection()}*/}
-          {/*>*/}
-          {/*  CONNECT WALLET*/}
-          {/*</button>*/}
+          <DropDown />
+
+          <div className="hidden sm:block">
             <ConnectWallet socket={socket} />
+          </div>
         </div>
       </nav>
+
+      <div className="sm:hidden w-full">
+        <ConnectWallet socket={socket} />
+      </div>
       <div className="primary-gradient w-full py-3 text-center flex items-center space-x-12 sm:space-x-20 justify-center">
         <button
           onClick={() => setActiveTab("hodlerg")}

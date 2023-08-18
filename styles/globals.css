@@ -4,9 +4,9 @@
 
 .primary-gradient {
   background-image: linear-gradient(
-          to right,
-          rgba(208, 0, 0, 1),
-          rgba(255, 122, 0, 1)
+    to right,
+    rgba(208, 0, 0, 1),
+    rgba(255, 122, 0, 1)
   );
 }
 
@@ -17,6 +17,46 @@ body {
   font-family: "Inter", sans-serif;
   background: #0d0f19;
   overflow-x: hidden;
+}
+
+@font-face {
+  font-family: VelaSansRegular;
+  src: url("/fonts/VelaSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: VelaSansMedium;
+  src: url("/fonts/VelaSans-Medium.ttf");
+}
+
+@font-face {
+  font-family: VelaSanSemiBold;
+  src: url("/fonts/VelaSans-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: VelaSansBold;
+  src: url("/fonts/VelaSans-Bold.ttf");
+}
+
+.font-VelaSansRegular {
+  font-family: VelaSansRegular;
+  font-weight: 400;
+}
+
+.font-VelaSansMedium {
+  font-family: VelaSansMedium;
+  font-weight: 500;
+}
+
+.font-VelaSanSemiBold {
+  font-family: VelaSanSemiBold;
+  font-weight: 600;
+}
+
+.font-VelaSansBold {
+  font-family: VelaSansBold;
+  font-weight: 700;
 }
 
 /*a {*/
@@ -50,7 +90,7 @@ input[type="number"] {
 }
 
 .ant-dropdown .ant-dropdown-menu {
-  background: #141414;
+  background: white;
   /*margin-left: 30px;*/
   /*border-radius: 20px;*/
 }
@@ -73,12 +113,12 @@ input[type="number"] {
   color: white;
   border-radius: 15px;
   box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014,
-  0 9px 28px 8px #0000000d;
+    0 9px 28px 8px #0000000d;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active {
   z-index: 1;
-  color: white !important;
+  color: white;
 }
 .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
   background: #7066c5;
@@ -89,8 +129,11 @@ input[type="number"] {
 .ant-modal-close-x {
   color: white;
 }
-.ant-tabs-tab-btn {
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: white !important;
+}
+.ant-tabs-tab-btn {
+  color: black;
   font-size: 16px;
 }
 .ant-btn.ant-btn-lg {
@@ -110,12 +153,14 @@ input[type="number"] {
 }
 
 .ant-tabs .ant-tabs-tab {
-  padding: 6px 0;
+  padding: 6px;
 }
 
 .ant-modal .ant-modal-content {
   border-radius: 16px;
   border: 1px solid #434343;
+  padding: 16px !important;
+  background-color: white !important;
 }
 .ant-modal-close-x {
   font-size: 20px !important;
@@ -132,12 +177,13 @@ input[type="number"] {
 
 /* Track (background) of the scrollbar */
 ::-webkit-scrollbar-track {
-  background-color: #222;
+  background-color: transparent;
 }
 
 /* Handle (thumb) of the scrollbar */
 ::-webkit-scrollbar-thumb {
-  background-color: #555;
+  background-color: #a7a3a3;
+  border-radius: 4px;
 }
 
 /* Handle on hover */
@@ -147,4 +193,30 @@ input[type="number"] {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.ant-modal-close-icon svg {
+  fill: #0d0f19;
+}
+
+@media (max-width: 640px) {
+  .ergo-pay-wallet-modal {
+    width: 100% !important;
+    max-width: 360px !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+  }
+
+  .browser-wallet-modal {
+    width: 100% !important;
+    max-width: 360px !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+  }
+  .ergo-pay-wallet-modal .ant-modal-content {
+    padding: 12px !important;
+  }
+  .site-button-ghost-wrapper .ant-space-item {
+    width: 100%;
+  }
 }
