@@ -21,22 +21,22 @@ body {
 
 @font-face {
   font-family: VelaSansRegular;
-  src: url("/fonts/VelaSans-Regular.ttf");
+  src: url("/fonts/VelaSans-Regular.otf");
 }
 
 @font-face {
   font-family: VelaSansMedium;
-  src: url("/fonts/VelaSans-Medium.ttf");
+  src: url("/fonts/VelaSans-Medium.otf");
 }
 
 @font-face {
   font-family: VelaSanSemiBold;
-  src: url("/fonts/VelaSans-SemiBold.ttf");
+  src: url("/fonts/VelaSans-SemiBold.otf");
 }
 
 @font-face {
   font-family: VelaSansBold;
-  src: url("/fonts/VelaSans-Bold.ttf");
+  src: url("/fonts/VelaSans-Bold.otf");
 }
 
 .font-VelaSansRegular {
