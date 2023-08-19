@@ -455,12 +455,14 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             >
               <div className="flex items-center">
                 <ErgoIconModal />
-                <p className={commonStyle.ergoBalanceText}>
+                <p
+                  className={`${commonStyle.ergoBalanceText} font-SpaceGrotesk`}
+                >
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </p>
               </div>
               <div>
-                <p className="m-0 text-[12px] font-medium text-[#595959]">
+                <p className="m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]">
                   ${numberWithCommas(parseInt(ergBalance), 9)}
                 </p>
               </div>
@@ -494,7 +496,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             >
               {/* FOR DESKTOP  */}
               <p
-                className={`${commonStyle.ergoBalanceAdd} hidden sm:inline-block`}
+                className={`${commonStyle.ergoBalanceAdd} font-SpaceGrotesk hidden sm:inline-block`}
               >
                 {walletAddress
                   ? walletAddress[0].slice(0, 18) +
@@ -503,7 +505,9 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                   : ""}
               </p>
               {/* FOR MOBILE  */}
-              <p className={`${commonStyle.ergoBalanceAdd} sm:hidden`}>
+              <p
+                className={`${commonStyle.ergoBalanceAdd} font-SpaceGrotesk sm:hidden`}
+              >
                 {walletAddress
                   ? walletAddress[0].slice(0, 13) +
                     "..." +
@@ -631,10 +635,10 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             />
           </div>
         ) : (
-          <div style={{ fontFamily: `'Space Grotesk', sans-serif` }}>
-            <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
+            <div className="flex items-center">
               <Image alt="img" height="32" width="32" src={NautilusLogo} />
-              <h5 className="ms-3 m-0 text-[18px] font-bold text-black">
+              <h5 className="ms-3 m-0 text-[18px] font-bold text-black font-SpaceGrotesk">
                 Nautilus Wallet
               </h5>
             </div>
