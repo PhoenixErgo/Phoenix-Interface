@@ -276,20 +276,18 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               style={{
                 color: "black",
                 border: "1px solid #D9D9D9",
-                fontFamily: `'Vela Sans', sans-serif`,
                 background: "#1D1D1D !important",
               }}
-              className="flex items-center w-full"
+              className="flex items-center w-full font-VelaSansRegular"
             >
               <div className="flex w-full">
                 <button
-                  className="w-full"
+                  className="w-full font-VelaSansRegular"
                   style={{
                     color: "black",
                     borderRadius: 5,
                     background: "#1D1D1D !important",
                     padding: "3px 10px",
-                    fontFamily: `'Vela Sans', sans-serif`,
                   }}
                 >
                   <div className="flex w-full">
@@ -299,9 +297,9 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       width="25"
                       src={ErgoLogoDark}
                     />
-                    <div style={{ fontFamily: `'Vela Sans', sans-serif` }}>
+                    <p className="font-VelaSansRegular">
                       {reduceAddress(walletAddress![0])}
-                    </div>
+                    </p>
                   </div>
                 </button>
               </div>
@@ -314,45 +312,33 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               style={{
                 color: "black",
                 border: "1px solid #D9D9D9",
-                fontFamily: `'Vela Sans', sans-serif`,
               }}
-              className="flex items-center w-full"
+              className="flex items-center w-full font-VelaSansRegular "
             >
               <div className="flex w-full">
                 <span
+                  className="font-VelaSansRegular"
                   style={{
                     padding: "3px 0px",
-                    fontFamily: `'Vela Sans', sans-serif`,
                   }}
                 >
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </span>
                 <button
-                  className="w-full"
+                  className="w-full font-VelaSansRegular"
                   style={{
                     borderRadius: 5,
                     background: "#FAFAFA",
                     color: "black",
                     marginLeft: 10,
                     padding: "3px 10px",
-                    fontFamily: `'Vela Sans', sans-serif !important`,
                   }}
                 >
-                  <div
-                    className="flex w-full"
-                    style={{ fontFamily: `'Vela Sans', sans-serif !important` }}
-                  >
-                    <Image
-                      style={{
-                        fontFamily: `'Vela Sans', sans-serif !important`,
-                      }}
-                      alt="img"
-                      width="25"
-                      src={NautilusLogo}
-                    />
-                    <div style={{ fontFamily: `'Vela Sans', sans-serif` }}>
+                  <div className="flex w-full font-VelaSansRegular">
+                    <Image alt="img" width="25" src={NautilusLogo} />
+                    <p className="font-VelaSansRegular">
                       {reduceAddress(walletAddress![0])}
-                    </div>
+                    </p>
                   </div>
                 </button>
               </div>
@@ -377,9 +363,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
         footer={null}
         style={{ fontFamily: `'Space Grotesk', sans-serif`, maxWidth: 464 }}
       >
-        <h5 style={{ fontFamily: `'Vela Sans', sans-serif` }}>
-          Select a wallet
-        </h5>
+        <h5 className="font-VelaSansRegular">Select a wallet</h5>
         <Tabs
           defaultActiveKey="1"
           centered
@@ -387,7 +371,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
           onChange={onChange}
           animated
           activeKey={activeKey}
-          style={{ fontFamily: `'Vela Sans', sans-serif` }}
+          className="font-VelaSansRegular"
         />
       </Modal>
 
@@ -420,7 +404,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                   fill="white"
                 ></path>
               </svg>
-              <h3 className="mx-2.5 m-0 font-bold text-darkblack text-[18px] xl:text-[20px]">
+              <h3 className="mx-2.5 m-0 font-bold text-darkblack text-[20px]">
                 ErgoPay
               </h3>
 
@@ -457,12 +441,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </button>
             </div>
             <div>
-              <p
-                className="mb-2 mt-4 text-[14px] font-semibold text-darkblack"
-                style={{
-                  fontFamily: `'Vela Sans', sans-serif`,
-                }}
-              >
+              <p className="mb-2 mt-4 text-[14px] font-semibold text-darkblack font-VelaSanSemiBold ">
                 Total balance
               </p>
             </div>
@@ -472,7 +451,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 alignItems: "center",
                 justifyContent: "space-between",
               }}
-              className={`${commonStyle.ergoBalanceDiv}`}
+              className={`${commonStyle.ergoBalanceDiv} font-VelaSansRegular`}
             >
               <div className="flex items-center">
                 <ErgoIconModal />
@@ -487,12 +466,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </div>
             </div>
             <div className="flex items-center mb-2 mt-4">
-              <p
-                className="text-[14px] font-semibold text-black"
-                style={{
-                  fontFamily: `'Vela Sans', sans-serif`,
-                }}
-              >
+              <p className="text-[14px] font-semibold text-darkblack ont-VelaSanSemiBold">
                 Active address
               </p>{" "}
               <Tooltip
@@ -516,22 +490,28 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </Tooltip>
             </div>
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-              className={`${commonStyle.ergoBalanceDiv}`}
+              className={`${commonStyle.ergoBalanceDiv} flex items-center justify-between`}
             >
-              <p className={commonStyle.ergoBalanceAdd}>
+              {/* FOR DESKTOP  */}
+              <p
+                className={`${commonStyle.ergoBalanceAdd} hidden sm:inline-block`}
+              >
                 {walletAddress
                   ? walletAddress[0].slice(0, 18) +
                     "..." +
                     walletAddress[0].slice(-8)
                   : ""}
               </p>
-              <div className="flex items-center">
-                <div className="mr-3 cursor-pointer">
+              {/* FOR MOBILE  */}
+              <p className={`${commonStyle.ergoBalanceAdd} sm:hidden`}>
+                {walletAddress
+                  ? walletAddress[0].slice(0, 13) +
+                    "..." +
+                    walletAddress[0].slice(-6)
+                  : ""}
+              </p>
+              <div className="flex items-center space-x-1.5">
+                <div className="cursor-pointer">
                   <CopyToClipboard
                     text={walletAddress![0]}
                     onCopy={(e) =>
@@ -587,10 +567,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             {walletAssets.length > 0 && (
               <div>
-                <p
-                  className="mb-2 mt-4 text-[14px] sm:text-[16px] font-semibold text-darkblack"
-                  style={{ fontFamily: `'Vela Sans', sans-serif` }}
-                >
+                <p className="mb-2 mt-4 text-[14px] sm:text-[16px] font-VelaSanSemiBold text-darkblack">
                   Tokens
                 </p>
               </div>
@@ -663,12 +640,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
 
             <div>
-              <p
-                className="mb-2 mt-4 text-[18px] font-bold text-black"
-                style={{
-                  fontFamily: `'Vela Sans', sans-serif`,
-                }}
-              >
+              <p className="mb-2 mt-4 text-[18px] font-bold text-black font-VelaSanSemiBold ">
                 Total balance
               </p>
             </div>
@@ -694,13 +666,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
 
             <div>
-              <p
-                className="mb-2 mt-4"
-                style={{
-                  fontFamily: `'Vela Sans', sans-serif`,
-                  fontWeight: "bold",
-                }}
-              >
+              <p className="mb-2 mt-4 font-VelaSanSemiBold text-darkblack">
                 Active address
               </p>
             </div>
@@ -767,12 +733,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             {walletAssets.length > 0 && (
               <div>
-                <p
-                  className="mb-2 mt-4 font-bold"
-                  style={{ fontFamily: `'Vela Sans', sans-serif` }}
-                >
-                  Tokens
-                </p>
+                <p className="mb-2 mt-4 font-VelaSansBold">Tokens</p>
               </div>
             )}
 
@@ -791,7 +752,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
-                  className={`${commonStyle.ergoTokenBalanceDiv}`}
+                  className={`${commonStyle.ergoTokenBalanceDiv} font-VelaSansRegular`}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <Image

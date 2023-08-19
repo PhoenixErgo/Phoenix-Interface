@@ -348,7 +348,6 @@
   padding: 10px 15px;
   margin-bottom: 20px;
   border: 1px solid #f5f5f5;
-  font-family: "Vela Sans", sans-serif;
 }
 
 .ergoTokenBalanceDiv {
@@ -358,7 +357,6 @@
   padding: 10px 15px;
   margin-bottom: 5px;
   border: 1px solid #f5f5f5;
-  font-family: "Vela Sans", sans-serif;
 }
 
 .ergoBalancePara {
@@ -413,23 +411,14 @@
 }
 
 @media (max-width: 640px) {
-  .ergoBalanceAdd {
-    font-size: 16px;
-  }
   .ergoBalanceDiv {
-    padding: 6px 0px;
+    padding: 12px 16px;
     margin-bottom: 20px;
+    border-radius: 12px;
     border: 1px solid #f5f5f5;
-    font-family: "Vela Sans", sans-serif;
   }
 
-  .ergoBalanceText {
-    font-size: 16px;
-  }
   .ergoTokenBalanceDiv {
-    padding: 8px 6px;
-  }
-  .ergoBalanceAdd {
-    font-size: 16px;
+    padding: 12px 24px;
   }
 }

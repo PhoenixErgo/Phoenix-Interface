@@ -14,9 +14,9 @@ const DisconnectNautilusWalletButton = ({
       <Button
         size="large"
         block
+        className="font-VelaSansRegular"
         style={{
           color: "black",
-          fontFamily: `'Vela Sans', sans-serif`,
           marginTop: 15,
         }}
         onClick={handleDisconnect}
