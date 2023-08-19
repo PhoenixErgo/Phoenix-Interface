@@ -405,8 +405,11 @@
   cursor: pointer;
 }
 
-.addressIcons:hover {
-  color: #6d63c0;
+.addressIcons svg {
+  fill: #262626;
+}
+.addressIcons svg:hover {
+  fill: #ee4d01;
 }
 
 @media (max-width: 640px) {

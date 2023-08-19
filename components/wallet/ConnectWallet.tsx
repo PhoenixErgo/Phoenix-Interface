@@ -1,50 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, Space, Tabs, TabsProps, Tooltip } from "antd";
-import NautilusWalletButton from "./NautilusWalletButton";
-import ErgoPayButton from "./ErgoPayButton";
-import Image from "next/image";
-import commonStyle from "../../styles/common.module.css";
-import NautilusLogo from "../../public/NautilusLogo.png";
-import ErgoLogoWhite from "../../public/symbol_bold__1080px__white.png";
-import ErgoLogoDark from "../../public/ergo-icon.png";
-import DisconnectNautilusWalletButton from "./DisconnectNautilusWalletButton";
-import ErgoIcon from "../Common/ErgoIcon";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Modal, Space, Tabs, TabsProps, Tooltip } from "antd";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { InfoCircleOutlined } from "@ant-design/icons";
-
+import { toast } from "react-toastify";
+import NautilusLogo from "../../public/NautilusLogo.png";
+import ErgoLogoDark from "../../public/ergo-icon.png";
+import commonStyle from "../../styles/common.module.css";
+import DisconnectNautilusWalletButton from "./DisconnectNautilusWalletButton";
+import ErgoPayButton from "./ErgoPayButton";
+import NautilusWalletButton from "./NautilusWalletButton";
+import { EXPLORER_API_URL, EXPLORER_URL } from "@/blockchain/ergo/constants";
 import {
   Configuration,
   DefaultApiFactory,
 } from "@/blockchain/ergo/explorerApi";
 import {
+  WrongNetworkException,
   connectErgoPayWallet,
   connectNautilusWallet,
   disconnectWallet,
-  WrongNetworkException,
 } from "@/blockchain/ergo/wallet/connection";
+import {
+  syncAssetBalance,
+  syncErgBalance,
+} from "@/blockchain/ergo/wallet/sync";
 import {
   handleCopyText,
   numberWithCommas,
   rateLimitedCoinGeckoERGUSD,
   reduceAddress,
 } from "@/blockchain/ergo/wallet/utils";
-import {
-  syncAssetBalance,
-  syncErgBalance,
-} from "@/blockchain/ergo/wallet/sync";
-import { noti_option_close } from "../Notifications/Toast";
-import { fromEvent } from "rxjs";
-import { io, Socket } from "socket.io-client";
-import { EXPLORER_API_URL, EXPLORER_URL } from "@/blockchain/ergo/constants";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
 import ErgoIconModal from "@/components/Common/ErgoIconModal";
-import { InfoIcon } from "../SettingPopup";
+import { DefaultEventsMap } from "@socket.io/component-emitter";
+import { fromEvent } from "rxjs";
+import { Socket } from "socket.io-client";
+import { noti_option_close } from "../Notifications/Toast";
+import { CopyOutlined } from "@ant-design/icons";
 
 interface Token {
   tokenId: string;
@@ -91,6 +87,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   const [usdOracle, setUsdOracle] = useState<number>(0);
   const [ergBalance, setErgBalance] = useState<string>("0");
   const [ergUSDValue, setErgUSDValue] = useState<any>("0");
+  const [isEyeOpen, setEyeOpen] = useState<boolean | undefined>(false);
 
   useEffect(() => {
     if (walletConnected && walletAddress) {
@@ -423,9 +420,41 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                   fill="white"
                 ></path>
               </svg>
-              <h3 className="ms-3 m-0 font-bold text-darkblack text-[18px] xl:text-[20px]">
+              <h3 className="mx-2.5 m-0 font-bold text-darkblack text-[18px] xl:text-[20px]">
                 ErgoPay
               </h3>
+
+              <button
+                onClick={() => setEyeOpen(!isEyeOpen)}
+                className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group"
+              >
+                {isEyeOpen ? (
+                  <svg
+                    viewBox="64 64 896 896"
+                    focusable="false"
+                    data-icon="eye-invisible"
+                    width="1em"
+                    height="1em"
+                    fill="#262626"
+                    aria-hidden="true"
+                  >
+                    <path d="M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z"></path>
+                    <path d="M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z"></path>
+                  </svg>
+                ) : (
+                  <svg
+                    viewBox="64 64 896 896"
+                    focusable="false"
+                    data-icon="eye"
+                    width="1em"
+                    height="1em"
+                    fill="#262626"
+                    aria-hidden="true"
+                  >
+                    <path d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"></path>
+                  </svg>
+                )}
+              </button>
             </div>
             <div>
               <p
@@ -468,7 +497,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </p>{" "}
               <Tooltip
                 placement="top"
-                title="Copy Address to clipboard."
+                title="Check the Address."
                 className={commonStyle.addressIcons}
               >
                 <svg
@@ -501,7 +530,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     walletAddress[0].slice(-8)
                   : ""}
               </p>
-              <div className="flex">
+              <div className="flex items-center">
                 <div className="mr-3 cursor-pointer">
                   <CopyToClipboard
                     text={walletAddress![0]}
@@ -509,12 +538,21 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       handleCopyText("Address successfully copied!")
                     }
                   >
-                    <Tooltip
-                      placement="top"
-                      title="Copy Address to clipboard."
-                      className={commonStyle.addressIcons}
-                    >
-                      <FontAwesomeIcon color="black" icon={faCopy} />
+                    <Tooltip placement="top" title="Copy Address to clipboard.">
+                      <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
+                        <svg
+                          className="group-hover:fill-primary fill-darkblack"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 13 13"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <path d="M10 2H0.5C0.223437 2 0 2.22344 0 2.5V12C0 12.2766 0.223437 12.5 0.5 12.5H10C10.2766 12.5 10.5 12.2766 10.5 12V2.5C10.5 2.22344 10.2766 2 10 2ZM9.375 11.375H1.125V3.125H9.375V11.375ZM12 0H2.375C2.30625 0 2.25 0.05625 2.25 0.125V1C2.25 1.06875 2.30625 1.125 2.375 1.125H11.375V10.125C11.375 10.1938 11.4313 10.25 11.5 10.25H12.375C12.4438 10.25 12.5 10.1938 12.5 10.125V0.5C12.5 0.223437 12.2766 0 12 0Z"></path>
+                        </svg>
+                      </span>
                     </Tooltip>
                   </CopyToClipboard>
                 </div>
@@ -527,15 +565,21 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <Tooltip
-                      placement="top"
-                      title="View on explorer."
-                      className={commonStyle.addressIcons}
-                    >
-                      <FontAwesomeIcon
-                        color="black"
-                        icon={faArrowUpRightFromSquare}
-                      />
+                    <Tooltip placement="top" title="View on explorer.">
+                      <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
+                        <svg
+                          className="group-hover:fill-primary fill-darkblack"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 12 12"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <path d="M10.6667 10.6667H1.33333V1.33333H6V0H1.33333C0.593333 0 0 0.6 0 1.33333V10.6667C0 11.4 0.593333 12 1.33333 12H10.6667C11.4 12 12 11.4 12 10.6667V6H10.6667V10.6667ZM7.33333 0V1.33333H9.72667L3.17333 7.88667L4.11333 8.82667L10.6667 2.27333V4.66667H12V0H7.33333Z"></path>
+                        </svg>
+                      </span>
                     </Tooltip>
                   </a>
                 </div>
@@ -544,7 +588,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             {walletAssets.length > 0 && (
               <div>
                 <p
-                  className="mb-2 mt-4 text-[14px] sm:text-[16px] font-semibold text-black"
+                  className="mb-2 mt-4 text-[14px] sm:text-[16px] font-semibold text-darkblack"
                   style={{ fontFamily: `'Vela Sans', sans-serif` }}
                 >
                   Tokens
@@ -673,7 +717,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 </p>
               </div>
 
-              <div className="flex">
+              <div className="flex items-start">
                 <div className="mr-3 cursor-pointer">
                   <CopyToClipboard
                     text={walletAddress ? walletAddress[0] : ""}
@@ -681,12 +725,23 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       handleCopyText("Address successfully copied!")
                     }
                   >
-                    <Tooltip
-                      placement="top"
-                      title="Copy Address to clipboard."
-                      className={commonStyle.addressIcons}
-                    >
-                      <FontAwesomeIcon icon={faCopy} />
+                    <Tooltip placement="top" title="Copy Address to clipboard.">
+                      <span className="w-5 h-5 rounded flex items-center justify-center border border-[#d9d9d9]">
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 13 13"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <path
+                            d="M10 2H0.5C0.223437 2 0 2.22344 0 2.5V12C0 12.2766 0.223437 12.5 0.5 12.5H10C10.2766 12.5 10.5 12.2766 10.5 12V2.5C10.5 2.22344 10.2766 2 10 2ZM9.375 11.375H1.125V3.125H9.375V11.375ZM12 0H2.375C2.30625 0 2.25 0.05625 2.25 0.125V1C2.25 1.06875 2.30625 1.125 2.375 1.125H11.375V10.125C11.375 10.1938 11.4313 10.25 11.5 10.25H12.375C12.4438 10.25 12.5 10.1938 12.5 10.125V0.5C12.5 0.223437 12.2766 0 12 0Z"
+                            fill="#262626"
+                          ></path>
+                        </svg>
+                      </span>
                     </Tooltip>
                   </CopyToClipboard>
                 </div>
