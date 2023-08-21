@@ -61,7 +61,7 @@ body {
     to right,
     rgba(208, 0, 0, 1),
     rgba(255, 122, 0, 1)
-  );
+  ) !important;
 }
 
 .react-datepicker-wrapper,
