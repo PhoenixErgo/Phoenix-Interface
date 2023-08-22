@@ -509,7 +509,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </p>{" "}
               <Tooltip
                 placement="top"
-                title="Check the Address."
+                title="Assets will be received at this address"
                 className={commonStyle.addressIcons}
               >
                 <svg
@@ -754,7 +754,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
               </p>
               <Tooltip
                 placement="top"
-                title="Check the Address."
+                title="Assets will be received at this address"
                 className={commonStyle.addressIcons}
               >
                 <svg
