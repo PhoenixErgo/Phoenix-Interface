@@ -50,7 +50,7 @@ const ErgoPayWalletModal = ({ isModalOpen, setIsModalOpen, ergoPayLink, txid, is
             window.document.documentElement.classList.remove('overflow-hidden');
         }} footer={null}>
             <div style={{ fontFamily: `'Space Grotesk', sans-serif` }}>
-                <p className="text-white">
+                <p className="text-black">
                     Complete the action with an ErgoPay compatible wallet.
                 </p>
                 <div className="text-center mt-1 mb-4">
@@ -64,7 +64,7 @@ const ErgoPayWalletModal = ({ isModalOpen, setIsModalOpen, ergoPayLink, txid, is
                     </a>
                 </div>
 
-                <h6 className="text-center text-white">Scan QR code</h6>
+                <h6 className="text-center text-black">Scan QR code</h6>
 
                 {/*  qr code*/}
                 <div className="flex justify-center">
@@ -85,17 +85,14 @@ const ErgoPayWalletModal = ({ isModalOpen, setIsModalOpen, ergoPayLink, txid, is
                     </div>
                 </div>
                 <div>
-                    <h6 className="text-white text-center mt-2">or</h6>
+                    <h6 className="text-black text-center mt-2">or</h6>
                 </div>
 
                 <div className="flex justify-center mt-4">
                     <CopyToClipboard text={textToCopy} onCopy={(e) => handleCopyText(e)}>
                         <Button
                             block
-                            style={{
-                                color: 'white',
-                                fontFamily: `'Space Grotesk', sans-serif`,
-                            }}
+                            style={{ fontFamily: `'Space Grotesk', sans-serif` }}
                             className="mr-2"
                         >
                             Copy request

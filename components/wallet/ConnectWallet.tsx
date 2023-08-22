@@ -259,13 +259,6 @@ const ConnectWallet: React.FC<IProps> = (props) => {
           activeKey={activeKey}
           isMainnet={isMainnet!}
         />
-
-        // <ErgoPayWalletModal
-        //   setIsModalOpen={setIsModalOpen}
-        //   connectErgoPay={connectWallet}
-        //   activeKey={activeKey}
-        //   isMainnet={isMainnet!}
-        // />
       ),
     },
   ];
