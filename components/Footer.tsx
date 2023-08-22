@@ -5,7 +5,7 @@ import KnowYourAssumptionsModal from "./KnowYourAssumptionsModal";
 const Footer = () => {
   return (
     <>
-      <footer className="primary-gradient py-8 lg:py-10">
+      <footer className="primary-gradient py-8 lg:py-10 font-inter">
         <div className="grid w-full text-white place-content-center gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-4 container mx-auto  px-3 lg:px-5">
           <div>
             <LogoFooter />
@@ -26,10 +26,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                    href="https://eprint.iacr.org/2023/1029"
-                    className="transition-all duration-200 ease-in-out hover:text-opacity-80"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  href="https://eprint.iacr.org/2023/1029"
+                  className="transition-all duration-200 ease-in-out hover:text-opacity-80"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   HodlCoin Game Paper
                 </a>
@@ -61,10 +61,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                    className="transition-all duration-200 ease-in-out hover:text-opacity-80"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://t.me/hodlCoinGame"
+                  className="transition-all duration-200 ease-in-out hover:text-opacity-80"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://t.me/hodlCoinGame"
                 >
                   Telegram
                 </a>

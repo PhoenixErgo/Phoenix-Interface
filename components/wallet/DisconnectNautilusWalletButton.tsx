@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'antd';
+import React from "react";
+import { Button } from "antd";
 
 const DisconnectNautilusWalletButton = ({
   disconnectWallet,
@@ -14,9 +14,9 @@ const DisconnectNautilusWalletButton = ({
       <Button
         size="large"
         block
+        className="font-VelaSansRegular"
         style={{
-          color: 'black',
-          fontFamily: `'Vela Sans', sans-serif`,
+          color: "black",
           marginTop: 15,
         }}
         onClick={handleDisconnect}
