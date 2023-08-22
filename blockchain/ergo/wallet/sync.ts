@@ -84,7 +84,7 @@ export async function syncErgBalance(adddress: string[], explorerClient: any, us
   setErgBalance(totalBalance.toString());
 
   const erg = parseInt(totalBalance.toString()) * 10 ** -9;
-  const ergUSD = getERGUSD(erg, usdOracle).toFixed(3);
+  const ergUSD = getERGUSD(erg, usdOracle).toFixed(2);
 
   setErgUSDValue(ergUSD)
 

@@ -37,7 +37,7 @@ import {
 } from "@/blockchain/ergo/wallet/utils";
 import ErgoIconModal from "@/components/Common/ErgoIconModal";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import { fromEvent } from "rxjs";
+import {fromEvent, Subscription} from "rxjs";
 import { Socket } from "socket.io-client";
 import { noti_option_close } from "../Notifications/Toast";
 import { CopyOutlined } from "@ant-design/icons";
@@ -91,21 +91,32 @@ const ConnectWallet: React.FC<IProps> = (props) => {
 
   useEffect(() => {
     if (walletConnected && walletAddress) {
-      syncWallet();
+      rateLimitedCoinGeckoERGUSD().then((res: () => Promise<number>) => {
+        res().then((oracle) => {
+          syncWallet(oracle);
+        })
+      })
     }
   }, [walletAddress]);
 
   useEffect(() => {
+    let msgSubscription: Subscription;
     if (walletConnected && walletAddress) {
-      const msgSubscription = fromEvent(socket!, "new_block").subscribe(
-        (msg) => {
-          syncWallet();
-          console.log("syncing:", msg);
-        }
-      );
+      rateLimitedCoinGeckoERGUSD().then((res: () => Promise<number>) => {
+          msgSubscription = fromEvent(socket!, "new_block").subscribe(
+              (msg) => {
+                res().then((oracle) => {
+                  syncWallet(oracle);
+                  console.log("syncing:", msg);
+                });
+              }
+          );
+      });
 
       return () => {
-        msgSubscription.unsubscribe();
+        if (msgSubscription) {
+          msgSubscription.unsubscribe();
+        }
       };
     }
   }, [walletConnected]);
@@ -178,18 +189,18 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     if (!walletConnected) setShowSelector(!showSelector);
   };
 
-  const syncWallet = async () => {
+  const syncWallet = async (oracle: number) => {
     syncErgBalance(
       walletAddress!,
       explorerApiClient,
-      usdOracle,
+        oracle,
       setErgBalance,
       setErgUSDValue
     );
     syncAssetBalance(
       walletAddress!,
       explorerApiClient,
-      usdOracle,
+        oracle,
       setWalletAssets
     );
   };
@@ -631,7 +642,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 >
                   <div className="flex items-center">
                     <Image
-                      src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/light/${item.tokenId}.svg`}
+                        src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
@@ -881,7 +892,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <Image
-                      src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/light/${item.tokenId}.svg`}
+                        src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
