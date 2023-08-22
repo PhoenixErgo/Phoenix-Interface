@@ -29,7 +29,7 @@ const Navbar = (props: IProps) => {
         </div>
       </nav>
 
-      <div className="sm:hidden w-full">
+      <div className="sm:hidden w-full ">
         <ConnectWallet socket={socket} />
       </div>
       <div className="primary-gradient w-full py-3 text-center flex items-center space-x-12 sm:space-x-20 justify-center">

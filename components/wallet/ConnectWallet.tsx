@@ -262,7 +262,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   return (
     <>
       <div
-        className={`flex items-center space-x-2   sm:ml-6 mb-4 sm:mb-0  ${
+        className={`flex items-center space-x-2 mx-3 sm:ml-6 mb-4 sm:mb-0  ${
           walletConnected
             ? "py-1 px-[10px] border-[#d9d9d9] border rounded-[5px] "
             : ""
@@ -738,7 +738,11 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 </p>
               </div>
               <div>
-                <p className="m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]">
+                <p
+                  className={`${
+                    isEyeOpen ? "blur-sm" : ""
+                  } m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]`}
+                >
                   ${ergUSDValue}
                 </p>
               </div>
@@ -786,26 +790,23 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     }
                   >
                     <Tooltip placement="top" title="Copy Address to clipboard.">
-                      <span className="w-5 h-5 rounded flex items-center justify-center border border-[#d9d9d9]">
+                      <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
                         <svg
-                          width="12"
-                          height="12"
+                          className="group-hover:fill-primary fill-darkblack"
+                          width="14"
+                          height="14"
                           viewBox="0 0 13 13"
                           fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                           focusable="false"
                         >
-                          <path
-                            d="M10 2H0.5C0.223437 2 0 2.22344 0 2.5V12C0 12.2766 0.223437 12.5 0.5 12.5H10C10.2766 12.5 10.5 12.2766 10.5 12V2.5C10.5 2.22344 10.2766 2 10 2ZM9.375 11.375H1.125V3.125H9.375V11.375ZM12 0H2.375C2.30625 0 2.25 0.05625 2.25 0.125V1C2.25 1.06875 2.30625 1.125 2.375 1.125H11.375V10.125C11.375 10.1938 11.4313 10.25 11.5 10.25H12.375C12.4438 10.25 12.5 10.1938 12.5 10.125V0.5C12.5 0.223437 12.2766 0 12 0Z"
-                            fill="#262626"
-                          ></path>
+                          <path d="M10 2H0.5C0.223437 2 0 2.22344 0 2.5V12C0 12.2766 0.223437 12.5 0.5 12.5H10C10.2766 12.5 10.5 12.2766 10.5 12V2.5C10.5 2.22344 10.2766 2 10 2ZM9.375 11.375H1.125V3.125H9.375V11.375ZM12 0H2.375C2.30625 0 2.25 0.05625 2.25 0.125V1C2.25 1.06875 2.30625 1.125 2.375 1.125H11.375V10.125C11.375 10.1938 11.4313 10.25 11.5 10.25H12.375C12.4438 10.25 12.5 10.1938 12.5 10.125V0.5C12.5 0.223437 12.2766 0 12 0Z"></path>
                         </svg>
                       </span>
                     </Tooltip>
                   </CopyToClipboard>
                 </div>
-
                 <div className="cursor-pointer">
                   <a
                     href={`${EXPLORER_URL(isMainnet!)}/addresses/${
@@ -814,12 +815,21 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <Tooltip
-                      placement="top"
-                      title="View on explorer."
-                      className={commonStyle.addressIcons}
-                    >
-                      <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                    <Tooltip placement="top" title="View on explorer.">
+                      <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
+                        <svg
+                          className="group-hover:fill-primary fill-darkblack"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 12 12"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                          focusable="false"
+                        >
+                          <path d="M10.6667 10.6667H1.33333V1.33333H6V0H1.33333C0.593333 0 0 0.6 0 1.33333V10.6667C0 11.4 0.593333 12 1.33333 12H10.6667C11.4 12 12 11.4 12 10.6667V6H10.6667V10.6667ZM7.33333 0V1.33333H9.72667L3.17333 7.88667L4.11333 8.82667L10.6667 2.27333V4.66667H12V0H7.33333Z"></path>
+                        </svg>
+                      </span>
                     </Tooltip>
                   </a>
                 </div>
@@ -827,7 +837,9 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             {walletAssets.length > 0 && (
               <div>
-                <p className="mb-2 mt-4 font-VelaSansBold">Tokens</p>
+                <p className="mb-2 mt-4 text-[14px] font-semibold text-darkblack font-VelaSanSemiBold">
+                  Tokens
+                </p>
               </div>
             )}
 
@@ -865,7 +877,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       </p>
                     </div>
                   </div>
-                  <div>
+                  <div className={`${isEyeOpen ? "blur-sm" : ""}`}>
                     <p className="m-0 font-bold">
                       {numberWithCommas(item.amount, item.decimals)}
                     </p>
