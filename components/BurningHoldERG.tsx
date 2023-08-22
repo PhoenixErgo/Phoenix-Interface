@@ -193,7 +193,7 @@ const BurningHoldERG = () => {
           );
           return;
         }
-        const url = await getShortLink(ergoPayTx, "nft purchase", isMainnet);
+        const url = await getShortLink(ergoPayTx, `Burn ${burnAmount} hodlERG3`, changeAddress, isMainnet);
         if (!url) {
           toast.dismiss();
           toast.warn(

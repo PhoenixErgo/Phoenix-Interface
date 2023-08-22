@@ -56,7 +56,7 @@ export async function rateLimitedCoinGeckoERGUSD(): Promise<
   return getPrice;
 }
 
-export async function getShortLink(base64Txn: string, message: string, isMainnet: boolean): Promise<any> {
+export async function getShortLink(base64Txn: string, message: string, changeAddress: string, isMainnet: boolean): Promise<any> {
   try{
     const res = await axios.get(`${NEXT_PUBLIC_NEST_API_URL(isMainnet)}/ergopay/generateShortLink/${base64Txn}`);
     const shortCode = res.data.shortCode;
@@ -64,7 +64,7 @@ export async function getShortLink(base64Txn: string, message: string, isMainnet
       return undefined;
     }
     const strippedUrl = NEXT_PUBLIC_NEST_API_URL(isMainnet).replace(/^https?:\/\//, "");
-    return `ergopay://${strippedUrl}/ergopay/reducedTxLink/${shortCode}/${message}`;
+    return `ergopay://${strippedUrl}/ergopay/reducedTxLink/${shortCode}/${message}/${changeAddress}`;
   } catch (error){
     console.log(error);
     return undefined;

@@ -192,7 +192,7 @@ const MintingHodlERG = () => {
           );
           return;
         }
-        const url = await getShortLink(ergoPayTx, "nft%20purchase", isMainnet);
+        const url = await getShortLink(ergoPayTx, `Mint ${mintAmount} hodlERG3`, changeAddress, isMainnet);
         if (!url) {
           toast.dismiss();
           toast.warn(
