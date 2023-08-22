@@ -16,10 +16,12 @@ const Navbar = (props: IProps) => {
   const { activeTab, setActiveTab, socket } = props;
   return (
     <>
-      <nav className="flex container items-center justify-between mx-auto px-3 lg:px-5 py-4">
-        <Logo />
+      <nav className="flex container items-center justify-between mx-auto px-2 sm:px-3 lg:px-5 py-4">
+        <span className="mr-3">
+          <Logo />
+        </span>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-4">
           <SettingPopup />
           <DropDown />
 

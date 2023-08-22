@@ -6,14 +6,16 @@ const Footer = () => {
   return (
     <>
       <footer className="primary-gradient py-8 lg:py-10 font-inter">
-        <div className="grid w-full text-white place-content-center gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-4 container mx-auto  px-3 lg:px-5">
+        <div className="grid w-full text-white place-content-center gap-5 lg:gap-5 grid-cols-2 lg:grid-cols-4 container mx-auto  px-2 sm:px-3 lg:px-5">
           <div>
             <LogoFooter />
-            <p className="mt-[18px] lg:ml-4 ">The Phoenix Finance Team</p>
+            <p className="mt-[18px] lg:ml-4 text-[13px] sm:text-base">
+              The Phoenix Finance Team
+            </p>
           </div>
           <div>
             <h4 className="font-bold uppercase pb-3 ">Open Source</h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2 sm:space-y-1.5 text-[13px] sm:text-base">
               <li>
                 <a
                   href="https://github.com/PhoenixErgo/phoenix-hodlcoin-contracts"
@@ -48,7 +50,7 @@ const Footer = () => {
           </div>
           <div>
             <h4 className="font-bold uppercase pb-3">Social</h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2 sm:space-y-1.5 text-[13px] sm:text-base">
               <li>
                 <a
                   className="transition-all duration-200 ease-in-out hover:text-opacity-80"
@@ -83,7 +85,7 @@ const Footer = () => {
           </div>
           <div>
             <h4 className="font-bold uppercase pb-3">KYA</h4>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2 sm:space-y-1.5 text-[13px] sm:text-base">
               <li>
                 <KnowYourAssumptionsModal />
               </li>
