@@ -4,7 +4,6 @@ import {
     apiPrecisionBigInt,
     BANK_SINGLETON_TOKEN_ID,
     explorerClient,
-    isMainnet,
     UIMultiplier,
 } from "@/blockchain/ergo/constants";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
@@ -26,8 +25,8 @@ export default async function handler(
     res: NextApiResponse<APIResponse>
 ) {
     const bankBox = (
-        await explorerClient(isMainnet).getApiV1BoxesUnspentBytokenidP1(
-            BANK_SINGLETON_TOKEN_ID(isMainnet)
+        await explorerClient(true).getApiV1BoxesUnspentBytokenidP1(
+            BANK_SINGLETON_TOKEN_ID(true)
         )
     ).data.items![0];
     const hodlBankContract = new HodlBankContract(bankBox);

@@ -75,3 +75,14 @@ export const txSubmmited = (txHash: string, isMainnet: boolean) =>
     theme: 'dark',
     onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
   });
+
+export const toaster_copy_text: any = {
+  position: 'bottom-right',
+  toastId: 'Address copy',
+  autoClose: 2000,
+  hideProgressBar: true,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: false,
+  theme: 'dark',
+};

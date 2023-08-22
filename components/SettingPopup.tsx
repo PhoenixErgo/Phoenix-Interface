@@ -1,46 +1,62 @@
 import { Popover, Transition } from "@headlessui/react";
-import {Fragment, useEffect, useState} from "react";
+import { Fragment, useEffect, useState } from "react";
 import CustomTooltip from "./CustomTooltip";
-import {MIN_MINER_FEE, MIN_TX_OPERATOR_FEE} from "@/blockchain/ergo/constants";
-import {hasDecimals, localStorageKeyExists} from "@/common/utils";
-import {toast} from "react-toastify";
-import {noti_option_close} from "@/components/Notifications/Toast";
+import {
+  MIN_MINER_FEE,
+  MIN_TX_OPERATOR_FEE,
+} from "@/blockchain/ergo/constants";
+import { hasDecimals, localStorageKeyExists } from "@/common/utils";
+import { toast } from "react-toastify";
+import { noti_option_close } from "@/components/Notifications/Toast";
 
 export default function SettingPopup() {
-    const [nitroValue, setNitroValue] = useState<number | string>("1.000");
-    const [minerNitroValue, setMinerNitroValue] = useState<number | string>("1.000");
+  const [nitroValue, setNitroValue] = useState<number | string>("1.000");
+  const [minerNitroValue, setMinerNitroValue] = useState<number | string>(
+    "1.000"
+  );
 
-    useEffect(() => {
-        if(localStorageKeyExists("txOperatorFee")){
-            setNitroValue(Number((Number(localStorage.getItem("txOperatorFee")!)/Number(MIN_TX_OPERATOR_FEE))).toFixed(3));
-        }
-        if(localStorageKeyExists("minerFee")){
-            setMinerNitroValue(Number((Number(localStorage.getItem("minerFee")!)/Number(MIN_MINER_FEE))).toFixed(3));
-        }
-    }, []);
-    const handleNitro = (nitroValue: number) => {
-        if(hasDecimals(nitroValue * 1e3)){
-            toast.dismiss();
-            toast.warn("max 3 decimals", noti_option_close("try-again"));
-            return;
-        }
-        const txOperatorFee = (BigInt(MIN_TX_OPERATOR_FEE) * BigInt(nitroValue * 1e3)) / BigInt(1e3);
-
-        setNitroValue(nitroValue);
-        localStorage.setItem("txOperatorFee", txOperatorFee.toString());
+  useEffect(() => {
+    if (localStorageKeyExists("txOperatorFee")) {
+      setNitroValue(
+        Number(
+          Number(localStorage.getItem("txOperatorFee")!) /
+            Number(MIN_TX_OPERATOR_FEE)
+        ).toFixed(3)
+      );
     }
-
-    const handleMinerNitro = (nitroValue: number) => {
-        if(hasDecimals(nitroValue * 1e3)){
-            toast.dismiss();
-            toast.warn("max 3 decimals", noti_option_close("try-again"));
-            return;
-        }
-        const minerFee = (BigInt(MIN_MINER_FEE) * BigInt(nitroValue * 1e3)) / BigInt(1e3);
-
-        setMinerNitroValue(nitroValue);
-        localStorage.setItem("minerFee", minerFee.toString());
+    if (localStorageKeyExists("minerFee")) {
+      setMinerNitroValue(
+        Number(
+          Number(localStorage.getItem("minerFee")!) / Number(MIN_MINER_FEE)
+        ).toFixed(3)
+      );
     }
+  }, []);
+  const handleNitro = (nitroValue: number) => {
+    if (hasDecimals(nitroValue * 1e3)) {
+      toast.dismiss();
+      toast.warn("max 3 decimals", noti_option_close("try-again"));
+      return;
+    }
+    const txOperatorFee =
+      (BigInt(MIN_TX_OPERATOR_FEE) * BigInt(nitroValue * 1e3)) / BigInt(1e3);
+
+    setNitroValue(nitroValue);
+    localStorage.setItem("txOperatorFee", txOperatorFee.toString());
+  };
+
+  const handleMinerNitro = (nitroValue: number) => {
+    if (hasDecimals(nitroValue * 1e3)) {
+      toast.dismiss();
+      toast.warn("max 3 decimals", noti_option_close("try-again"));
+      return;
+    }
+    const minerFee =
+      (BigInt(MIN_MINER_FEE) * BigInt(nitroValue * 1e3)) / BigInt(1e3);
+
+    setMinerNitroValue(nitroValue);
+    localStorage.setItem("minerFee", minerFee.toString());
+  };
 
   return (
     <Popover className="relative">
@@ -58,7 +74,7 @@ export default function SettingPopup() {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute left-[30px] sm:left-1/2 z-10 mt-6 w-screen max-w-xs md:max-w-sm -translate-x-1/2 transform">
+            <Popover.Panel className="absolute left-0px sm:left-1/2 z-10 mt-6 w-screen max-w-xs md:max-w-sm -translate-x-1/2 transform">
               <div className="bg-white border border-primary px-4 py-3 shadow-xl rounded-md">
                 <h3 className="text-black font-semibold text-xl mb-2">
                   Transaction Settings
@@ -77,11 +93,16 @@ export default function SettingPopup() {
                   </label>
 
                   <div className="border border-gray p-1 flex items-center justify-between rounded-md space-x-2">
-                    <button className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-md px-3 sm:px-5 py-2 sm:py-2.5"
-                            onClick={() => {
-                                localStorage.setItem("txOperatorFee", MIN_TX_OPERATOR_FEE.toString());
-                                setNitroValue("1.000");
-                            }}>
+                    <button
+                      className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-md px-3 sm:px-5 py-2 sm:py-2.5"
+                      onClick={() => {
+                        localStorage.setItem(
+                          "txOperatorFee",
+                          MIN_TX_OPERATOR_FEE.toString()
+                        );
+                        setNitroValue("1.000");
+                      }}
+                    >
                       Minimum
                     </button>
                     <div className="border border-gray rounded-md">
@@ -90,7 +111,9 @@ export default function SettingPopup() {
                         // defaultValue={localStorageKeyExists("txOperatorFee") ? (BigInt(localStorage.getItem("txOperatorFee")!)/BigInt(MIN_TX_OPERATOR_FEE)).toString() : "1.00"}
                         value={nitroValue}
                         className="w-full outline-none border-0 text-right focus-within:outline-none focus:shadow-none focus:ring-0 focus:outline-none rounded-md"
-                        onChange={(e) => handleNitro(parseFloat(e.target.value))}
+                        onChange={(e) =>
+                          handleNitro(parseFloat(e.target.value))
+                        }
                       />
                     </div>
                   </div>
@@ -110,18 +133,24 @@ export default function SettingPopup() {
 
                   <div className="border border-gray p-1 flex items-center justify-between rounded-md space-x-2">
                     <button
-                        className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-md px-3 sm:px-5 py-2 sm:py-2.5"
-                        onClick={() => {
-                            localStorage.setItem("minerFee", MIN_MINER_FEE.toString());
-                            setMinerNitroValue("1.000");
-                        }}>
+                      className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-md px-3 sm:px-5 py-2 sm:py-2.5"
+                      onClick={() => {
+                        localStorage.setItem(
+                          "minerFee",
+                          MIN_MINER_FEE.toString()
+                        );
+                        setMinerNitroValue("1.000");
+                      }}
+                    >
                       Minimum
                     </button>
                     <div className="border border-gray rounded-md">
                       <input
                         type="number"
                         value={minerNitroValue}
-                        onChange={(e) => handleMinerNitro(parseFloat(e.target.value))}
+                        onChange={(e) =>
+                          handleMinerNitro(parseFloat(e.target.value))
+                        }
                         className="w-full outline-none border-0 text-right focus-within:outline-none focus:shadow-none focus:ring-0 focus:outline-none rounded-md"
                       />
                     </div>
