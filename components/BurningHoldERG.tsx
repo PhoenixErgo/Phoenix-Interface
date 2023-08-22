@@ -44,6 +44,7 @@ import { hasDecimals, localStorageKeyExists } from "@/common/utils";
 import { getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
+import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 
 const BurningHoldERG = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
@@ -251,6 +252,15 @@ const BurningHoldERG = () => {
           >
             BURN HODLERG
           </button>
+          {isModalErgoPayOpen && (
+              <ErgoPayWalletModal
+                  isModalOpen={isModalErgoPayOpen}
+                  setIsModalOpen={setIsModalErgoPayOpen}
+                  ergoPayLink={ergoPayLink}
+                  txid={ergoPayTxId}
+                  isMainnet={isMainnet}
+              ></ErgoPayWalletModal>
+          )}
         </div>
       </div>
     </>
