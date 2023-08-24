@@ -81,10 +81,10 @@ const DropDown: React.FC = () => {
           type="primary"
           ghost
           size="large"
+          className="!px-2.5 sm:!px-4"
           style={{
             color: "white",
             border: "none",
-            paddingRight: 15,
             backgroundImage:
               "linear-gradient( to right, rgba(208, 0, 0, 1), rgba(255, 122, 0, 1) )",
             fontFamily: `'Space Grotesk', sans-serif`,

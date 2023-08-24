@@ -37,7 +37,7 @@ import {
 } from "@/blockchain/ergo/wallet/utils";
 import ErgoIconModal from "@/components/Common/ErgoIconModal";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
-import {fromEvent, Subscription} from "rxjs";
+import { fromEvent, Subscription } from "rxjs";
 import { Socket } from "socket.io-client";
 import { noti_option_close } from "../Notifications/Toast";
 import { CopyOutlined } from "@ant-design/icons";
@@ -67,10 +67,37 @@ function classNames(...classes: any) {
 const ConnectWallet: React.FC<IProps> = (props) => {
   const { socket } = props;
 
+  const [activeTabValue, setActiveTabValue] = useState("1"); // Initial value for desktop
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Check if the window object is available
+      if (typeof window !== "undefined") {
+        // Update the value based on screen width
+        if (window.innerWidth <= 768) {
+          setActiveTabValue("2"); // Mobile value
+        } else {
+          setActiveTabValue("1"); // Desktop value
+        }
+      }
+    };
+
+    // Initial call
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // Empty dependency array ensures the effect runs only once
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNautilusOpen, setIsNautilusOpen] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
-  const [activeKey, setActiveKey] = useState("1");
+  const [activeKey, setActiveKey] = useState(activeTabValue);
   const [isLoading, setIsLoading] = useState(false);
 
   const [isMainnet, setIsMainnet] = useState<boolean | undefined>(undefined);
@@ -94,8 +121,8 @@ const ConnectWallet: React.FC<IProps> = (props) => {
       rateLimitedCoinGeckoERGUSD().then((res: () => Promise<number>) => {
         res().then((oracle) => {
           syncWallet(oracle);
-        })
-      })
+        });
+      });
     }
   }, [walletAddress]);
 
@@ -103,14 +130,12 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     let msgSubscription: Subscription;
     if (walletConnected && walletAddress) {
       rateLimitedCoinGeckoERGUSD().then((res: () => Promise<number>) => {
-          msgSubscription = fromEvent(socket!, "new_block").subscribe(
-              (msg) => {
-                res().then((oracle) => {
-                  syncWallet(oracle);
-                  console.log("syncing:", msg);
-                });
-              }
-          );
+        msgSubscription = fromEvent(socket!, "new_block").subscribe((msg) => {
+          res().then((oracle) => {
+            syncWallet(oracle);
+            console.log("syncing:", msg);
+          });
+        });
       });
 
       return () => {
@@ -154,7 +179,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   const showModal = () => {
     setIsModalOpen(true);
     window.document.documentElement.classList.add("overflow-hidden");
-    setActiveKey("1");
+    setActiveKey(activeTabValue);
   };
 
   const handleOk = () => {
@@ -193,14 +218,14 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     syncErgBalance(
       walletAddress!,
       explorerApiClient,
-        oracle,
+      oracle,
       setErgBalance,
       setErgUSDValue
     );
     syncAssetBalance(
       walletAddress!,
       explorerApiClient,
-        oracle,
+      oracle,
       setWalletAssets
     );
   };
@@ -266,9 +291,9 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   return (
     <>
       <div
-        className={`flex items-center space-x-2 mx-3 sm:ml-6 mb-4 sm:mb-0  ${
+        className={`flex items-center space-x-2 mx-2 sm:mx-3 sm:ml-6 mb-4 sm:mb-0  ${
           walletConnected
-            ? "py-1 px-[10px] border-[#d9d9d9] border rounded-[5px] "
+            ? "py-1 px-2 sm:px-[10px] border-[#d9d9d9] border rounded-[5px] "
             : ""
         }`}
       >
@@ -399,13 +424,13 @@ const ConnectWallet: React.FC<IProps> = (props) => {
       >
         <h5 className="font-VelaSansRegular">Select a wallet</h5>
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={activeTabValue}
           centered
           items={items}
           onChange={onChange}
           animated
           activeKey={activeKey}
-          className="font-VelaSansRegular"
+          className="font-VelaSansRegular mt-2"
         />
       </Modal>
 
@@ -635,7 +660,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 >
                   <div className="flex items-center">
                     <Image
-                        src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
+                      src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
@@ -885,7 +910,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <Image
-                        src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
+                      src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
                         currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
