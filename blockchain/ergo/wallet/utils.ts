@@ -20,10 +20,10 @@ export const handleCopyText = (e: string) => {
 
 export const getWalletConfig = () => {
   return localStorage.getItem('walletConfig')
-    ? (JSON.parse(
-      localStorage.getItem('walletConfig')!,
-    ) as walletLocalStorage)
-    : undefined;
+      ? (JSON.parse(
+          localStorage.getItem('walletConfig')!,
+      ) as walletLocalStorage)
+      : undefined;
 }
 
 export async function rateLimitedCoinGeckoERGUSD(): Promise<
@@ -64,10 +64,9 @@ export async function getShortLink(base64Txn: string, message: string, changeAdd
       return undefined;
     }
     const strippedUrl = NEXT_PUBLIC_NEST_API_URL(isMainnet).replace(/^https?:\/\//, "");
-    return `ergopay://${strippedUrl}/ergopay/reducedTxLink/${shortCode}/${message}/${changeAddress}`;
+    return `ergopay://${strippedUrl}/ergopay/reducedTxLink/${shortCode}/${encodeURIComponent(message)}/${changeAddress}`;
   } catch (error){
     console.log(error);
     return undefined;
   }
 }
-
