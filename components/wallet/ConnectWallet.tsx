@@ -663,7 +663,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
+                        currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/empty.svg`;
                       }}
                       alt="logo"
                       width={25}
@@ -913,7 +913,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
                         currentTarget.onerror = null; // prevents looping
-                        currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/empty.svg`;
+                        currentTarget.src = `https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/empty.svg`;
                       }}
                       alt="logo"
                       width={25}
