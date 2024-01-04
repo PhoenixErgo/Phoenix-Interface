@@ -111,7 +111,7 @@ export interface AssetInstanceInfo {
      * @type {number}
      * @memberof AssetInstanceInfo
      */
-    'amount': number;
+    'amount': bigint;
     /**
      * Name of a token
      * @type {string}
@@ -1072,7 +1072,7 @@ export interface MOutputInfo {
      * @type {number}
      * @memberof MOutputInfo
      */
-    'value': number;
+    'value': bigint;
     /**
      * Index of the output in a transaction
      * @type {number}
@@ -1251,7 +1251,7 @@ export interface OutputInfo {
      * @type {number}
      * @memberof OutputInfo
      */
-    'value': number;
+    'value': bigint;
     /**
      * Index of the output in a transaction
      * @type {number}
