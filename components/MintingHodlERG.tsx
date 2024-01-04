@@ -159,7 +159,7 @@ const MintingHodlERG = () => {
     const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
 
     const outBox = new OutputBuilder(
-      nanoErgsPrice + txOperatorFee + minerFee,
+      nanoErgsPrice + txOperatorFee + minerFee + minBoxValue,
       proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
