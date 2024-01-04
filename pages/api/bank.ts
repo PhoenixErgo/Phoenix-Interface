@@ -39,7 +39,7 @@ export default async function handler(
 
     const circulatingSupplyUI =
         Number(
-            (hodlBankContract.getHodlERG3EmissionAmount() * apiPrecisionBigInt) /
+            (hodlBankContract.getHodlEmissionAmount() * apiPrecisionBigInt) /
             UIMultiplier
         ) / apiPrecision;
 
