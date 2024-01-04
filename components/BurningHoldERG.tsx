@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Configuration,
-  DefaultApiFactory,
-  ItemsB,
   OutputInfo,
 } from "@/blockchain/ergo/explorerApi";
 import {
@@ -19,9 +16,6 @@ import {
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
   checkWalletConnection,
-  getWalletConn,
-  getWalletConnection,
-  isErgoDappWalletConnected,
   outputInfoToErgoTransactionOutput,
   signAndSubmitTx,
 } from "@/blockchain/ergo/walletUtils/utils";
@@ -41,7 +35,7 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
-import { getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
+import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
@@ -139,16 +133,12 @@ const BurningHoldERG = () => {
     const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks())
       .data.items![0].height;
 
+    const target = minerFee + txOperatorFee;
+    const targetWithfee = target + minerFee;
+
     const inputs = isErgoPay
-      ? (
-          await explorerClient(
-            isMainnet
-          ).getApiV1BoxesUnspentUnconfirmedByaddressP1(changeAddress)
-        )
-          .data!.filter((item) => item.address === changeAddress)
-          .map(outputInfoToErgoTransactionOutput)
-          .map((item) => item as unknown as Box<Amount>)
-      : await ergo!.get_utxos();
+        ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee)
+        : await ergo!.get_utxos();
 
     let receiverErgoTree = ErgoAddress.fromBase58(
       String(changeAddress)
@@ -158,7 +148,7 @@ const BurningHoldERG = () => {
 
     const burnAmountBigInt = BigInt(burnAmount * 1e9);
 
-    const outBox = new OutputBuilder(txOperatorFee + minerFee, proxyAddress)
+    const outBox = new OutputBuilder(target, proxyAddress)
       .addTokens({
         tokenId: HODL_ERG_TOKEN_ID(isMainnet),
         amount: burnAmountBigInt,

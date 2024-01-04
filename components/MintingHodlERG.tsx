@@ -34,7 +34,7 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
-import { getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
+import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
@@ -132,16 +132,21 @@ const MintingHodlERG = () => {
     const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks())
       .data.items![0].height;
 
+    const mintAmountBigInt = BigInt(mintAmount * 1e9);
+    const bankBoxRes = await explorerClient(
+        isMainnet
+    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
+    const bankBox = bankBoxRes.data.items![0];
+    const hodlBankContract = new HodlBankContract(bankBox);
+
+    const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
+
+    const target = nanoErgsPrice + txOperatorFee + minerFee + minBoxValue;
+    const targetWithfee = target + minerFee;
+
     const inputs = isErgoPay
-      ? (
-          await explorerClient(
-            isMainnet
-          ).getApiV1BoxesUnspentUnconfirmedByaddressP1(changeAddress)
-        )
-          .data!.filter((item) => item.address === changeAddress)
-          .map(outputInfoToErgoTransactionOutput)
-          .map((item) => item as unknown as Box<Amount>)
-      : await ergo!.get_utxos();
+        ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee)
+        : await ergo!.get_utxos();
 
     let receiverErgoTree = ErgoAddress.fromBase58(
       String(changeAddress)
@@ -149,17 +154,8 @@ const MintingHodlERG = () => {
 
     receiverErgoTree = receiverErgoTree.substring(2);
 
-    const mintAmountBigInt = BigInt(mintAmount * 1e9);
-    const bankBoxRes = await explorerClient(
-      isMainnet
-    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
-    const bankBox = bankBoxRes.data.items![0];
-    const hodlBankContract = new HodlBankContract(bankBox);
-
-    const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
-
     const outBox = new OutputBuilder(
-      nanoErgsPrice + txOperatorFee + minerFee + minBoxValue,
+        target,
       proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
