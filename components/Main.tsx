@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Loader from "./Loader";
 import Navbar from "./Navbar";
 import {
-  BANK_SINGLETON_TOKEN_ID,
+  BANK_SINGLETON_TOKEN_ID, BASE_TOKEN_ID,
   explorerClient,
   NEXT_PUBLIC_NEST_API_URL,
   precision,
@@ -18,6 +18,9 @@ import { io, Socket } from "socket.io-client";
 import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { getWalletConfig } from "@/blockchain/ergo/wallet/utils";
 import { getWalletConnection } from "@/blockchain/ergo/walletUtils/utils";
+import {HodlTokenContract} from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlTokenContract";
+import {toast} from "react-toastify";
+import {noti_option_close} from "@/components/Notifications/Toast";
 
 interface HodlERGInterfaceData {
   currentPrice: string;
@@ -72,29 +75,52 @@ const Main = () => {
     explorerClient(isMainnet)
       .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
       .then((res) => {
-        const bankBox = res.data.items![0];
-        const hodlBankContract = new HodlBankContract(bankBox);
 
-        const currentPrice = hodlBankContract.mintAmount(BigInt(1e9));
-        const tvl = hodlBankContract.getTVL();
+        explorerClient(isMainnet)
+            .getApiV1TokensP1(BASE_TOKEN_ID)
+            .then((tokenInfo) => {
 
-        const currentPriceUI =
-          Number((currentPrice * precisionBigInt) / UIMultiplier) / precision;
+              if(tokenInfo.data.decimals === undefined){
+                throw new Error('cannot get decimals');
+              }
 
-        const circulatingSupplyUI =
-          Number(
-            (hodlBankContract.getHodlERG3EmissionAmount() * precisionBigInt) /
-              UIMultiplier
-          ) / precision;
+              const baseTokenSingleUnit =  Math.pow(10, tokenInfo.data.decimals);
 
-        const tvlUI =
-          Number((tvl * precisionBigInt) / UIMultiplier) / precision;
+              const precisionBigInt = BigInt(baseTokenSingleUnit);
+              const UIMultiplier = BigInt(baseTokenSingleUnit);
+              const precision = baseTokenSingleUnit;
 
-        setErgData({
-          currentPrice: currentPriceUI.toString(),
-          circulatingSupply: circulatingSupplyUI.toString(),
-          tvl: tvlUI.toString(),
-        });
+              const bankBox = res.data.items![0];
+              const hodlBankContract = new HodlTokenContract(bankBox);
+
+              const currentPrice = hodlBankContract.mintAmount(BigInt(baseTokenSingleUnit));
+              const tvl = hodlBankContract.getTVL();
+
+              const currentPriceUI =
+                  Number((currentPrice * precisionBigInt) / UIMultiplier) / precision;
+
+              const circulatingSupplyUI =
+                  Number(
+                      (hodlBankContract.getHodlEmissionAmount() * precisionBigInt) /
+                      UIMultiplier
+                  ) / precision;
+
+              const tvlUI =
+                  Number((tvl * precisionBigInt) / UIMultiplier) / precision;
+
+              setErgData({
+                currentPrice: currentPriceUI.toString(),
+                circulatingSupply: circulatingSupplyUI.toString(),
+                tvl: tvlUI.toString(),
+              });
+
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.dismiss();
+              toast.warn("error getting base token decimals", noti_option_close("try-again"));
+            });
+
       })
       .catch((err) => console.log(err));
   }, [lastBlock]);
