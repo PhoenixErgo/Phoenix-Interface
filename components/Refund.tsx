@@ -23,6 +23,8 @@ import {
 import { TransactionInfo } from "@/blockchain/ergo/explorerApi";
 import { Asset, ErgoTransaction, ErgoTransactionOutput } from "@/types/nodeApi";
 import { getUnConfirmedOrConfirmedTx } from "@/blockchain/ergo/apiHelper";
+import {getInputBoxes, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
+import {explorerClient} from "@/blockchain/ergo/constants";
 const Refund = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [proxyAddressForm, setProxyAddressForm] = React.useState<string>("");
@@ -71,7 +73,7 @@ const Refund = () => {
     }
 
     const proxyErgoTree = ErgoAddress.fromBase58(proxyAddress).ergoTree;
-    const minerFee = 1100000;
+    const minerFee = BigInt(1100000);
 
     const txBuilding_noti = toast.loading("Please wait...", noti_option);
 
@@ -143,8 +145,7 @@ const Refund = () => {
       return;
     }
 
-    let walletInputSum = 0;
-    const inputs: Box<Amount>[] = [];
+    const proxyInputs: Box<Amount>[] = [];
     const proxyInputsWithTokens: Box<Amount>[] = [];
     const outputs: OutputBuilder[] = [];
     const changeTokens: Asset[] = [];
@@ -152,70 +153,11 @@ const Refund = () => {
     receiverOutputs.forEach((box) => {
       if (box.assets.length > 0) {
         proxyInputsWithTokens.push(box as unknown as Box<Amount>);
+      } else {
+        proxyInputs.push(box as unknown as Box<Amount>);
       }
-      inputs.push(box as unknown as Box<Amount>);
     });
-
-    console.log("inputs: ", inputs);
-
-    walletInputSum += minerFee;
-
-    if (walletInputSum > 0) {
-      const walletInputs: Box<Amount>[] = (await ergo!.get_utxos()).sort(
-        (a, b) => {
-          return BigInt(a.value) > BigInt(b.value)
-            ? -1
-            : BigInt(a.value) < BigInt(b.value)
-            ? 1
-            : 0;
-        }
-      ); // sorts inputs in descending order
-
-      let currentSum = BigInt(0);
-
-      for (let i = 0; i < walletInputs.length; i++) {
-        currentSum += BigInt(walletInputs[i].value);
-        walletInputs[i].assets.forEach((t) =>
-          changeTokens.push({
-            tokenId: t.tokenId,
-            amount: parseInt(t.amount.toString()),
-          })
-        );
-        inputs.push(walletInputs[i]);
-        if (currentSum >= walletInputSum) {
-          break;
-        }
-      }
-    }
-
     try {
-      const inputTotalValue = inputs.reduce(
-        (acc: bigint, curr) => BigInt(curr.value) + acc,
-        BigInt(0)
-      );
-      const proxyInputTotalValue = proxyInputsWithTokens.reduce(
-        (acc: bigint, curr) => BigInt(curr.value) + acc,
-        BigInt(0)
-      );
-
-      const tokens: TokenAmount<Amount>[] = [];
-
-      inputs.forEach((box) =>
-        box.assets.forEach((t) =>
-          tokens.push({ tokenId: t.tokenId, amount: t.amount })
-        )
-      );
-      const out =
-        tokens.length > 0
-          ? new OutputBuilder(
-              inputTotalValue - BigInt(minerFee),
-              changeAddress
-            ).addTokens(tokens)
-          : new OutputBuilder(
-              inputTotalValue - BigInt(minerFee),
-              changeAddress
-            );
-      outputs.push(out);
 
       proxyInputsWithTokens.forEach((box) => {
         const out = new OutputBuilder(box.value, changeAddress).addTokens(
@@ -224,29 +166,38 @@ const Refund = () => {
         outputs.push(out);
       });
 
-      const outputTotalValue = outputs.reduce(
-        (acc: bigint, curr) => BigInt(curr.value) + acc,
-        BigInt(0)
-      );
-
-      const diff =
-        outputTotalValue +
-        BigInt(minerFee) -
-        (inputTotalValue + proxyInputTotalValue);
-
-      if (diff > 0) {
-        toast.dismiss();
-        toast.warn(
-          `Wallet needs ${parseInt(diff.toString()) * 10 ** -9} more ERG`,
-          noti_option_close("try-again")
+      proxyInputs.forEach((box) => {
+        const out = new OutputBuilder(box.value, changeAddress).addTokens(
+            box.assets.map((t) => ({ tokenId: t.tokenId, amount: t.amount }))
         );
+        outputs.push(out);
+      });
+
+      const walletConfig = getWalletConfig();
+
+      if(!walletConfig){
+        toast.dismiss();
+        toast.warn("could not get wallet info", noti_option_close("try-again"));
         return;
       }
 
+      const isErgoPay = walletConfig.walletName === "ergopay";
+
+      const walletInputs = isErgoPay
+          ? await getInputBoxes(explorerClient(isMainnet), changeAddress, minerFee)
+          : await ergo!.get_utxos();
+
+      const finalProxyInputs = proxyInputs.concat(proxyInputsWithTokens);
+
       const unsignedTransaction = new TransactionBuilder(creationHeight)
-        .from(inputs.concat(proxyInputsWithTokens)) // add inputs
+        .from(finalProxyInputs.concat(walletInputs)) // add inputs
         .to(outputs)
         .sendChangeTo(changeAddress) // set change address
+          .configureSelector((selector) =>
+              selector.ensureInclusion((input) =>
+                  finalProxyInputs.map(box => box.boxId).includes(input.boxId)
+              )
+          )
         .payMinFee()
         .build()
         .toEIP12Object();
