@@ -15,13 +15,13 @@ const Hodlerg = (props: IProps) => {
         <div className="container mx-auto px-2 sm:px-3 lg:px-5 my-10 sm:flex items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 xl:space-x-10">
           <HeaderCards
             title="Current price"
-            text={`${ergdata.currentPrice} ERG`}
+            text={`${ergdata.currentPrice} Comet`}
           />
           <HeaderCards
             title="Emission amount"
-            text={`${ergdata.circulatingSupply} hodlERG`}
+            text={`${ergdata.circulatingSupply} Comet`}
           />
-          <HeaderCards title="TVL" text={`${ergdata.tvl} ERG`} />
+          <HeaderCards title="TVL" text={`${ergdata.tvl} Comet`} />
         </div>
         <div className="lg:flex items-start px-2 sm:px-3 my-10 lg:my-20">
           <MintingHodlERG />

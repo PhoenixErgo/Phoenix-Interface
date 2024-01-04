@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
-  Configuration,
-  DefaultApiFactory,
-  ItemsB,
   OutputInfo,
 } from "@/blockchain/ergo/explorerApi";
 import {
-  BANK_SINGLETON_TOKEN_ID,
+  BANK_SINGLETON_TOKEN_ID, BASE_TOKEN_ID,
   explorerClient,
   HODL_ERG_TOKEN_ID,
   MIN_MINER_FEE,
   MIN_TX_OPERATOR_FEE,
-  precision,
-  precisionBigInt,
   PROXY_ADDRESS,
-  UIMultiplier,
 } from "@/blockchain/ergo/constants";
-import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
   checkWalletConnection,
-  getWalletConn,
-  getWalletConnection,
-  isErgoDappWalletConnected,
-  outputInfoToErgoTransactionOutput,
   signAndSubmitTx,
 } from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
@@ -41,16 +30,18 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
-import { getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
+import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
+import {HodlTokenContract} from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlTokenContract";
 
 const BurningHoldERG = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [burnAmount, setBurnAmount] = useState<number>(0);
   const [bankBox, setBankBox] = useState<OutputInfo | null>(null);
   const [ergPrice, setErgPrice] = useState<number>(0);
+  const [baseTokenDecimal, setBaseTokenDecimal] = useState<number | undefined>(undefined);
   const [proxyAddress, setProxyAddress] = useState<string>("");
 
   const [isModalErgoPayOpen, setIsModalErgoPayOpen] = useState<boolean>(false);
@@ -75,21 +66,37 @@ const BurningHoldERG = () => {
         toast.warn("error getting bank box", noti_option_close("try-again"));
         setBankBox(null);
       });
+
+    explorerClient(isMainnet)
+        .getApiV1TokensP1(BASE_TOKEN_ID)
+        .then((res) => {
+          console.log(res.data.decimals);
+          setBaseTokenDecimal(res.data.decimals)
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.dismiss();
+          toast.warn("error getting base token decimals", noti_option_close("try-again"));
+          setBaseTokenDecimal(undefined);
+        });
   }, []);
 
   const minBoxValue = BigInt(1000000);
 
   useEffect(() => {
     if (
-      !isNaN(burnAmount) &&
-      burnAmount >= 0.001 &&
-      !hasDecimals(burnAmount * 1e9) &&
-      bankBox
+        !isNaN(burnAmount) && (baseTokenDecimal !== undefined) &&
+        !hasDecimals(burnAmount * Math.pow(10, baseTokenDecimal)) &&
+        bankBox
     ) {
-      const burnAmountBigInt = BigInt(burnAmount * 1e9);
-      const hodlBankContract = new HodlBankContract(bankBox);
+      const baseTokenSingleUnit =  Math.pow(10, baseTokenDecimal);
+      const burnAmountBigInt = BigInt(burnAmount * baseTokenSingleUnit);
+      const hodlBankContract = new HodlTokenContract(bankBox);
       const ep =
         hodlBankContract.burnAmount(burnAmountBigInt).expectedAmountWithdrawn;
+      const precisionBigInt = BigInt(baseTokenSingleUnit);
+      const UIMultiplier = BigInt(baseTokenSingleUnit);
+      const precision = baseTokenSingleUnit;
       setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
     } else {
       toast.dismiss();
@@ -99,6 +106,24 @@ const BurningHoldERG = () => {
   }, [burnAmount]);
 
   const handleClick = async () => {
+
+    if(baseTokenDecimal === undefined){
+      toast.dismiss();
+      toast.warn("error getting base token decimals", noti_option_close("try-again"));
+      return;
+    }
+
+    const baseTokenSingleUnit =  Math.pow(10, baseTokenDecimal);
+
+    if (hasDecimals(burnAmount * baseTokenSingleUnit)) {
+      toast.dismiss();
+      toast.warn("max decimals exceeded", noti_option_close("try-again"));
+      return;
+    }
+
+
+    const burnAmountBigInt = BigInt(burnAmount * baseTokenSingleUnit);
+
     let txOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
     let minerFee = BigInt(MIN_MINER_FEE);
 
@@ -112,14 +137,12 @@ const BurningHoldERG = () => {
       minerFee = BigInt(localStorage.getItem("minerFee")!);
     }
 
-    if (burnAmount < 0.001) {
+    console.log(`burn amount ${burnAmountBigInt}`)
+    console.log(`baseTokenSingleUnit ${baseTokenSingleUnit}`)
+
+    if (burnAmountBigInt <= BigInt(1)) {
       toast.dismiss();
-      toast.warn("min 0.001 ERG", noti_option_close("try-again"));
-      return;
-    }
-    if (hasDecimals(burnAmount * 1e9)) {
-      toast.dismiss();
-      toast.warn("max 9 decimals", noti_option_close("try-again"));
+      toast.warn("more than one unit required", noti_option_close("try-again"));
       return;
     }
 
@@ -139,16 +162,27 @@ const BurningHoldERG = () => {
     const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks())
       .data.items![0].height;
 
+
+    const bankBoxRes = await explorerClient(
+        isMainnet
+    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
+    const bankBox = bankBoxRes.data.items![0];
+
+    const hodlBankContract = new HodlTokenContract(bankBox);
+    const burnInfo = hodlBankContract.burnAmount(burnAmountBigInt);
+
+
+    const target = burnInfo.devFeeAmount === BigInt(0) ? minerFee + txOperatorFee + minBoxValue : minerFee + txOperatorFee + minBoxValue + minBoxValue // minerFee + txOperatorFee
+    const targetWithfee = target + minerFee;
+
+    const tokens = [{
+      tokenId: HODL_ERG_TOKEN_ID(isMainnet),
+      amount: burnAmountBigInt
+    }]
+
     const inputs = isErgoPay
-      ? (
-          await explorerClient(
-            isMainnet
-          ).getApiV1BoxesUnspentUnconfirmedByaddressP1(changeAddress)
-        )
-          .data!.filter((item) => item.address === changeAddress)
-          .map(outputInfoToErgoTransactionOutput)
-          .map((item) => item as unknown as Box<Amount>)
-      : await ergo!.get_utxos();
+        ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee, tokens)
+        : await ergo!.get_utxos();
 
     let receiverErgoTree = ErgoAddress.fromBase58(
       String(changeAddress)
@@ -156,13 +190,8 @@ const BurningHoldERG = () => {
 
     receiverErgoTree = receiverErgoTree.substring(2);
 
-    const burnAmountBigInt = BigInt(burnAmount * 1e9);
-
-    const outBox = new OutputBuilder(txOperatorFee + minerFee, proxyAddress)
-      .addTokens({
-        tokenId: HODL_ERG_TOKEN_ID(isMainnet),
-        amount: burnAmountBigInt,
-      })
+    const outBox = new OutputBuilder(target, proxyAddress)
+      .addTokens(tokens)
       .setAdditionalRegisters({
         R4: receiverErgoTree,
         R5: "0e20" + BANK_SINGLETON_TOKEN_ID(isMainnet),
@@ -224,9 +253,9 @@ const BurningHoldERG = () => {
   return (
     <>
       <div className="max-w-md mx-auto font-inter">
-        <h4 className="text-black text-xl font-medium">Burning hodlERG</h4>
+        <h4 className="text-black text-xl font-medium">Burning hodlCOMET</h4>
         <p className="text-black my-3 min-h-[100px]">
-          When burning your hodlERG, there is a 3% protocol fee and a 0.3% dev
+          When burning your hodlCOMET, there is a 3% protocol fee and a 0.3% dev
           fee associated with the process. The protocol fee contributes to the
           overall dynamics of the ecosystem.
         </p>
@@ -242,7 +271,7 @@ const BurningHoldERG = () => {
               }
             />
             <span className="text-black font-medium text-md pl-4 mt-2">
-              {`${ergPrice} ERG`}
+              {`${ergPrice} COMET`}
             </span>
           </div>
 
@@ -250,7 +279,7 @@ const BurningHoldERG = () => {
             className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
             onClick={handleClick}
           >
-            BURN HODLERG
+            BURN HODLCOMET
           </button>
           {isModalErgoPayOpen && (
               <ErgoPayWalletModal
