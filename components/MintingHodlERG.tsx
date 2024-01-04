@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  BANK_SINGLETON_TOKEN_ID,
+  BANK_SINGLETON_TOKEN_ID, BASE_TOKEN_ID,
   explorerClient,
   HODL_ERG_TOKEN_ID,
   MIN_MINER_FEE,
@@ -26,7 +26,7 @@ import {
 } from "@/components/Notifications/Toast";
 import {
   Amount,
-  Box,
+  Box, BoxSelector,
   ErgoAddress,
   OutputBuilder,
   SConstant,
@@ -34,16 +34,18 @@ import {
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
-import { getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
+import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 import { outputInfoToErgoTransactionOutput } from "@/blockchain/ergo/walletUtils/utils";
+import {HodlTokenContract} from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlTokenContract";
 
 const MintingHodlERG = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [mintAmount, setMintAmount] = useState<number>(0);
   const [bankBox, setBankBox] = useState<OutputInfo | null>(null);
+  const [baseTokenDecimal, setBaseTokenDecimal] = useState<number | undefined>(undefined);
   const [ergPrice, setErgPrice] = useState<number>(0);
   const [proxyAddress, setProxyAddress] = useState<string>("");
 
@@ -71,18 +73,34 @@ const MintingHodlERG = () => {
         toast.warn("error getting bank box", noti_option_close("try-again"));
         setBankBox(null);
       });
+
+    explorerClient(isMainnet)
+        .getApiV1TokensP1(BASE_TOKEN_ID)
+        .then((res) => {
+          console.log(res.data.decimals);
+          setBaseTokenDecimal(res.data.decimals)
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.dismiss();
+          toast.warn("error getting base token decimals", noti_option_close("try-again"));
+          setBaseTokenDecimal(undefined);
+        });
   }, []);
 
   useEffect(() => {
     if (
-      !isNaN(mintAmount) &&
-      mintAmount >= 0.001 &&
-      !hasDecimals(mintAmount * 1e9) &&
+      !isNaN(mintAmount) && (baseTokenDecimal !== undefined) &&
+      !hasDecimals(mintAmount * Math.pow(10, baseTokenDecimal)) &&
       bankBox
     ) {
-      const mintAmountBigInt = BigInt(mintAmount * 1e9);
-      const hodlBankContract = new HodlBankContract(bankBox);
+      const baseTokenSingleUnit =  Math.pow(10, baseTokenDecimal);
+      const mintAmountBigInt = BigInt(mintAmount * baseTokenSingleUnit);
+      const hodlBankContract = new HodlTokenContract(bankBox);
       const ep = hodlBankContract.mintAmount(mintAmountBigInt);
+      const precisionBigInt = BigInt(baseTokenSingleUnit);
+      const UIMultiplier = BigInt(baseTokenSingleUnit);
+      const precision = baseTokenSingleUnit;
       setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
     } else {
       toast.dismiss();
@@ -95,6 +113,22 @@ const MintingHodlERG = () => {
     let txOperatorFee = BigInt(MIN_TX_OPERATOR_FEE);
     let minerFee = BigInt(MIN_MINER_FEE);
 
+    if(baseTokenDecimal === undefined){
+      toast.dismiss();
+      toast.warn("error getting base token decimals", noti_option_close("try-again"));
+      return;
+    }
+
+    const baseTokenSingleUnit =  Math.pow(10, baseTokenDecimal);
+
+    if (hasDecimals(mintAmount * baseTokenSingleUnit)) {
+      toast.dismiss();
+      toast.warn("decimals exceeded", noti_option_close("try-again"));
+      return;
+    }
+
+    const mintAmountBigInt = BigInt(mintAmount * baseTokenSingleUnit);
+
     const walletConfig = getWalletConfig();
 
     if (localStorageKeyExists("txOperatorFee")) {
@@ -105,14 +139,9 @@ const MintingHodlERG = () => {
       minerFee = BigInt(localStorage.getItem("minerFee")!);
     }
 
-    if (mintAmount < 0.001) {
+    if (mintAmountBigInt <= BigInt(0)) {
       toast.dismiss();
-      toast.warn("min 0.001 ERG", noti_option_close("try-again"));
-      return;
-    }
-    if (hasDecimals(mintAmount * 1e9)) {
-      toast.dismiss();
-      toast.warn("max 9 decimals", noti_option_close("try-again"));
+      toast.warn("at least one unit required", noti_option_close("try-again"));
       return;
     }
 
@@ -132,15 +161,25 @@ const MintingHodlERG = () => {
     const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks())
       .data.items![0].height;
 
+
+    const bankBoxRes = await explorerClient(
+        isMainnet
+    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
+    const bankBox = bankBoxRes.data.items![0];
+    const hodlBankContract = new HodlTokenContract(bankBox);
+    const tokensToSend = hodlBankContract.mintAmount(mintAmountBigInt);
+
+    const target = minBoxValue + txOperatorFee + minerFee;
+    const targetWithfee = target + minerFee;
+
+    const tokens = [{
+      tokenId: BASE_TOKEN_ID,
+      amount: tokensToSend
+    }]
+
+
     const inputs = isErgoPay
-      ? (
-          await explorerClient(
-            isMainnet
-          ).getApiV1BoxesUnspentUnconfirmedByaddressP1(changeAddress)
-        )
-          .data!.filter((item) => item.address === changeAddress)
-          .map(outputInfoToErgoTransactionOutput)
-          .map((item) => item as unknown as Box<Amount>)
+      ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee, tokens)
       : await ergo!.get_utxos();
 
     let receiverErgoTree = ErgoAddress.fromBase58(
@@ -149,17 +188,8 @@ const MintingHodlERG = () => {
 
     receiverErgoTree = receiverErgoTree.substring(2);
 
-    const mintAmountBigInt = BigInt(mintAmount * 1e9);
-    const bankBoxRes = await explorerClient(
-      isMainnet
-    ).getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet));
-    const bankBox = bankBoxRes.data.items![0];
-    const hodlBankContract = new HodlBankContract(bankBox);
-
-    const nanoErgsPrice = hodlBankContract.mintAmount(mintAmountBigInt);
-
     const outBox = new OutputBuilder(
-      nanoErgsPrice + txOperatorFee + minerFee,
+        target,
       proxyAddress
     ).setAdditionalRegisters({
       R4: receiverErgoTree,
@@ -168,7 +198,7 @@ const MintingHodlERG = () => {
       R7: SConstant(SLong(minBoxValue)),
       R8: SConstant(SLong(minerFee)),
       R9: SConstant(SLong(txOperatorFee)),
-    });
+    }).addTokens(tokens);
 
     try {
       const unsignedTransaction = new TransactionBuilder(creationHeight)
@@ -222,9 +252,9 @@ const MintingHodlERG = () => {
   return (
     <>
       <div className="max-w-md mx-auto mb-10 lg:mb-0 font-inter">
-        <h4 className="text-black text-xl font-medium">Minting hodlERG</h4>
+        <h4 className="text-black text-xl font-medium">Minting hodlCOMET</h4>
         <p className="text-black my-3 min-h-[100px]">
-          Mint hodlERG with no fees. You have the freedom to mint as much as you
+          Mint hodlCOMET with no fees. You have the freedom to mint as much as you
           desire at the current price. it's important to note that the minting
           process does not directly affect the token's pricing dynamics.
         </p>
@@ -240,7 +270,7 @@ const MintingHodlERG = () => {
               }
             />
             <span className="text-black font-medium text-md pl-4 mt-2">
-              {`${ergPrice} ERG`}
+              {`${ergPrice} Comet`}
             </span>
           </div>
 
@@ -248,7 +278,7 @@ const MintingHodlERG = () => {
             className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
             onClick={handleClick}
           >
-            MINT HODLERG
+            MINT HODLCOMET
           </button>
           {isModalErgoPayOpen && (
             <ErgoPayWalletModal
