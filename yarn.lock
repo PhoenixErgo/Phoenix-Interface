@@ -1552,19 +1552,36 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.44.0.tgz#961a5903c74139390478bdc808bcde3fc45ab7af"
   integrity sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==
 
-"@fleet-sdk/common@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@fleet-sdk/common/-/common-0.1.2.tgz#24694201aa9437eaed928423b5027cacb5be41a5"
-  integrity sha512-7a8IlehvXNxx989HBtY5BRNKscB1e2TFjBOkHIt6xx60qb6MXQkz6G11sSTo3AaV19tXGG/kUgoM9t/iQvBZGA==
+"@fleet-sdk/common@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fleet-sdk/common/-/common-0.2.3.tgz#a928bc4d307051e59338df5e8ea12792957d2eff"
+  integrity sha512-pu0h/RnmEyvS6egs6sh7OCy+xKGdKC9FVYoKHmBScewpMX3DWMQSN7X5LPtWWS8u56tBPrGt8xwRJvofo4/7EA==
 
-"@fleet-sdk/core@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@fleet-sdk/core/-/core-0.1.2.tgz#b83d0a3039763f3039d6a985681209820ffd348d"
-  integrity sha512-HDJt2AP9yZW/xARfvUxyoMzZ0sbm98Q37hg2JICndOTUQR+5M2sZhu5PCY4JHK5Qehxhv4HsaLYpSJG9bsqYVA==
+"@fleet-sdk/core@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fleet-sdk/core/-/core-0.2.3.tgz#1f56b84dd9fbb8eab43ffd3384454b56481b8d50"
+  integrity sha512-jMS5Y/qjogHPqV5E3Qb/0RiMg6y5eobLHFBuSf4LFMFbFaMA6+JnWy7fyBelXy4wqkEjcrb84w58eBdPIAC5hA==
   dependencies:
-    "@fleet-sdk/common" "^0.1.2"
-    "@noble/hashes" "^1.3.0"
-    "@scure/base" "^1.1.1"
+    "@fleet-sdk/common" "^0.2.3"
+    "@fleet-sdk/crypto" "^0.2.3"
+    "@fleet-sdk/serializer" "^0.2.3"
+
+"@fleet-sdk/crypto@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fleet-sdk/crypto/-/crypto-0.2.3.tgz#1b412ca96e1b48c7c6aa16f91d0a17d45d83349e"
+  integrity sha512-ETBRLYK7Y4buX2ua7/bqORb6GqAhlCjQtvSOyN6CvLvN0XfECumJoJzOU0/CMJolNwYpBwRcTfmyDTd5liniGg==
+  dependencies:
+    "@fleet-sdk/common" "^0.2.3"
+    "@noble/hashes" "^1.3.2"
+    "@scure/base" "^1.1.3"
+
+"@fleet-sdk/serializer@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@fleet-sdk/serializer/-/serializer-0.2.3.tgz#70c4b3face141cb2307e11c24bc1332e7d90b49e"
+  integrity sha512-2puQMbmV3t2uRZ2rRaxXQyxUoVX5RC8RMW4TC3pnrzc4CXQUwcK4aVxTlOFSW4WEYc7FmOhuW93jkw7cpM4qHg==
+  dependencies:
+    "@fleet-sdk/common" "^0.2.3"
+    "@fleet-sdk/crypto" "^0.2.3"
 
 "@floating-ui/core@^1.4.1":
   version "1.4.1"
@@ -2228,10 +2245,10 @@
   dependencies:
     eslint-scope "5.1.1"
 
-"@noble/hashes@^1.3.0":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.1.tgz#8831ef002114670c603c458ab8b11328406953a9"
-  integrity sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==
+"@noble/hashes@^1.3.2":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.3.tgz#39908da56a4adc270147bb07968bf3b16cfe1699"
+  integrity sha512-V7/fPHgl+jsVPXqqeOzT8egNj2iBIVt+ECeMMG8TdcnTikP3oaBtUVqpT/gYCR68aEBJSF+XbYUxStjbFMqIIA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2487,10 +2504,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.3.2.tgz#31b9c510d8cada9683549e1dbb4284cca5001faf"
   integrity sha512-V+MvGwaHH03hYhY+k6Ef/xKd6RYlc4q8WBx+2ANmipHJcKuktNcI/NgEsJgdSUF6Lw32njT6OnrRsKYCdgHjYw==
 
-"@scure/base@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@scure/base/-/base-1.1.1.tgz#ebb651ee52ff84f420097055f4bf46cfba403938"
-  integrity sha512-ZxOhsSyxYwLJj3pLZCefNitxsj093tb2vq90mp2txoYeBqbcjDjqFhyM8eUjq/uFm6zJ+mUuqxlS2FkuSY1MTA==
+"@scure/base@^1.1.3":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@scure/base/-/base-1.1.5.tgz#1d85d17269fe97694b9c592552dd9e5e33552157"
+  integrity sha512-Brj9FiG2W1MRQSTB212YVPRrcbjkv48FoZi/u4l/zds/ieRrqsh7aUf6CLwkAq61oKXr/ZlTzlY66gLIj3TFTQ==
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.51"
