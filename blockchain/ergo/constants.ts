@@ -46,3 +46,5 @@ export const NEXT_PUBLIC_NEST_API_URL = (isMainnet: boolean) =>  (
         ? process.env.NEXT_PUBLIC_NEST_MAINNET_API
         : process.env.NEXT_PUBLIC_NEST_TESTNET_API
 )!?.replace(/[\\/]+$/, '');
+
+export const BASE_TOKEN_ID = "f2c1dc7078baabb8a3f10db11e2959edb390821bfc6f065fa518fea04fe0203f"
