@@ -14,7 +14,7 @@
     "@coinbarn/ergo-ts": "^0.3.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@fleet-sdk/core": "^0.1.2",
+    "@fleet-sdk/core": "^0.2.3",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
