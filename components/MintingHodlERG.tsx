@@ -255,7 +255,7 @@ const MintingHodlERG = () => {
         <h4 className="text-black text-xl font-medium">Minting hodlCOMET</h4>
         <p className="text-black my-3 min-h-[100px]">
           Mint hodlCOMET with no fees. You have the freedom to mint as much as you
-          desire at the current price. it's important to note that the minting
+          desire at the current price. It's important to note that the minting
           process does not directly affect the token's pricing dynamics.
         </p>
 
