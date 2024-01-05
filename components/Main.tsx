@@ -77,7 +77,7 @@ const Main = () => {
       .then((res) => {
 
         explorerClient(isMainnet)
-            .getApiV1TokensP1(BASE_TOKEN_ID)
+            .getApiV1TokensP1(BASE_TOKEN_ID(isMainnet))
             .then((tokenInfo) => {
 
               if(tokenInfo.data.decimals === undefined){
