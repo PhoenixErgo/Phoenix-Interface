@@ -19,7 +19,7 @@ const Hodlerg = (props: IProps) => {
           />
           <HeaderCards
             title="Emission amount"
-            text={`${ergdata.circulatingSupply} Comet`}
+            text={`${ergdata.circulatingSupply} HodlCOMET`}
           />
           <HeaderCards title="TVL" text={`${ergdata.tvl} Comet`} />
         </div>
