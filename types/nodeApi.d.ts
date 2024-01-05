@@ -30,7 +30,7 @@ interface ErgoTransactionDataInput{
 
 interface ErgoTransactionOutput{
   'boxId': string;
-  'value': number;
+  'value': bigint;
   'ergoTree': string;
   'creationHeight': number;
   'assets': Array<Asset>;
@@ -42,7 +42,7 @@ interface ErgoTransactionOutput{
 
 interface Asset{
   'tokenId': string;
-  'amount': number;
+  'amount': bigint;
 }
 
 type Registers = Partial<Record<RegisterType, string>>;
