@@ -47,4 +47,4 @@ export const NEXT_PUBLIC_NEST_API_URL = (isMainnet: boolean) =>  (
         : process.env.NEXT_PUBLIC_NEST_TESTNET_API
 )!?.replace(/[\\/]+$/, '');
 
-export const BASE_TOKEN_ID = (isMainnet: boolean) => isMainnet ? "6dc054380f0104681b792e5bc23e3dddf82d7dc671aaf6ca05a76992e1a47f91" : "f2c1dc7078baabb8a3f10db11e2959edb390821bfc6f065fa518fea04fe0203f"
+export const BASE_TOKEN_ID = (isMainnet: boolean) => isMainnet ? "6dc054380f0104681b792e5bc23e3dddf82d7dc671aaf6ca05a76992e1a47f91" : "7402ce4755a154cf4e4794168c69df3e33de14ff333e39ba5bdef0d892537df6"
