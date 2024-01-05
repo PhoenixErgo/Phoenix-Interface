@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  checkWalletConnection,
   getWalletConn,
   outputInfoToErgoTransactionOutput,
 } from "@/blockchain/ergo/walletUtils/utils";
@@ -23,12 +24,18 @@ import {
 import { TransactionInfo } from "@/blockchain/ergo/explorerApi";
 import { Asset, ErgoTransaction, ErgoTransactionOutput } from "@/types/nodeApi";
 import { getUnConfirmedOrConfirmedTx } from "@/blockchain/ergo/apiHelper";
-import {getInputBoxes, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
+import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wallet/utils";
 import {explorerClient} from "@/blockchain/ergo/constants";
+import {getTxReducedB64Safe} from "@/blockchain/ergo/ergopay/reducedTxn";
+import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 const Refund = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
   const [proxyAddressForm, setProxyAddressForm] = React.useState<string>("");
   const [transactionIDForm, setTxIdForm] = React.useState<string>("");
+
+  const [isModalErgoPayOpen, setIsModalErgoPayOpen] = useState<boolean>(false);
+  const [ergoPayLink, setErgoPayLink] = useState<string>("");
+  const [ergoPayTxId, setErgoPayTxId] = useState<string>("");
 
   useEffect(() => {
     const isMainnet = localStorage.getItem("IsMainnet")
@@ -39,12 +46,18 @@ const Refund = () => {
   }, []);
 
   const handleClick = async () => {
-    if (!(await getWalletConn())) {
+
+    const walletConfig = getWalletConfig();
+
+    if(!walletConfig){
       toast.dismiss();
-      toast.warn(
-        "unable to get wallet connection",
-        noti_option_close("try-again")
-      );
+      toast.warn("issue with wallet", noti_option_close("try-again"));
+      return;
+    }
+
+    if (!(await checkWalletConnection(walletConfig))) {
+      toast.dismiss();
+      toast.warn("please connect wallet", noti_option_close("try-again"));
       return;
     }
 
@@ -73,7 +86,6 @@ const Refund = () => {
     }
 
     const proxyErgoTree = ErgoAddress.fromBase58(proxyAddress).ergoTree;
-    const minerFee = BigInt(1100000);
 
     const txBuilding_noti = toast.loading("Please wait...", noti_option);
 
@@ -96,6 +108,14 @@ const Refund = () => {
       return validRegister && box.ergoTree === proxyErgoTree;
     };
 
+    const feeBoxes = "blockId" in transactionInfo
+        //@ts-ignore
+        ? (transactionInfo as TransactionInfo).outputs.filter(o => o.ergoTree === "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304")
+        : (transactionInfo as ErgoTransaction).outputs.filter(o => o.ergoTree === "1005040004000e36100204a00b08cd0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798ea02d192a39a8cc7a701730073011001020402d19683030193a38cc7b2a57300000193c2b2a57301007473027303830108cdeeac93b1a57304")
+
+    //@ts-ignore
+    const totalFeePaid: bigint = feeBoxes.reduce((acc: bigint, curr: any) => acc + BigInt(curr.value), BigInt(0));
+
     const proxyOutputs: ErgoTransactionOutput[] =
       "blockId" in transactionInfo
         ? (transactionInfo as TransactionInfo)
@@ -115,8 +135,9 @@ const Refund = () => {
       return;
     }
 
-    const changeAddress = await ergo!.get_change_address();
-    const creationHeight = await ergo!.get_current_height();
+    const changeAddress = walletConfig.walletAddress[0];
+    const creationHeight = (await explorerClient(isMainnet).getApiV1Blocks())
+        .data.items![0].height;
     let changeErgoTree = ErgoAddress.fromBase58(String(changeAddress)).ergoTree;
     let receiverErgoTree = changeErgoTree.substring(2);
     let spentCounter = 0;
@@ -148,7 +169,6 @@ const Refund = () => {
     const proxyInputs: Box<Amount>[] = [];
     const proxyInputsWithTokens: Box<Amount>[] = [];
     const outputs: OutputBuilder[] = [];
-    const changeTokens: Asset[] = [];
 
     receiverOutputs.forEach((box) => {
       if (box.assets.length > 0) {
@@ -183,6 +203,8 @@ const Refund = () => {
 
       const isErgoPay = walletConfig.walletName === "ergopay";
 
+      const minerFee = totalFeePaid + BigInt(1000000);
+
       const walletInputs = isErgoPay
           ? await getInputBoxes(explorerClient(isMainnet), changeAddress, minerFee)
           : await ergo!.get_utxos();
@@ -198,9 +220,41 @@ const Refund = () => {
                   finalProxyInputs.map(box => box.boxId).includes(input.boxId)
               )
           )
-        .payMinFee()
+          .payFee(minerFee)
         .build()
         .toEIP12Object();
+
+
+      if (isErgoPay) {
+        const [txId, ergoPayTx] = await getTxReducedB64Safe(
+            unsignedTransaction,
+            explorerClient(isMainnet)
+        );
+        if (ergoPayTx === null) {
+          toast.dismiss();
+          toast.warn(
+              "issue getting ergopay transaction",
+              noti_option_close("try-again")
+          );
+          return;
+        }
+        const url = await getShortLink(ergoPayTx, `Refund hodlComet`, changeAddress, isMainnet);
+        if (!url) {
+          toast.dismiss();
+          toast.warn(
+              "issue getting ergopay transaction",
+              noti_option_close("try-again")
+          );
+          return;
+        }
+        console.log(url);
+        setErgoPayTxId(txId!);
+        setErgoPayLink(url);
+        window.document.documentElement.classList.add("overflow-hidden");
+        setIsModalErgoPayOpen(true);
+        toast.dismiss();
+        return;
+      }
 
       let signedTx: SignedTransaction;
 
@@ -287,6 +341,15 @@ const Refund = () => {
           >
             Get Refund
           </button>
+          {isModalErgoPayOpen && (
+              <ErgoPayWalletModal
+                  isModalOpen={isModalErgoPayOpen}
+                  setIsModalOpen={setIsModalErgoPayOpen}
+                  ergoPayLink={ergoPayLink}
+                  txid={ergoPayTxId}
+                  isMainnet={isMainnet}
+              ></ErgoPayWalletModal>
+          )}
         </div>
       </div>
     </>

@@ -91,15 +91,17 @@ export async function getInputBoxes(
     let offset = 0;
 
     while (true) {
-      const boxes = await explorerApi.getUnspentBoxesByAddress(
+      const boxes = (await explorerApi.getApiV1BoxesUnspentByaddressP1(
           inputAddress,
-          limit,
-          offset
-      );
+          offset,
+          limit
+      )).data;
 
       if (!boxes) {
         throw new Error("issue getting boxes");
       }
+
+      console.log(boxes)
 
       for (const input of boxes!.items) {
         for (const asset of input.assets) {
@@ -146,11 +148,11 @@ export async function getInputBoxes(
 
   let offset = 0;
   while (true) {
-    const boxes = await explorerApi.getUnspentBoxesByAddress(
+    const boxes = (await explorerApi.getApiV1BoxesUnspentByaddressP1(
         inputAddress,
-        limit,
-        offset
-    );
+        offset,
+        limit
+    )).data;
     if (!boxes) {
       throw new Error("issue getting boxes");
     }
