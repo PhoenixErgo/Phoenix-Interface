@@ -122,7 +122,11 @@ const MintingHodlERG = () => {
       return;
     }
 
-    assert(walletConfig !== undefined);
+    if(!walletConfig){
+      toast.dismiss();
+      toast.warn("issue with wallet", noti_option_close("try-again"));
+      return;
+    }
 
     const isErgoPay = walletConfig.walletName === "ergopay";
 
@@ -143,6 +147,15 @@ const MintingHodlERG = () => {
 
     const target = nanoErgsPrice + txOperatorFee + minerFee + minBoxValue;
     const targetWithfee = target + minerFee;
+
+
+    const balance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.nanoErgs : BigInt(await ergo!.get_balance());
+
+    if (balance < targetWithfee){
+      toast.dismiss();
+      toast.warn(`insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) / precision} ERGs`, noti_option_close("try-again"));
+      return;
+    }
 
     const inputs = isErgoPay
         ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee)

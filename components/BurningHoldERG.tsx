@@ -123,7 +123,11 @@ const BurningHoldERG = () => {
       return;
     }
 
-    assert(walletConfig !== undefined);
+    if(!walletConfig){
+      toast.dismiss();
+      toast.warn("issue with wallet", noti_option_close("try-again"));
+      return;
+    }
 
     const isErgoPay = walletConfig.walletName === "ergopay";
 
@@ -136,6 +140,23 @@ const BurningHoldERG = () => {
     const target = minerFee + txOperatorFee;
     const targetWithfee = target + minerFee;
 
+    const balance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.nanoErgs : BigInt(await ergo!.get_balance());
+
+    if (balance < targetWithfee){
+      toast.dismiss();
+      toast.warn(`insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) / precision} ERGs`, noti_option_close("try-again"));
+      return;
+    }
+
+    const tokenBalance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.tokens!.filter(t => t.tokenId === HODL_ERG_TOKEN_ID(isMainnet))[0].amount : BigInt(await ergo!.get_balance(HODL_ERG_TOKEN_ID(isMainnet)));
+    const burnAmountBigInt = BigInt(burnAmount * 1e9);
+
+    if (tokenBalance < burnAmountBigInt){
+      toast.dismiss();
+      toast.warn(`insufficient token balance missing ${Number(((BigInt(burnAmountBigInt) - BigInt(tokenBalance)) * precisionBigInt) / UIMultiplier) / precision} hodlERGs`, noti_option_close("try-again"));
+      return;
+    }
+
     const inputs = isErgoPay
         ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee)
         : await ergo!.get_utxos();
@@ -145,8 +166,6 @@ const BurningHoldERG = () => {
     ).ergoTree;
 
     receiverErgoTree = receiverErgoTree.substring(2);
-
-    const burnAmountBigInt = BigInt(burnAmount * 1e9);
 
     const outBox = new OutputBuilder(target, proxyAddress)
       .addTokens({
