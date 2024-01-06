@@ -180,6 +180,26 @@ const BurningHoldERG = () => {
       amount: burnAmountBigInt
     }]
 
+    const precisionBigInt = BigInt(baseTokenSingleUnit);
+    const UIMultiplier = BigInt(baseTokenSingleUnit);
+    const precision = baseTokenSingleUnit;
+
+    const balance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.nanoErgs : BigInt(await ergo!.get_balance());
+
+    if (balance < targetWithfee){
+      toast.dismiss();
+      toast.warn(`insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) / precision} ERGs`, noti_option_close("try-again"));
+      return;
+    }
+
+    const tokenBalance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.tokens!.filter(t => t.tokenId === HODL_ERG_TOKEN_ID(isMainnet))[0].amount : BigInt(await ergo!.get_balance(HODL_ERG_TOKEN_ID(isMainnet)));
+
+    if (tokenBalance < burnAmountBigInt){
+      toast.dismiss();
+      toast.warn(`insufficient token balance missing ${Number(((BigInt(burnAmountBigInt) - BigInt(tokenBalance)) * precisionBigInt) / UIMultiplier) / precision} hodlCOMET`, noti_option_close("try-again"));
+      return;
+    }
+
     const inputs = isErgoPay
         ? await getInputBoxes(explorerClient(isMainnet), changeAddress, targetWithfee, tokens)
         : await ergo!.get_utxos();

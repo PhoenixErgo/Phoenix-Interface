@@ -5,18 +5,11 @@ import {
   HODL_ERG_TOKEN_ID,
   MIN_MINER_FEE,
   MIN_TX_OPERATOR_FEE,
-  precision,
-  precisionBigInt,
   PROXY_ADDRESS,
-  UIMultiplier,
 } from "@/blockchain/ergo/constants";
 import { OutputInfo } from "@/blockchain/ergo/explorerApi";
-import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
   checkWalletConnection,
-  getWalletConn,
-  getWalletConnection,
-  isErgoDappWalletConnected,
   signAndSubmitTx,
 } from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
@@ -25,8 +18,6 @@ import {
   noti_option_close,
 } from "@/components/Notifications/Toast";
 import {
-  Amount,
-  Box, BoxSelector,
   ErgoAddress,
   OutputBuilder,
   SConstant,
@@ -38,7 +29,6 @@ import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wa
 import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
-import { outputInfoToErgoTransactionOutput } from "@/blockchain/ergo/walletUtils/utils";
 import {HodlTokenContract} from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlTokenContract";
 
 const MintingHodlERG = () => {
@@ -176,6 +166,26 @@ const MintingHodlERG = () => {
       tokenId: BASE_TOKEN_ID(isMainnet),
       amount: tokensToSend
     }]
+
+    const precisionBigInt = BigInt(baseTokenSingleUnit);
+    const UIMultiplier = BigInt(baseTokenSingleUnit);
+    const precision = baseTokenSingleUnit;
+
+    const balance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.nanoErgs : BigInt(await ergo!.get_balance());
+
+    if (balance < targetWithfee){
+      toast.dismiss();
+      toast.warn(`insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) / precision} ERGs`, noti_option_close("try-again"));
+      return;
+    }
+
+    const tokenBalance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.tokens!.filter(t => t.tokenId === BASE_TOKEN_ID(isMainnet))[0].amount : BigInt(await ergo!.get_balance(HODL_ERG_TOKEN_ID(isMainnet)));
+
+    if (tokenBalance < tokensToSend){
+      toast.dismiss();
+      toast.warn(`insufficient token balance missing ${Number(((BigInt(tokensToSend) - BigInt(tokenBalance)) * precisionBigInt) / UIMultiplier) / precision} comet`, noti_option_close("try-again"));
+      return;
+    }
 
 
     const inputs = isErgoPay
