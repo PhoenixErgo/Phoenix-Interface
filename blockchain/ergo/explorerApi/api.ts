@@ -161,7 +161,7 @@ export interface Balance {
      * @type {number}
      * @memberof Balance
      */
-    'nanoErgs': number;
+    'nanoErgs': bigint;
     /**
      * Tokens balances
      * @type {Array<TokenAmount>}
@@ -1446,7 +1446,7 @@ export interface TokenAmount {
      * @type {number}
      * @memberof TokenAmount
      */
-    'amount': number;
+    'amount': bigint;
     /**
      * Number of decimals
      * @type {number}
