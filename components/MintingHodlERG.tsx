@@ -179,7 +179,7 @@ const MintingHodlERG = () => {
       return;
     }
 
-    const tokenBalance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.tokens!.filter(t => t.tokenId === BASE_TOKEN_ID(isMainnet))[0].amount : BigInt(await ergo!.get_balance(HODL_ERG_TOKEN_ID(isMainnet)));
+    const tokenBalance = isErgoPay ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data.tokens!.filter(t => t.tokenId === BASE_TOKEN_ID(isMainnet))[0].amount : BigInt(await ergo!.get_balance(BASE_TOKEN_ID(isMainnet)));
 
     if (tokenBalance < tokensToSend){
       toast.dismiss();
