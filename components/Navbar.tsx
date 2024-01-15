@@ -42,7 +42,7 @@ const Navbar = (props: IProps) => {
              activeTab === "hodlerg" ? "after:w-[130%] " : "after:w-0"
            }`}
         >
-          HODLCOMET 3%
+          HODLCOMET 10%
         </button>
         <button
           onClick={() => setActiveTab("refund")}
