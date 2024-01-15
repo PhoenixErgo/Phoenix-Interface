@@ -277,7 +277,7 @@ const MintingHodlERG = () => {
       <div className="max-w-md mx-auto mb-10 lg:mb-0 font-inter">
         <h4 className="text-black text-xl font-medium">Minting hodlCOMET</h4>
         <p className="text-black my-3 min-h-[100px]">
-          Mint hodlCOMET with no fees. You have the freedom to mint as much as you
+          Mint hodlCOMET with only a 0.5% non-refundable UI fee or 0.01 ERGs (whichever is higher). You have the freedom to mint as much as you
           desire at the current price. It's important to note that the minting
           process does not directly affect the token's pricing dynamics.
         </p>

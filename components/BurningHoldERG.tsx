@@ -287,8 +287,8 @@ const BurningHoldERG = () => {
       <div className="max-w-md mx-auto font-inter">
         <h4 className="text-black text-xl font-medium">Burning hodlCOMET</h4>
         <p className="text-black my-3 min-h-[100px]">
-          When burning your hodlCOMET, there is a 3% protocol fee and a 0.3% dev
-          fee associated with the process. The protocol fee contributes to the
+          When burning your hodlCOMET, there is a 10% protocol fee, 2% COMET fee, and a 1% dev fee
+          associated with the process. There is also an upfront non-refundable 0.5% UI fee or 0.01 ERGs (whichever is higher). The protocol fee contributes to the
           overall dynamics of the ecosystem.
         </p>
 
