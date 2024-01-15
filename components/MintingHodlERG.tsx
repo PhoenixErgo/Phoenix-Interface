@@ -5,7 +5,7 @@ import {
   HODL_ERG_TOKEN_ID,
   MIN_MINER_FEE,
   MIN_TX_OPERATOR_FEE,
-  PROXY_ADDRESS,
+  PROXY_ADDRESS, UI_FEE_Address,
 } from "@/blockchain/ergo/constants";
 import { OutputInfo } from "@/blockchain/ergo/explorerApi";
 import {
@@ -30,6 +30,7 @@ import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 import {HodlTokenContract} from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlTokenContract";
+import {ErgoDexService} from "@/components/wallet/ergoDexService";
 
 const MintingHodlERG = () => {
   const [isMainnet, setIsMainnet] = useState<boolean>(true);
@@ -159,8 +160,18 @@ const MintingHodlERG = () => {
     const hodlBankContract = new HodlTokenContract(bankBox);
     const tokensToSend = hodlBankContract.mintAmount(mintAmountBigInt);
 
+    const ergoDexService = new ErgoDexService();
+    const tokenErgPrice = await ergoDexService.getTokenRates();
+
+    const ergPerBaseToken = tokenErgPrice[BASE_TOKEN_ID(isMainnet)];
+    const nanoErgPerBaseToken = BigInt((ergPerBaseToken.erg * 10 ** 9).toFixed(0))
+    const tokenNanoErgValue = nanoErgPerBaseToken * tokensToSend;
+
+    const UIFee = (tokenNanoErgValue / 200n) < BigInt(10000000) ? BigInt(10000000) : (tokenNanoErgValue / 200n) // smallest UI fee is 0.01 ERG
+
+
     const target = minBoxValue + txOperatorFee + minerFee;
-    const targetWithfee = target + minerFee;
+    const targetWithfee = target + UIFee + minerFee;
 
     const tokens = [{
       tokenId: BASE_TOKEN_ID(isMainnet),
@@ -210,10 +221,12 @@ const MintingHodlERG = () => {
       R9: SConstant(SLong(txOperatorFee)),
     }).addTokens(tokens);
 
+    const UIFeeBox = new OutputBuilder(UIFee, UI_FEE_Address(isMainnet));
+
     try {
       const unsignedTransaction = new TransactionBuilder(creationHeight)
         .from(inputs) // add inputs
-        .to(outBox)
+        .to([outBox, UIFeeBox])
         .sendChangeTo(changeAddress) // set change address
         .payFee(minerFee) // set fee
         .build()
