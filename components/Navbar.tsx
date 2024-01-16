@@ -35,23 +35,38 @@ const Navbar = (props: IProps) => {
         <ConnectWallet socket={socket} />
       </div>
       <div className="primary-gradient w-full py-3 text-center flex items-center space-x-12 sm:space-x-20 justify-center">
+
         <button
           onClick={() => setActiveTab("hodlerg")}
           className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
-           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${
-             activeTab === "hodlerg" ? "after:w-[130%] " : "after:w-0"
-           }`}
+           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${activeTab === "hodlerg" ? "after:w-[130%] " : "after:w-0"
+            }`}
         >
-          HODLERG 3%
+          HODLERG
+        </button>
+        <button
+          onClick={() => setActiveTab("hodltoken")}
+          className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
+           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${activeTab === "hodltoken" ? "after:w-[130%] " : "after:w-0"
+            }`}
+        >
+          HODLTOKEN
         </button>
         <button
           onClick={() => setActiveTab("refund")}
           className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
-           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${
-             activeTab === "refund" ? "after:w-[130%] " : ""
-           }`}
+           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${activeTab === "refund" ? "after:w-[130%] " : ""
+            }`}
         >
           Refund
+        </button>
+        <button
+          onClick={() => setActiveTab("create")}
+          className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
+           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${activeTab === "create" ? "after:w-[130%] " : ""
+            }`}
+        >
+          Create
         </button>
       </div>
     </>

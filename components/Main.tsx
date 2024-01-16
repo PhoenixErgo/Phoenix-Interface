@@ -12,6 +12,8 @@ import {
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
 import Hodlerg from "./Hodlerg";
+import Hodltoken from "./Hodltoken";
+import Create from "./Create";
 import Refund from "./Refund";
 import { fromEvent } from "rxjs";
 import { io, Socket } from "socket.io-client";
@@ -84,7 +86,7 @@ const Main = () => {
         const circulatingSupplyUI =
           Number(
             (hodlBankContract.getHodlERG3EmissionAmount() * precisionBigInt) /
-              UIMultiplier
+            UIMultiplier
           ) / precision;
 
         const tvlUI =
@@ -110,8 +112,10 @@ const Main = () => {
         setActiveTab={setActiveTab}
         socket={socket}
       />
+      {activeTab === "hodltoken" && <Hodltoken ergdata={ergdata} />}
       {activeTab === "hodlerg" && <Hodlerg ergdata={ergdata} />}
       {activeTab === "refund" && <Refund />}
+      {activeTab === "create" && <Create ergdata={ergdata} />}
       <Footer />
     </>
   );
