@@ -62,7 +62,12 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
 
                         <div className="mt-6 flex justify-end space-x-4">
                             {/* TODO: map list of tokens here: */}
-                            <TokenItem />
+                            <TokenItem
+                                createFormData={createFormData}
+                                setCreateFormData={setCreateFormData}
+                                displaySelectTokenModal={displaySelectTokenModal}
+                                setDisplaySelectTokenModal={setDisplaySelectTokenModal}
+                            />
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,21 @@
 import React, { ChangeEvent } from 'react';
+import { createFormData } from "../../../types/front";
 
 interface TokenItemProps {
-
+    createFormData: createFormData;
+    setCreateFormData: React.Dispatch<React.SetStateAction<createFormData>>;
+    displaySelectTokenModal: boolean;
+    setDisplaySelectTokenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchBar: React.FC<TokenItemProps> = () => {
+const TokenItem: React.FC<TokenItemProps> = ({
+    createFormData,
+    setCreateFormData,
+    displaySelectTokenModal,
+    setDisplaySelectTokenModal }) => {
 
     const handleTokenClick = () => {
+        setDisplaySelectTokenModal(!displaySelectTokenModal);
         console.log("Token Click!")
     }
 
@@ -19,4 +28,4 @@ const SearchBar: React.FC<TokenItemProps> = () => {
     );
 };
 
-export default SearchBar;
+export default TokenItem;
