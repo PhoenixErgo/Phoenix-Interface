@@ -12,7 +12,7 @@ import {
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
 import Hodlerg from "./Hodlerg/Hodlerg";
-import Hodltoken from "./Hodltoken";
+import Hodltoken from "./Hodltoken/Hodltoken";
 import Create from "./Create/Create";
 import Refund from "./Refund";
 import { fromEvent } from "rxjs";
