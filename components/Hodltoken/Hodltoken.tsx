@@ -2,7 +2,7 @@ import React from "react";
 import HeaderCards from "../HeaderCards";
 import MintingHodlTOKEN from "./ui/MintingHodlTOKEN";
 import BurningHoldTOKEN from "./ui/BurningHodlTOKEN";
-import DepositingHoldTOKEN from "./ui/DepositingHodlToken";
+import DepositingHoldTOKEN from "./ui/DepositingHodlTOKEN";
 
 
 interface IProps {

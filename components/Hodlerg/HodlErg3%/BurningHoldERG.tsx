@@ -232,7 +232,7 @@ const BurningHoldERG = () => {
 
   return (
     <>
-      <div className="max-w-md mx-auto font-inter m-2">
+      <article className="w-full mx-auto font-inter m-2">
         <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
           <div className="flex flex-col w-full h-full">
             <input
@@ -264,7 +264,7 @@ const BurningHoldERG = () => {
             ></ErgoPayWalletModal>
           )}
         </div>
-      </div>
+      </article>
     </>
   );
 };

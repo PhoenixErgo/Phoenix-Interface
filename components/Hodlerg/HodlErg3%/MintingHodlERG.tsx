@@ -230,7 +230,7 @@ const MintingHodlERG = () => {
 
   return (
 
-    <div className="max-w-md mx-auto lg:mb-0 font-inter m-2">
+    <article className="w-full mx-auto lg:mb-0 font-inter m-2">
       <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
         <div className="flex flex-col w-full h-full">
           <input
@@ -262,7 +262,7 @@ const MintingHodlERG = () => {
           ></ErgoPayWalletModal>
         )}
       </div>
-    </div>
+    </article>
 
   );
 };

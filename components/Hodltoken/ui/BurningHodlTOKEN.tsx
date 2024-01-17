@@ -232,8 +232,8 @@ const BurningHoldTOKEN = () => {
 
     return (
         <>
-            <div className="max-w-md mx-auto font-inter m-2">
-                <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
+            <article className="w-full bg-gray-200 shadow-lg p-4 mx-auto font-inter m-2">
+                <div className="flex justify-between rounded-md items-start h-full">
                     <div className="flex flex-col w-full h-full">
                         <input
                             className="w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"
@@ -264,7 +264,7 @@ const BurningHoldTOKEN = () => {
                         ></ErgoPayWalletModal>
                     )}
                 </div>
-            </div>
+            </article>
         </>
     );
 };

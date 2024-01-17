@@ -14,9 +14,9 @@ const Hodlerg = (props: IProps) => {
 
   return (
     <>
-      <div className="min-h-[70vh] flex flex-col md:flex-row md:mx-20 mx-5">
-        <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10  lg:my-20">
-          <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 3%</h2>
+      <div className="min-h-[70vh] flex flex-col  md:mx-20 mx-5">
+        <h2 className="text-black font-bold text-3xl my-10 lg:mb-8 text-center">HODLERG</h2>
+        <div className="mt-8">
           <HeaderCardsV2
             title="Current price"
             text={`${ergdata.currentPrice} ERG`}
@@ -27,29 +27,23 @@ const Hodlerg = (props: IProps) => {
           />
           <HeaderCardsV2
             title="TVL"
-            text={`${ergdata.tvl} ERG`} />
+            text={`${ergdata.tvl} ERG`}
+          />
+        </div>
+        <div className="flex">
+          <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10  lg:my-20">
+            <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 3%</h2>
+            <MintingHodlERG />
+            <BurningHoldERG />
+          </div>
 
-          <MintingHodlERG />
-          <BurningHoldERG />
+          <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10 lg:my-20">
+            <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 10%</h2>
+            <MintingHodlERG10 />
+            <BurningHoldERG10 />
+          </div>
         </div>
 
-        <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10 lg:my-20">
-          <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 10%</h2>
-          <HeaderCardsV2
-            title="Current price"
-            text={`${ergdata.currentPrice} ERG`}
-          />
-          <HeaderCardsV2
-            title="Emission amount"
-            text={`${ergdata.circulatingSupply} hodlERG`}
-          />
-          <HeaderCardsV2
-            title="TVL"
-            text={`${ergdata.tvl} ERG`} />
-
-          <MintingHodlERG10 />
-          <BurningHoldERG10 />
-        </div>
       </div>
     </>
   );
