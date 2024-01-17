@@ -11,7 +11,7 @@ import {
 } from "@/blockchain/ergo/constants";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import Footer from "./Footer";
-import Hodlerg from "./Hodlerg";
+import Hodlerg from "./Hodlerg/Hodlerg";
 import Hodltoken from "./Hodltoken";
 import Create from "./Create/Create";
 import Refund from "./Refund";

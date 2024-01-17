@@ -132,7 +132,7 @@ const CreateForm = () => {
     return (
         <>
             <div className="max-w-md mx-auto font-inter">
-                <h4 className="text-black text-xl font-medium">Create Form</h4>
+                <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">Create Form</h2>
                 <p className="text-black my-3 min-h-[100px]">
                     When creating..., there is a protocol fee and a dev
                     fee associated with the process. The protocol fee contributes to the

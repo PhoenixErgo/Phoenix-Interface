@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderCards from "./HeaderCards";
-import MintingHodlERG from "./MintingHodlERG";
-import BurningHoldERG from "./BurningHoldERG";
+import MintingHodlERG from "./Hodlerg/HodlErg3%/MintingHodlERG";
+import BurningHoldERG from "./Hodlerg/HodlErg3%/BurningHoldERG";
 
 interface IProps {
     ergdata: any;
