@@ -34,7 +34,7 @@ const Navbar = (props: IProps) => {
       <div className="sm:hidden w-full ">
         <ConnectWallet socket={socket} />
       </div>
-      <div className="primary-gradient w-full py-3 text-center flex items-center space-x-12 sm:space-x-20 justify-center">
+      <div className="primary-gradient w-full py-3 text-center grid grid-cols-[1fr_1fr] md:grid-cols-4 gap-4 items-center space-x-12 sm:space-x-20 justify-center">
 
         <button
           onClick={() => setActiveTab("hodlerg")}

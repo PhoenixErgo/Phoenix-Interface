@@ -30,7 +30,7 @@ const Hodlerg = (props: IProps) => {
             text={`${ergdata.tvl} ERG`}
           />
         </div>
-        <div className="flex">
+        <div className="flex-col md:flex-row flex">
           <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10  lg:my-20">
             <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 3%</h2>
             <MintingHodlERG />
