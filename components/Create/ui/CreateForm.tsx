@@ -101,7 +101,10 @@ const CreateForm = () => {
 
 
     const initialFormData: createFormData = {
-        token: '',
+        tokenId: '',
+        tiker: '',
+        tokenName: '',
+        img: '',
         bankFee: 0,
         creatorFee: 0,
         uiPromotionFee: 0,
@@ -129,6 +132,11 @@ const CreateForm = () => {
         setCreateFormData(initialFormData);
     };
 
+    useEffect(() => {
+        console.log("Form data: ", createFormData)
+    }, [createFormData])
+
+
     return (
         <>
             <div className="max-w-md mx-auto font-inter">
@@ -147,12 +155,28 @@ const CreateForm = () => {
                         <label className="pl-5 font-bold">
                             Token
                         </label>
-                        {initialFormData.token === "" ?
+                        {createFormData?.tiker === ""
+                            ?
                             <div
                                 onClick={() => setDisplaySelectTokenModal(!displaySelectTokenModal)}
-                                className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex"><span> Select a token</span> <svg width="24px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#FFF" d="M13.098 8H6.902c-.751 0-1.172.754-.708 1.268L9.292 12.7c.36.399 1.055.399 1.416 0l3.098-3.433C14.27 8.754 13.849 8 13.098 8Z" /></svg></div>
+                                className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex">
+                                <span> Select a token</span>
+                                <svg width="24px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#FFF" d="M13.098 8H6.902c-.751 0-1.172.754-.708 1.268L9.292 12.7c.36.399 1.055.399 1.416 0l3.098-3.433C14.27 8.754 13.849 8 13.098 8Z" />
+                                </svg>
+                            </div>
                             :
-                            <div className="">{initialFormData.token}</div>
+                            <div
+                                onClick={() => setDisplaySelectTokenModal(!displaySelectTokenModal)}
+                                className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex">
+
+                                <img
+                                    className='w-6 h-6 mr-2'
+                                    src={createFormData.img}
+                                    alt="Token Img" />
+                                <div >{createFormData.tiker}</div>
+                                <svg width="24px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#FFF" d="M13.098 8H6.902c-.751 0-1.172.754-.708 1.268L9.292 12.7c.36.399 1.055.399 1.416 0l3.098-3.433C14.27 8.754 13.849 8 13.098 8Z" />
+                                </svg>
+                            </div>
                         }
                     </div>
 
@@ -216,8 +240,7 @@ const CreateForm = () => {
                         />
                     </div>
 
-                    {initialFormData.token === ""}
-                    <button disabled={initialFormData.token === ""} type="submit" className="w-full focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md  px-4 py-3">Create</button>
+                    <button disabled={initialFormData.tokenId === ""} type="submit" className="w-full focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md  px-4 py-3">Create</button>
 
                     {isModalErgoPayOpen && (
                         <ErgoPayWalletModal
