@@ -3,13 +3,6 @@ import SearchBar from "./SearchBar";
 import TokenItem from "./TokenItem";
 import { createFormData } from "../../../types/front";
 
-// import { tokens } from "../../../assest/tokens";
-import ERGimg from "../../../assest/images/token_icons/ergo.svg";
-import COMETimg from "../../../assest/images/token_icons/comet.svg";
-import rsADAimg from "../../../assest/images/token_icons/rsADA.svg";
-import RSNimg from "../../../assest/images/token_icons/rsn.svg";
-import sigUSDimg from "../../../assest/images/token_icons/sigUSD.svg";
-
 export const tokens = [
     {
         tokenId: "",
@@ -43,13 +36,20 @@ export const tokens = [
     },
 ];
 
-
+interface Token {
+    tokenId: string;
+    tiker: string;
+    tokenName: string;
+    imgPath: string;
+}
 interface SelectTokenModalProps {
     createFormData: createFormData;
     setCreateFormData: React.Dispatch<React.SetStateAction<createFormData>>;
     displaySelectTokenModal: boolean;
     setDisplaySelectTokenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+
 
 const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
     createFormData,
@@ -58,11 +58,17 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
     setDisplaySelectTokenModal,
 }) => {
 
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [searchedTokens, setSearchedTokens] = useState<Token[]>([]);
 
     useEffect(() => {
-        // TODO: get a list of avaliable tokens
-    }, [])
+        // Filter tokens based on tiker when searchQuery changes
+        const filteredTokens = tokens.filter((token) =>
+            token.tiker.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchedTokens(filteredTokens);
+    }, [searchQuery]);
+
 
 
     return (
@@ -102,7 +108,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             setSearchQuery={setSearchQuery} />
 
                         <div className="w-full mt-6 flex flex-col justify-start">
-                            {tokens?.map((token, index) => (
+                            {searchedTokens?.map((token) => (
                                 <TokenItem
                                     key={token.tokenId}
                                     tokenId={token.tokenId}
