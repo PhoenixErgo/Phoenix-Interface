@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import TokenItem from "./TokenItem";
 import { createFormData } from "../../../types/front";
+// import { tokens } from './../../../assest/tokens';
+import rsADAimg from "./token_icons/rsADA.svg";
+import RSNimg from "./../../../public/token_icons/rsn.webp";
 
 export const tokens = [
     {
         tokenId: "",
         tiker: "ERG",
         tokenName: "ERGO",
-        imgPath: "/token_icons/ergo.svg",
+        imgPath: "./token_icons/ergo.svg",
     },
     {
         tokenId: "0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b",
@@ -26,13 +29,13 @@ export const tokens = [
         tokenId: "8b08cdd5449a9592a9e79711d7d79249d7a03c535d17efaee83e216e80a44c4b",
         tiker: "RSN",
         tokenName: "Rosen",
-        img: "/token_icons/rsn.svg",
+        imgPath: "/token_icons/rsn.webp",
     },
     {
         tokenId: "e023c5f382b6e96fbd878f6811aac73345489032157ad5affb84aefd4956c297",
         tiker: "rsADA",
         tokenName: "rsADA",
-        img: "/token_icons/rsADA.svg",
+        imgPath: "/token_icons/rsADA.svg",
     },
 ];
 
