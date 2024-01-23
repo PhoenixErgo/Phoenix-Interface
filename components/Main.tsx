@@ -106,7 +106,7 @@ const Main = () => {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col justify-between">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -117,7 +117,7 @@ const Main = () => {
       {activeTab === "refund" && <Refund />}
       {activeTab === "create" && <Create ergdata={ergdata} />}
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -33,13 +33,33 @@ const Hodlerg = (props: IProps) => {
         <div className="flex-col md:flex-row flex">
           <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10  lg:my-20">
             <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 3%</h2>
+            <p className="text-black my-3 min-h-[100px] flex items-end">
+              Mint hodlERG with no fees. You have the freedom to mint as much as you
+              desire at the current price. It's important to note that the minting
+              process does not directly affect the token's pricing dynamics.
+            </p>
             <MintingHodlERG />
+            <p className="text-black my-3 min-h-[100px] flex items-end">
+              When burning your hodlERG, there is a 3% protocol fee and a 0.3% dev
+              fee associated with the process. The protocol fee contributes to the
+              overall dynamics of the ecosystem.
+            </p>
             <BurningHoldERG />
           </div>
 
           <div className="w-full flex flex-col items-center px-2 sm:px-3 my-10 lg:my-20">
             <h2 className="text-black font-bold text-3xl mb-5 lg:mb-8">HODLERG 10%</h2>
+            <p className="text-black my-3 min-h-[100px] flex items-end">
+              Mint hodlERG with no fees. You have the freedom to mint as much as you
+              desire at the current price. It's important to note that the minting
+              process does not directly affect the token's pricing dynamics.
+            </p>
             <MintingHodlERG10 />
+            <p className="text-black my-3 min-h-[100px] flex items-end">
+              When burning your hodlERG, there is a 3% protocol fee and a 0.3% dev
+              fee associated with the process. The protocol fee contributes to the
+              overall dynamics of the ecosystem.
+            </p>
             <BurningHoldERG10 />
           </div>
         </div>
