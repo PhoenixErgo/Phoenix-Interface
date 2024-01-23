@@ -16,16 +16,23 @@ const Hodltoken = (props: IProps) => {
             <div className="max-w-l mx-auto font-inter min-h-[70vh] my-10 mx-20">
                 <div className="bg-gray-200 shadow-lg flex items-end content-between rounded-md">
                     <div className="container mx-auto flex flex-col justify-between">
-                        <h2 className="text-black font-bold text-3xl my-10 lg:mb-8 text-center">HODLTOKEN</h2>
+                        <div className="text-black font-bold text-2xl mt-5 lg:mb-8 text-center">HODLTOKEN</div>
                         <HeaderCardsV2
                             title="Price"
-                            text={`${ergdata.currentPrice} ERG`}
+                            amount={ergdata.currentPrice}
+                            token="ERG"
                         />
                         <HeaderCardsV2
                             title="Supply"
-                            text={`${ergdata.circulatingSupply} hodlERG`}
+                            amount={ergdata.circulatingSupply}
+                            token="hodlERG"
+
                         />
-                        <HeaderCardsV2 title="Reserve" text={`${ergdata.tvl} ERG`} />
+                        <HeaderCardsV2
+                            title="Reserve"
+                            amount={ergdata.tvl}
+                            token="ERG"
+                        />
                     </div>
                     <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-end">
                         <MintingHodlTOKEN />

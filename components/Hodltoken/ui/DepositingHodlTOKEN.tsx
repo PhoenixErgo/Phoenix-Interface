@@ -232,11 +232,11 @@ const DepositingHoldTOKEN = () => {
 
     return (
         <>
-            <article className="w-full p-4 mx-auto font-inter">
+            <article className="w-full p-2 mx-auto font-inter">
                 <div className="flex justify-between rounded-md items-center h-full">
                     <div className="flex flex-col w-full h-full">
                         <input
-                            className="w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"
+                            className="w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-10 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"
                             placeholder="Amount"
                             type="number"
                             onChange={(event) =>
