@@ -14,7 +14,7 @@ const Hodltoken = (props: IProps) => {
     return (
         <>
             <div className="max-w-l mx-auto font-inter min-h-[70vh] my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex items-end content-between rounded-md">
+                <div className="bg-gray-200 shadow-lg flex items-start content-between rounded-md">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black font-bold text-2xl mt-5 lg:mb-8 text-center">HODLTOKEN</div>
                         <HeaderCardsV2
