@@ -14,9 +14,9 @@ const Hodltoken = (props: IProps) => {
     return (
         <>
             <div className="max-w-l mx-auto font-inter min-h-[70vh] my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex items-start content-between rounded-md">
+                <div className="bg-gray-200 shadow-lg flex content-between rounded-md">
                     <div className="container mx-auto flex flex-col justify-between">
-                        <div className="text-black font-bold text-2xl mt-5 lg:mb-8 text-center">HODLTOKEN</div>
+                        <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">HODLTOKEN</div>
                         <HeaderCardsV2
                             title="Price"
                             amount={ergdata.currentPrice}
@@ -34,7 +34,7 @@ const Hodltoken = (props: IProps) => {
                             token="ERG"
                         />
                     </div>
-                    <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-end">
+                    <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
                         <MintingHodlTOKEN />
                         <BurningHoldTOKEN />
                         <DepositingHoldTOKEN />

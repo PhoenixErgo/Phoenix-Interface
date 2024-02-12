@@ -230,7 +230,7 @@ const MintingHodlERG = () => {
 
   return (
 
-    <article className="w-full mx-auto lg:mb-0 font-inter m-2">
+    <article className="w-full mx-auto lg:mb-0 font-inter py-1">
       <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
         <div className="flex flex-col w-full h-full">
           <input
@@ -250,7 +250,7 @@ const MintingHodlERG = () => {
           className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
           onClick={handleClick}
         >
-          MINT HODLERG 3%
+          MINT <br />HODLERG 3%
         </button>
         {isModalErgoPayOpen && (
           <ErgoPayWalletModal

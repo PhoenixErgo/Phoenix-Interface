@@ -10,7 +10,7 @@ const Create = (props: IProps) => {
     return (
         <>
             <div className="min-h-[70vh]">
-                <div className="lg:flex items-start px-2 sm:px-3 my-10 lg:my-20">
+                <div className="lg:flex items-start px-2 sm:px-3 my-2 lg:my-10">
                     <CreateForm />
                 </div>
             </div>
