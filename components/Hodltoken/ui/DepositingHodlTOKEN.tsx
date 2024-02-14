@@ -249,7 +249,7 @@ const DepositingHoldTOKEN = ({token}) => {
                     </div>
 
                     <button
-                        className="w-60 h-full whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
+                        className="w-full lg:w-60 h-full whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
                         onClick={handleClick}
                     >
                         DEPOSIT

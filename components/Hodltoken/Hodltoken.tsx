@@ -14,7 +14,7 @@ const Hodltoken = (props: IProps) => {
     return (
         <>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex content-between rounded-md">
+                <div className="flex-col lg:flex-row bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlCOMMET 3%</div>
                         <HeaderCardsV2
@@ -42,7 +42,7 @@ const Hodltoken = (props: IProps) => {
                 </div>
             </div>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex content-between rounded-md">
+                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlSigUSD 4%</div>
                         <HeaderCardsV2
@@ -70,7 +70,7 @@ const Hodltoken = (props: IProps) => {
                 </div>
             </div>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex content-between rounded-md">
+                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlSPF 10%</div>
                         <HeaderCardsV2
