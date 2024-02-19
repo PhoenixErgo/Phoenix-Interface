@@ -9,9 +9,9 @@ const HeaderCards = (props: IProps) => {
   const { title, text } = props;
   return (
     <>
-      <article className="text-center w-full bg-gray-200 p-4 shadow-lg font-inter">
-        <span className="text-black text-sm font-light">{title}</span>
-        <p className="font-bold text-xl xl:text-2xl text-black">{text}</p>
+      <article className="text-start w-full bg-gray-200 p-3 font-inter flex items-center justify-between">
+        <span className="font-light text-black text-sm">{title}</span>
+        <p className="font-bold text-base lg:text-lg text-black pr-1">{text}</p>
       </article>
     </>
   );
