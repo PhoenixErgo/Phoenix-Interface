@@ -249,7 +249,7 @@ const BurningHoldERG10 = () => {
                     </div>
 
                     <button
-                        className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
+                        className="whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5 h-full"
                         onClick={handleClick}
                     >
                         BURN <br />HODLERG 10%

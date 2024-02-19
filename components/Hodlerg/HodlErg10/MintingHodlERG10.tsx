@@ -230,7 +230,7 @@ const MintingHodlERG10 = () => {
 
     return (
 
-        <article className="w-full mx-auto lg:mb-0 font-inter py-1">
+        <article className="w-full h-1/2 mx-auto lg:mb-0 font-inter py-1">
             <div className="flex bg-gray-200 shadow-lg justify-between rounded-md items-start h-full">
                 <div className="flex flex-col w-full h-full">
                     <input
@@ -247,7 +247,7 @@ const MintingHodlERG10 = () => {
                 </div>
 
                 <button
-                    className="h-24 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
+                    className="h-full whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5"
                     onClick={handleClick}
                 >
                     MINT <br />HODLERG 10%
