@@ -40,7 +40,7 @@ import assert from "assert";
 import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 
-const DepositingHoldTOKEN = ({token}) => {
+const DepositingHoldTOKEN = ({ token }: { token: string }) => {
     const [isMainnet, setIsMainnet] = useState<boolean>(true);
     const [burnAmount, setBurnAmount] = useState<number>(0);
     const [bankBox, setBankBox] = useState<OutputInfo | null>(null);

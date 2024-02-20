@@ -233,7 +233,7 @@ const BurningHoldERG = () => {
   return (
     <>
       <article className="w-full mx-auto font-inter h-1/2">
-        <div className="flex flex-col md:flex-row bg-gray-200 shadow-lg justify-start align-start md:justify-between rounded-md items-start md:items-center h-full">
+        <div className="flex flex-col md:flex-row bg-gray-200 justify-start align-start md:justify-between rounded-md items-start md:items-center h-full">
           <div className="flex flex-col w-full h-full">
             <input
               className="h-1/2 w-full border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none pl-4"

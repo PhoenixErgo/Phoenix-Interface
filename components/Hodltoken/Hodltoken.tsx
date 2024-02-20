@@ -63,9 +63,9 @@ const Hodltoken = (props: IProps) => {
                         />
                     </div>
                     <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
-                        <MintingHodlTOKEN token="SigUSD"/>
-                        <BurningHoldTOKEN token="hodlSigUSD"/>
-                        <DepositingHoldTOKEN token="SigUSD"/>
+                        <MintingHodlTOKEN token="SigUSD" />
+                        <BurningHoldTOKEN token="hodlSigUSD" />
+                        <DepositingHoldTOKEN token="SigUSD" />
                     </div>
                 </div>
             </div>
@@ -91,9 +91,9 @@ const Hodltoken = (props: IProps) => {
                         />
                     </div>
                     <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
-                        <MintingHodlTOKEN token="SPF"/>
-                        <BurningHoldTOKEN token="hodlSPF"/>
-                        <DepositingHoldTOKEN token="SPF"/>
+                        <MintingHodlTOKEN token="SPF" />
+                        <BurningHoldTOKEN token="hodlSPF" />
+                        <DepositingHoldTOKEN token="SPF" />
                     </div>
                 </div>
             </div>
