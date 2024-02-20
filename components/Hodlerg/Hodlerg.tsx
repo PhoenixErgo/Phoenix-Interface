@@ -46,7 +46,7 @@ const Hodlerg = (props: IProps) => {
                   token="ERG"
                 />
               </div>
-              <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
+              <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
                 <MintingHodlERG />
                 <BurningHoldERG />
               </div>
@@ -82,7 +82,7 @@ const Hodlerg = (props: IProps) => {
                   token="ERG"
                 />
               </div>
-              <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
+              <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
                 <MintingHodlERG10 />
                 <BurningHoldERG10 />
               </div>
