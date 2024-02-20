@@ -12,7 +12,10 @@ const HeaderCardsV2 = (props: IProps) => {
         <>
             <article className="text-start w-full bg-gray-200 p-3 font-inter flex items-center justify-between">
                 <div className=" text-black text-sm">{title}</div>
-                <span className="font-bold text-base lg:text-lg text-black pr-1">{amount}{" "}{token}</span>
+                <div className="flex flex-col items-end">
+                    <span className="font-bold text-base lg:text-lg text-black pr-1">{amount}{" "}</span>
+                    <span className="font-thin lg:text-s text-black pr-1">{token}</span>
+                </div>
             </article>
         </>
     );

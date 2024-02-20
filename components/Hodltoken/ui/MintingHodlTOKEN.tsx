@@ -237,7 +237,7 @@ const BurningHoldERG10 = ({ token }: { token: string }) => {
 
     return (
         <>
-            <article className="w-full mx-auto font-inter">
+            <article className="w-full mx-auto font-inter p-1">
                 <div className="flex flex-col md:flex-row justify-start align-start md:justify-between rounded-md md:items-center h-full">
                     <div className="py-1 flex flex-col w-full h-full">
                         <input

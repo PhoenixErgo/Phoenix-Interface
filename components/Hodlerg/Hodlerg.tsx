@@ -17,7 +17,7 @@ const Hodlerg = (props: IProps) => {
       <div className="min-h-[70vh] flex flex-col  md:mx-20 mx-5 items-center">
         <div className="w-full lg:w-[800px] flex flex-col items-center px-2 sm:px-3 my-2 lg:my-10 justify-center">
           <div className="max-w-l mx-auto font-inter my-10 mx-20">
-            <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
+            <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
               {/* <p className="text-black my-3 min-h-[100px] flex items-end">
                     Mint hodlERG with no fees. You have the freedom to mint as much as you
                     desire at the current price. It's important to note that the minting
@@ -30,17 +30,20 @@ const Hodlerg = (props: IProps) => {
                   </p> */}
               <div className="container mx-auto flex flex-col justify-between">
                 <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">HODLERG 3%</div>
-                <HeaderCards
+                <HeaderCardsV2
                   title="Price"
-                  text={`${ergdata.currentPrice} ERG`}
+                  amount={ergdata.currentPrice}
+                  token="ERG"
                 />
-                <HeaderCards
+                <HeaderCardsV2
                   title="Supply"
-                  text={`${ergdata.circulatingSupply} hodlERG`}
+                  amount={ergdata.circulatingSupply}
+                  token="hodlERG"
                 />
-                <HeaderCards
+                <HeaderCardsV2
                   title="Reserve"
-                  text={`${ergdata.tvl} ERG`}
+                  amount={ergdata.tvl}
+                  token="ERG"
                 />
               </div>
               <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
@@ -50,7 +53,7 @@ const Hodlerg = (props: IProps) => {
             </div>
           </div>
           <div className="max-w-l mx-auto font-inter my-10 mx-20">
-            <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
+            <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
               {/* <p className="text-black my-3 min-h-[100px] flex items-end">
                     Mint hodlERG with no fees. You have the freedom to mint as much as you
                     desire at the current price. It's important to note that the minting
@@ -63,17 +66,20 @@ const Hodlerg = (props: IProps) => {
                   </p> */}
               <div className="container mx-auto flex flex-col justify-between">
                 <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">HODLERG 10%</div>
-                <HeaderCards
+                <HeaderCardsV2
                   title="Price"
-                  text={`${ergdata.currentPrice} ERG`}
+                  amount={ergdata.currentPrice}
+                  token="ERG"
                 />
-                <HeaderCards
+                <HeaderCardsV2
                   title="Supply"
-                  text={`${ergdata.circulatingSupply} hodlERG`}
+                  amount={ergdata.circulatingSupply}
+                  token="hodlERG"
                 />
-                <HeaderCards
+                <HeaderCardsV2
                   title="Reserve"
-                  text={`${ergdata.tvl} ERG`}
+                  amount={ergdata.tvl}
+                  token="ERG"
                 />
               </div>
               <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">

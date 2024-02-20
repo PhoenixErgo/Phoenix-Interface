@@ -232,7 +232,7 @@ const BurningHoldERG = () => {
 
   return (
     <>
-      <article className="w-full mx-auto font-inter h-1/2">
+      <article className="w-full mx-auto font-inter h-1/2 p-1">
         <div className="flex flex-col md:flex-row bg-gray-200 justify-start align-start md:justify-between rounded-md items-start md:items-center h-full">
           <div className="flex flex-col w-full h-full">
             <input
@@ -249,7 +249,7 @@ const BurningHoldERG = () => {
           </div>
 
           <button
-            className="h-full whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5 w-full"
+            className="h-full w-60 whitespace-nowrap focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300  focus:shadow-none font-medium rounded text-md px-5 py-2.5 w-full"
             onClick={handleClick}
           >
             BURN<br />HODLERG 3%

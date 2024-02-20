@@ -14,7 +14,7 @@ const Hodltoken = (props: IProps) => {
     return (
         <>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="flex-col lg:flex-row bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]">
+                <div className="flex-col lg:flex-row bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px] p-2">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlCOMMET 3%</div>
                         <HeaderCardsV2
@@ -34,7 +34,7 @@ const Hodltoken = (props: IProps) => {
                             token="COMMET"
                         />
                     </div>
-                    <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
+                    <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
                         <MintingHodlTOKEN token="COMMET" />
                         <BurningHoldTOKEN token="hodlCOMMET" />
                         <DepositingHoldTOKEN token="COMMET" />
@@ -42,7 +42,7 @@ const Hodltoken = (props: IProps) => {
                 </div>
             </div>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
+                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlSigUSD 4%</div>
                         <HeaderCardsV2
@@ -62,7 +62,7 @@ const Hodltoken = (props: IProps) => {
                             token="SigUSD"
                         />
                     </div>
-                    <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
+                    <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
                         <MintingHodlTOKEN token="SigUSD" />
                         <BurningHoldTOKEN token="hodlSigUSD" />
                         <DepositingHoldTOKEN token="SigUSD" />
@@ -70,7 +70,7 @@ const Hodltoken = (props: IProps) => {
                 </div>
             </div>
             <div className="max-w-l mx-auto font-inter my-10 mx-20">
-                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row">
+                <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
                     <div className="container mx-auto flex flex-col justify-between">
                         <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">hodlSPF 10%</div>
                         <HeaderCardsV2
@@ -90,7 +90,7 @@ const Hodltoken = (props: IProps) => {
                             token="SPF"
                         />
                     </div>
-                    <div className="container mx-auto border border-l-gray-300 flex flex-col items-center justify-between">
+                    <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
                         <MintingHodlTOKEN token="SPF" />
                         <BurningHoldTOKEN token="hodlSPF" />
                         <DepositingHoldTOKEN token="SPF" />
