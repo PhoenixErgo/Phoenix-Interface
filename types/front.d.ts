@@ -1,6 +1,6 @@
 export interface createFormData {
   tokenId: string;
-  tiker: string;
+  ticker: string;
   tokenName: string;
   img: any;
   bankFee: number;

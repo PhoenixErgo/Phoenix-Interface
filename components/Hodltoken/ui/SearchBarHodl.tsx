@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, setSearchQuery }) =>
     };
 
     return (
-        <div className="relative">
+        <div className="relative w-3/4">
             <input
                 type="text"
                 placeholder="Search"

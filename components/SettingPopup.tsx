@@ -1,3 +1,6 @@
+'use client';
+
+import { useAppContext } from '../context/appContext';
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import CustomTooltip from "./CustomTooltip";
@@ -10,6 +13,9 @@ import { toast } from "react-toastify";
 import { noti_option_close } from "@/components/Notifications/Toast";
 
 export default function SettingPopup() {
+  const { advancedSettings, setAdvancedSettings } = useAppContext();
+  console.log("advancedSettings: ", advancedSettings) // false
+
   const [nitroValue, setNitroValue] = useState<number | string>("1.000");
   const [minerNitroValue, setMinerNitroValue] = useState<number | string>(
     "1.000"
@@ -20,7 +26,7 @@ export default function SettingPopup() {
       setNitroValue(
         Number(
           Number(localStorage.getItem("txOperatorFee")!) /
-            Number(MIN_TX_OPERATOR_FEE)
+          Number(MIN_TX_OPERATOR_FEE)
         ).toFixed(3)
       );
     }
@@ -57,6 +63,12 @@ export default function SettingPopup() {
     setMinerNitroValue(nitroValue);
     localStorage.setItem("minerFee", minerFee.toString());
   };
+
+  const handleAdvancedSettings = () => {
+    console.log("Advanced Click")
+    setAdvancedSettings(!advancedSettings) // Doesn't update the state. How to make it
+    console.log("New advancedSettings: ", advancedSettings)
+  }
 
   return (
     <Popover className="relative">
@@ -155,6 +167,23 @@ export default function SettingPopup() {
                       />
                     </div>
                   </div>
+                </div>
+
+
+                <div className="mb-2">
+                  <label
+                    htmlFor="advancedSettings"
+                    className="flex items-center font-medium space-x-1 py-1 cursor-pointer"
+                  >
+                    Advanced Settings
+                    <input
+                      id="advancedSettings"
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-primary ml-2"
+                      checked={advancedSettings}
+                      onChange={() => handleAdvancedSettings()}
+                    />
+                  </label>
                 </div>
 
                 {/*/!* BOX VALUE  *!/*/}

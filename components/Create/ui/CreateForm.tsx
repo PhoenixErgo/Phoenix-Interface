@@ -102,7 +102,7 @@ const CreateForm = () => {
 
     const initialFormData: createFormData = {
         tokenId: '',
-        tiker: '',
+        ticker: '',
         tokenName: '',
         img: '',
         bankFee: 0,
@@ -155,7 +155,7 @@ const CreateForm = () => {
                         <label className="pl-5 font-bold">
                             Token
                         </label>
-                        {createFormData?.tiker === ""
+                        {createFormData?.ticker === ""
                             ?
                             <div
                                 onClick={() => setDisplaySelectTokenModal(!displaySelectTokenModal)}
@@ -173,7 +173,7 @@ const CreateForm = () => {
                                     className='w-6 h-6 mr-2'
                                     src={createFormData.img}
                                     alt="Token Img" />
-                                <div >{createFormData.tiker}</div>
+                                <div >{createFormData.ticker}</div>
                                 <svg width="24px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#FFF" d="M13.098 8H6.902c-.751 0-1.172.754-.708 1.268L9.292 12.7c.36.399 1.055.399 1.416 0l3.098-3.433C14.27 8.754 13.849 8 13.098 8Z" />
                                 </svg>
                             </div>

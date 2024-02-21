@@ -3,7 +3,7 @@ import { createFormData } from "../../../types/front";
 
 interface TokenItemProps {
     tokenId: string;
-    tiker: string;
+    ticker: string;
     tokenName: string;
     img: any;
     createFormData: createFormData;
@@ -14,7 +14,7 @@ interface TokenItemProps {
 
 const TokenItem: React.FC<TokenItemProps> = ({
     tokenId,
-    tiker,
+    ticker,
     tokenName,
     img,
     createFormData,
@@ -23,11 +23,11 @@ const TokenItem: React.FC<TokenItemProps> = ({
     setDisplaySelectTokenModal }) => {
 
     const handleTokenClick = () => {
-        console.log("Token Click!")
+        // console.log("Token Click!")
         setCreateFormData({
             ...createFormData,
             tokenId: tokenId,
-            tiker: tiker,
+            ticker: ticker,
             tokenName: tokenName,
             img: img,
         });
@@ -35,13 +35,10 @@ const TokenItem: React.FC<TokenItemProps> = ({
     }
 
     return (
-        <div className="w-full relative cursor-pointer hover:bg-gray-100 rounded flex justify-between p-5" onClick={handleTokenClick}>
-            <img
-                className='w-6 h-6'
-                src={img}
-                alt="Token Img" />
-            <div className="">{tiker}</div>
-            <div className="">{tokenName}</div>
+        <div className="w-full relative cursor-pointer hover:bg-gray-100 rounded flex justify-between items-center p-5" onClick={handleTokenClick}>
+            <img className='w-6 h-6' src={img} alt="Token Img" />
+            <div className="flex-grow">{ticker}</div>
+            <div className="flex-grow">{tokenName}</div>
         </div>
     );
 };
