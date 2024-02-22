@@ -1,6 +1,3 @@
-'use client';
-
-import { useAppContext } from '../context/appContext';
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import CustomTooltip from "./CustomTooltip";
@@ -11,15 +8,16 @@ import {
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
 import { toast } from "react-toastify";
 import { noti_option_close } from "@/components/Notifications/Toast";
+import { useAdvancedSettings } from "../context/AdvansedSettings";
+
 
 export default function SettingPopup() {
-  const { advancedSettings, setAdvancedSettings } = useAppContext();
-  console.log("advancedSettings: ", advancedSettings) // false
-
+  const { advancedSettings, setAdvancedSettings } = useAdvancedSettings();
   const [nitroValue, setNitroValue] = useState<number | string>("1.000");
   const [minerNitroValue, setMinerNitroValue] = useState<number | string>(
     "1.000"
   );
+
 
   useEffect(() => {
     if (localStorageKeyExists("txOperatorFee")) {
@@ -64,11 +62,7 @@ export default function SettingPopup() {
     localStorage.setItem("minerFee", minerFee.toString());
   };
 
-  const handleAdvancedSettings = () => {
-    console.log("Advanced Click")
-    setAdvancedSettings(!advancedSettings) // Doesn't update the state. How to make it
-    console.log("New advancedSettings: ", advancedSettings)
-  }
+
 
   return (
     <Popover className="relative">
@@ -181,7 +175,7 @@ export default function SettingPopup() {
                       type="checkbox"
                       className="form-checkbox h-5 w-5 text-primary ml-2"
                       checked={advancedSettings}
-                      onChange={() => handleAdvancedSettings()}
+                      onChange={() => setAdvancedSettings(!advancedSettings)}
                     />
                   </label>
                 </div>

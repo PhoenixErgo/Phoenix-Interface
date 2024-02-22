@@ -9,6 +9,7 @@ import commonStyle from '../../styles/common.module.css';
 import Image from 'next/image';
 import filter_icon from '../../assest/images/checkout/filter_icon.svg';
 import filter_icon_descend from '../../assest/images/checkout/filter_icon_descend.svg';
+import { useAdvancedSettings } from "../../context/AdvansedSettings";
 
 interface IProps {
     ergdata: any;
@@ -31,14 +32,14 @@ const tokenData = [
     { id: 1007, token: "SPF", title: "hodlSPF", bankFee: 10 },
     // Add more tokens if needed
 ];
-
+const ADVANCED_SETTINGS = "advancedSettingsOn";
 
 const Hodltoken = (props: IProps) => {
     const { ergdata } = props;
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [tokensList, setTokensList] = useState<HodlToken[]>(tokenData);
     const [ascendingOrder, setAscendingOrder] = useState<boolean>(true);
-
+    const { advancedSettings } = useAdvancedSettings();
 
     const sortTokens = () => {
         const sortedTokens = [...tokenData]
@@ -50,6 +51,8 @@ const Hodltoken = (props: IProps) => {
     useEffect(() => {
         sortTokens();
     }, [ascendingOrder, searchQuery]);
+
+
 
     return (
         <div className="flex flex-col items-center mt-20">
@@ -89,10 +92,10 @@ const Hodltoken = (props: IProps) => {
                                 token={token}
                             />
                         </div>
-                        <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
+                        <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-around">
                             <MintingHodlTOKEN token={token} />
                             <BurningHoldTOKEN token={`hodl${token}`} />
-                            <DepositingHoldTOKEN token={token} />
+                            {advancedSettings && <DepositingHoldTOKEN token={token} />}
                         </div>
                     </div>
                 </div>
