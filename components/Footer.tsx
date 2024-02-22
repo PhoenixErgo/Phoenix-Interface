@@ -10,9 +10,9 @@ const Footer = () => {
           <div>
             <div className="p-2 bg-white flex items-center place-content-center"><LogoFooter /></div>
 
-            <p className="mt-[18px] lg:ml-4 text-[13px] sm:text-base">
+            {/* <p className="mt-[18px] lg:ml-4 text-[13px] sm:text-base">
               The Phoenix Finance Team
-            </p>
+            </p> */}
           </div>
           <div>
             <h4 className="font-bold uppercase pb-3 ">Open Source</h4>
