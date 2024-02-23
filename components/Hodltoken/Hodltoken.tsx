@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HeaderCardsV2 from "../HeaderCardsV2";
+import HeaderCardsV2 from "../shared/HeaderCardsV2";
 import MintingHodlTOKEN from "./ui/MintingHodlTOKEN";
 import BurningHoldTOKEN from "./ui/BurningHodlTOKEN";
 import DepositingHoldTOKEN from "./ui/DepositingHodlTOKEN";
@@ -10,6 +10,7 @@ import Image from 'next/image';
 import filter_icon from '../../assest/images/checkout/filter_icon.svg';
 import filter_icon_descend from '../../assest/images/checkout/filter_icon_descend.svg';
 import { useAdvancedSettings } from "../../context/AdvansedSettings";
+import SwiperSlider from "../TopPromotedFive/SwiperSlider/SwiperSlider";
 
 interface IProps {
     ergdata: any;
@@ -32,7 +33,6 @@ const tokenData = [
     { id: 1007, token: "SPF", title: "hodlSPF", bankFee: 10 },
     // Add more tokens if needed
 ];
-const ADVANCED_SETTINGS = "advancedSettingsOn";
 
 const Hodltoken = (props: IProps) => {
     const { ergdata } = props;
@@ -55,7 +55,8 @@ const Hodltoken = (props: IProps) => {
 
 
     return (
-        <div className="flex flex-col items-center mt-20">
+        <div className="flex flex-col items-center">
+            <SwiperSlider />
             <div className="relative bg-gray-200 shadow-lg flex content-between items-center rounded-md w-[350px] lg:w-[800px]">
                 <SearchBarHodl searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
                 <div

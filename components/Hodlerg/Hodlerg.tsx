@@ -1,8 +1,8 @@
 import React from "react";
-import HeaderCards from "../HeaderCards";
+import HeaderCards from "../shared/HeaderCards";
 import MintingHodlERG from "./HodlErg3%/MintingHodlERG";
 import BurningHoldERG from "./HodlErg3%/BurningHoldERG";
-import HeaderCardsV2 from "../HeaderCardsV2";
+import HeaderCardsV2 from "../shared/HeaderCardsV2";
 import MintingHodlERG10 from "./HodlErg10/MintingHodlERG10";
 import BurningHoldERG10 from "./HodlErg10/BurningHodlERG10";
 
