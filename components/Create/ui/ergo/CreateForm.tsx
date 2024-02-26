@@ -5,44 +5,20 @@ import {
 import {
     BANK_SINGLETON_TOKEN_ID,
     explorerClient,
-    HODL_ERG_TOKEN_ID,
-    MIN_MINER_FEE,
-    MIN_TX_OPERATOR_FEE,
     precision,
     precisionBigInt,
     PROXY_ADDRESS,
     UIMultiplier,
 } from "@/blockchain/ergo/constants";
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
-import {
-    checkWalletConnection,
-    outputInfoToErgoTransactionOutput,
-    signAndSubmitTx,
-} from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
 import {
-    noti_option,
     noti_option_close,
-    txSubmmited,
 } from "@/components/Notifications/Toast";
-import {
-    Amount,
-    Box,
-    ErgoAddress,
-    OutputBuilder,
-    SConstant,
-    SLong,
-    TransactionBuilder,
-} from "@fleet-sdk/core";
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
-import { getInputBoxes, getShortLink, getWalletConfig } from "@/blockchain/ergo/wallet/utils";
-import assert from "assert";
-import { getTxReducedB64Safe } from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
 import SelectTokenModal from "./SelectTokenModal";
-import { take } from "rxjs";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import { createFormData } from "../../../types/front";
+import { createFormData } from "@/types/front";
 
 
 const CreateForm = () => {

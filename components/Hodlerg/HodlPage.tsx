@@ -1,16 +1,40 @@
-import React from "react";
-import HeaderCards from "../shared/HeaderCards";
+import React, { Fragment } from "react";
 import MintingHodlERG from "./HodlErg3%/MintingHodlERG";
 import BurningHoldERG from "./HodlErg3%/BurningHoldERG";
 import HeaderCardsV2 from "../shared/HeaderCardsV2";
 import MintingHodlERG10 from "./HodlErg10/MintingHodlERG10";
 import BurningHoldERG10 from "./HodlErg10/BurningHodlERG10";
+import {getTicker} from "@/common/utils";
+import MintingHodlAlph from "@/components/Hodlerg/HodlAlph3/MintingHodlAlph";
+import BurningHodlAlph from "@/components/Hodlerg/HodlAlph3/BurningHodlAlph";
 
 interface IProps {
-  ergdata: any;
+  gameData: any;
+  network: string | null
 }
 const Hodlerg = (props: IProps) => {
-  const { ergdata } = props;
+  const { gameData, network } = props;
+
+  function getNetworkComponent(network: string | null) {
+    switch (network) {
+      case '1':
+      case '3':
+      default:
+        return (
+            <Fragment>
+              <MintingHodlERG network={network} />
+              <BurningHodlErg network={network} />
+            </Fragment>
+        );
+      case '4':
+        return (
+            <Fragment>
+              <MintingHodlAlph network={network} />
+              <BurningHodlAlph network={network} />
+            </Fragment>
+        );
+    }
+  }
 
   return (
     <>
@@ -29,21 +53,21 @@ const Hodlerg = (props: IProps) => {
                     overall dynamics of the ecosystem.
                   </p> */}
               <div className="container mx-auto flex flex-col justify-between">
-                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">HODLERG 3%</div>
+                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">{`HODL${getTicker(network)} 3%`}</div>
                 <HeaderCardsV2
                   title="Price"
-                  amount={ergdata.currentPrice}
-                  token="ERG"
+                  amount={gameData.currentPrice}
+                  token={getTicker(network)}
                 />
                 <HeaderCardsV2
                   title="Supply"
-                  amount={ergdata.circulatingSupply}
-                  token="hodlERG"
+                  amount={gameData.circulatingSupply}
+                  token={"hodl" + getTicker(network)}
                 />
                 <HeaderCardsV2
                   title="Reserve"
-                  amount={ergdata.tvl}
-                  token="ERG"
+                  amount={gameData.tvl}
+                  token={getTicker(network)}
                 />
               </div>
               <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
@@ -52,8 +76,9 @@ const Hodlerg = (props: IProps) => {
               </div>
             </div>
           </div>
-          <div className="max-w-l mx-auto font-inter my-10 mx-20">
-            <div className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
+          {!network || network === '1' ? <div className="max-w-l mx-auto font-inter my-10 mx-20">
+            <div
+                className="bg-gray-200 shadow-lg flex content-between rounded-md w-[350px] lg:w-[800px]  flex-col lg:flex-row p-2">
               {/* <p className="text-black my-3 min-h-[100px] flex items-end">
                     Mint hodlERG with no fees. You have the freedom to mint as much as you
                     desire at the current price. It's important to note that the minting
@@ -65,29 +90,29 @@ const Hodlerg = (props: IProps) => {
                     overall dynamics of the ecosystem.
                   </p> */}
               <div className="container mx-auto flex flex-col justify-between">
-                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">HODLERG 10%</div>
+                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">{`HODL${getTicker(network)} 10%`}</div>
                 <HeaderCardsV2
-                  title="Price"
-                  amount={ergdata.currentPrice}
-                  token="ERG"
+                    title="Price"
+                    amount={gameData.currentPrice}
+                    token={getTicker(network)}
                 />
                 <HeaderCardsV2
-                  title="Supply"
-                  amount={ergdata.circulatingSupply}
-                  token="hodlERG"
+                    title="Supply"
+                    amount={gameData.circulatingSupply}
+                    token={"hodl" + getTicker(network)}
                 />
                 <HeaderCardsV2
-                  title="Reserve"
-                  amount={ergdata.tvl}
-                  token="ERG"
+                    title="Reserve"
+                    amount={gameData.tvl}
+                    token={getTicker(network)}
                 />
               </div>
               <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
-                <MintingHodlERG10 />
-                <BurningHoldERG10 />
+                <MintingHodlERG10/>
+                <BurningHoldERG10/>
               </div>
             </div>
-          </div>
+          </div> : null }
         </div>
       </div>
     </>
