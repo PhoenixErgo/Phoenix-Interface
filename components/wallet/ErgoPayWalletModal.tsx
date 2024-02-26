@@ -3,7 +3,7 @@ import QRCode from 'react-qr-code';
 import { Button, Modal } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
-import { toaster_copy_text, txSubmmited } from '../Notifications/Toast';
+import { toaster_copy_text, txSubmitted } from '../Notifications/Toast';
 import {getUnConfirmedOrConfirmedTx} from "@/blockchain/ergo/apiHelper";
 
 const ErgoPayWalletModal = ({ isModalOpen, setIsModalOpen, ergoPayLink, txid, isMainnet }: any) => {
@@ -23,7 +23,7 @@ const ErgoPayWalletModal = ({ isModalOpen, setIsModalOpen, ergoPayLink, txid, is
                 if(response && Object.keys(response).length !== 0){
                     clearInterval(txIntervalId);
                     toast.dismiss();
-                    txSubmmited(txid, isMainnet);
+                    txSubmitted(txid, isMainnet);
                 }
             }, 3000)
         }
