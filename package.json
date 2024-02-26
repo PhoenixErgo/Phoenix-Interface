@@ -10,10 +10,10 @@
     "build:tailwind": "tailwindcss build ./styles/globals.css -o ./public/styles.css"
   },
   "dependencies": {
-    "@alephium/cli": "^0.31.1",
-    "@alephium/web3": "^0.31.1",
-    "@alephium/web3-react": "^0.31.1",
-    "@alephium/web3-wallet": "^0.31.1",
+    "@alephium/cli": "^0.31.2",
+    "@alephium/web3": "^0.31.2",
+    "@alephium/web3-react": "^0.31.2",
+    "@alephium/web3-wallet": "^0.31.2",
     "@chakra-ui/alert": "^2.0.6",
     "@coinbarn/ergo-ts": "^0.3.0",
     "@emotion/react": "^11.10.0",
