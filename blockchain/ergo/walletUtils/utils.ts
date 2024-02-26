@@ -1,4 +1,4 @@
-import {installNautilus, noti_option_close, txSubmmited} from "@/components/Notifications/Toast";
+import {installNautilus, noti_option_close, txSubmitted} from "@/components/Notifications/Toast";
 import {Id, toast} from "react-toastify";
 import {SignedTransaction} from "@nautilus-js/eip12-types";
 import {walletLocalStorage} from "@/components/wallet/ConnectWallet";
@@ -70,7 +70,7 @@ export const signAndSubmitTx = async (unsignedTransaction: any, ergo: any, txBui
     const hash = await ergo!.submit_tx(signedTransaction);
     console.log('tx hash:', hash);
     toast.dismiss();
-    txSubmmited(hash, isMainnet);
+    txSubmitted(hash, isMainnet);
 };
 
 export function outputInfoToErgoTransactionOutput(
