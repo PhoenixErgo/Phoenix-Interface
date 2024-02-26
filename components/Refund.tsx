@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   checkWalletConnection,
-  getWalletConn,
   outputInfoToErgoTransactionOutput,
 } from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
 import {
   noti_option,
   noti_option_close,
-  txSubmmited,
+  txSubmitted,
 } from "@/components/Notifications/Toast";
 import { isHex } from "@fleet-sdk/common";
 import { SignedTransaction } from "@nautilus-js/eip12-types";
@@ -18,7 +17,6 @@ import {
   ErgoAddress,
   FEE_CONTRACT,
   OutputBuilder,
-  TokenAmount,
   TransactionBuilder,
 } from "@fleet-sdk/core";
 import { TransactionInfo } from "@/blockchain/ergo/explorerApi";
@@ -28,22 +26,22 @@ import {getInputBoxes, getShortLink, getWalletConfig} from "@/blockchain/ergo/wa
 import {explorerClient} from "@/blockchain/ergo/constants";
 import {getTxReducedB64Safe} from "@/blockchain/ergo/ergopay/reducedTxn";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
-const Refund = () => {
-  const [isMainnet, setIsMainnet] = useState<boolean>(true);
+
+interface IProps {
+  network: string | null
+}
+
+const Refund = (props: IProps) => {
+
+  const { network } = props;
+  const isMainnet: boolean = !network || network === '1';
+
   const [proxyAddressForm, setProxyAddressForm] = React.useState<string>("");
   const [transactionIDForm, setTxIdForm] = React.useState<string>("");
 
   const [isModalErgoPayOpen, setIsModalErgoPayOpen] = useState<boolean>(false);
   const [ergoPayLink, setErgoPayLink] = useState<string>("");
   const [ergoPayTxId, setErgoPayTxId] = useState<string>("");
-
-  useEffect(() => {
-    const isMainnet = localStorage.getItem("IsMainnet")
-        ? (JSON.parse(localStorage.getItem("IsMainnet")!) as boolean)
-        : true;
-
-    setIsMainnet(isMainnet);
-  }, []);
 
   const handleClick = async () => {
 
@@ -290,7 +288,7 @@ const Refund = () => {
       const hash = await ergo!.submit_tx(signedTx);
       console.log("tx hash:", hash);
       toast.dismiss();
-      txSubmmited(hash, isMainnet);
+      txSubmitted(hash, isMainnet);
     } catch (error) {
       console.log(error);
       toast.dismiss();

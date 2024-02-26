@@ -8,7 +8,7 @@ import {
 import { hasDecimals, localStorageKeyExists } from "@/common/utils";
 import { toast } from "react-toastify";
 import { noti_option_close } from "@/components/Notifications/Toast";
-import { useAdvancedSettings } from "../context/AdvansedSettings";
+import { useAdvancedSettings } from "@/context/AdvansedSettings";
 
 
 export default function SettingPopup() {
@@ -37,7 +37,7 @@ export default function SettingPopup() {
     }
   }, []);
   const handleNitro = (nitroValue: number) => {
-    if (hasDecimals(nitroValue * 1e3)) {
+    if (hasDecimals(nitroValue, 3)) {
       toast.dismiss();
       toast.warn("max 3 decimals", noti_option_close("try-again"));
       return;
@@ -50,7 +50,7 @@ export default function SettingPopup() {
   };
 
   const handleMinerNitro = (nitroValue: number) => {
-    if (hasDecimals(nitroValue * 1e3)) {
+    if (hasDecimals(nitroValue, 3)) {
       toast.dismiss();
       toast.warn("max 3 decimals", noti_option_close("try-again"));
       return;

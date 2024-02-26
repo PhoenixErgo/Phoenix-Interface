@@ -9,7 +9,7 @@ import 'swiper/css/pagination'
 
 // Dummy images data
 const top5Data = [
-    { id: 1001, token: "COMMET", title: "hodlCOMMET", bankFee: 3, amount: 100 },
+    { id: 1001, token: "COMET", title: "hodlCOMET", bankFee: 3, amount: 100 },
     { id: 1002, token: "SigUSD", title: "hodlSigUSD", bankFee: 4, amount: 200 },
     { id: 1003, token: "SigUSD", title: "hodlSigUSD", bankFee: 14, amount: 300 },
     { id: 1004, token: "SPF", title: "hodlSPF", bankFee: 2, amount: 400 },
