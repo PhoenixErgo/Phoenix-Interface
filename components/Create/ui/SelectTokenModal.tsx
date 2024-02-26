@@ -52,6 +52,12 @@ export const tokens: CreationToken[] = [
 
 export const testnetTokens: CreationToken[] = [
   {
+    tokenId: 'a792befda0cc09f1d70585da80ad257e3f3c853d163dc682dd2d34a34387fd00',
+    ticker: 'COMET',
+    tokenName: 'Comet',
+    imgPath: 'https://github.com/spectrum-finance/token-logos/blob/master/logos/ergo/0cd8c9f416e5b1ca9f986a7f10a84191dfb85941619e49e53c0dc30ebf83324b.svg'
+  },
+  {
     tokenId: 'accf5a8446669a4597c7673c58e455e0dfc39a794b90801948e11bbddc577f00',
     ticker: 'HUSD',
     tokenName: 'hodlUSD',
