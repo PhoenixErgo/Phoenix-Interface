@@ -188,7 +188,7 @@ const Hodltoken = (props: IProps) => {
 
     }, []);
 
-    const loading = <div className="w-full h-3/4 flex items-center justify-center">
+    const loading = <div className="w-full h-[60vh] flex items-center justify-center">
         <button
             disabled
             type="button"
