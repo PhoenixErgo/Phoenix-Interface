@@ -32,7 +32,7 @@ export function getPhoenixConfig(network: string | null): BankConfig {
             net = 'devnet';
             break;
         default:
-            net = 'devnet';
+            net = 'testnet';
             break;
     }
     const phoenix = loadDeployments(net).contracts.PhoenixBank.contractInstance
@@ -55,7 +55,7 @@ export function getFactoryConfig(network: string | null): FactoryConfig {
             net = 'devnet';
             break;
         default:
-            net = 'devnet';
+            net = 'testnet';
             break;
     }
     const factory = loadDeployments(net).contracts.PhoenixFactory.contractInstance

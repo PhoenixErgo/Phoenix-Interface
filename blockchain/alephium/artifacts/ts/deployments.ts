@@ -13,7 +13,6 @@ import {
   USDTokenInstance,
 } from ".";
 import { default as testnetDeployments } from "../.deployments.testnet.json";
-import { default as devnetDeployments } from "../.deployments.devnet.json";
 
 export type Deployments = {
   deployerAddress: string;
@@ -58,8 +57,6 @@ export function loadDeployments(
   const deployments =
     networkId === "testnet"
       ? testnetDeployments
-      : networkId === "devnet"
-      ? devnetDeployments
       : undefined;
   if (deployments === undefined) {
     throw Error("The contract has not been deployed to the " + networkId);

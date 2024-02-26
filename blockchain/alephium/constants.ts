@@ -21,7 +21,7 @@ export const ALPH_EXPLORER_URL = (network: string | null): string => {
         case '6':
             return 'http://localhost:23000';
         default:
-            return 'http://localhost:22973';
+            return 'https://testnet.alephium.org';
     }
 }
 
@@ -34,7 +34,7 @@ export const ALPH_NODE_URL = (network: string | null): string => {
         case '6':
             return 'http://localhost:22973';
         default:
-            return 'http://localhost:22973';
+            return 'https://wallet.testnet.alephium.org';
     }
 }
 

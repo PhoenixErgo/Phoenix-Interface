@@ -36,7 +36,7 @@ const TokenItem: React.FC<TokenItemProps> = ({
 
     return (
         <div className="w-full relative cursor-pointer hover:bg-gray-100 rounded flex justify-between items-center p-5" onClick={handleTokenClick}>
-            <img className='w-6 h-6' src={img} alt="Token Img" />
+            <img className='w-6 h-6 mr-2' src={img} alt="Token Img" />
             <div className="flex-grow">{ticker}</div>
             <div className="flex-grow">{tokenName}</div>
         </div>

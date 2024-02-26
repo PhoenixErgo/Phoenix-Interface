@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBar from "./SearchBar";
 import TokenItem from "./TokenItem";
 import { createFormData } from "@/types/front";
@@ -86,6 +86,8 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [searchedTokens, setSearchedTokens] = useState<Token[]>([]);
 
+    const modalRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         // Filter tokens based on ticker when searchQuery changes
 
@@ -108,7 +110,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             tokenName: item.name,
                             imgPath: item.logoURI
                         }
-                    }).slice(0, 10)
+                    })
 
                     const filteredTokens = alephiumTokens.filter((token) =>
                         token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
@@ -127,7 +129,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             tokenName: item.name,
                             imgPath: item.logoURI
                         }
-                    }).slice(0, 10) // TODO: implement scroll
+                    })
 
                     const filteredTokens = tokens.filter((token) =>
                         token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
@@ -141,6 +143,19 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
 
     }, [searchQuery]);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                setDisplaySelectTokenModal(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setDisplaySelectTokenModal]);
+
 
 
     return (
@@ -150,7 +165,9 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     {/* Modal Container */}
-                    <div className="w-full bg-white p-5 max-w-md mx-auto rounded-md shadow-lg">
+                    <div
+                        ref={modalRef}
+                        className="w-full h-3/4 bg-white p-5 max-w-md mx-auto rounded-md shadow-lg">
                         {/* Modal Header */}
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold">Select a token</h2>
@@ -179,7 +196,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery} />
 
-                        <div className="w-full mt-6 flex flex-col justify-start">
+                        <div className="w-full h-4/5 mt-6 overflow-y-scroll flex flex-col justify-start">
                             {searchedTokens.map((token) => (
                                 <TokenItem
                                     key={token.tokenId}
