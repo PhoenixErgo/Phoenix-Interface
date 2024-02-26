@@ -165,7 +165,9 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                     {/* Modal Container */}
-                    <div ref={modalRef} className="w-full h-3/4 bg-white p-5 max-w-md mx-auto rounded-md shadow-lg">
+                    <div
+                        ref={modalRef}
+                        className="w-full h-3/4 bg-white p-5 max-w-md mx-auto rounded-md shadow-lg">
                         {/* Modal Header */}
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold">Select a token</h2>
