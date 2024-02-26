@@ -1,4 +1,4 @@
-import { RegisterType } from '../blockchain/ergo/explorerApi';
+import { RegisterType } from '@/blockchain/ergo/explorerApi';
 
 interface ErgoTransaction{
   'id': string;
