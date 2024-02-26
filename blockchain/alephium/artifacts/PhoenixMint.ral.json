@@ -10,8 +10,20 @@
       "baseTokenApprovalAmount",
       "interfaceFee"
     ],
-    "types": ["ByteVec", "ByteVec", "U256", "U256", "U256"],
-    "isMutable": [false, false, false, false, false]
+    "types": [
+      "ByteVec",
+      "ByteVec",
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
   },
   "functions": [
     {

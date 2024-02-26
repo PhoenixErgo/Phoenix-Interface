@@ -30,23 +30,57 @@
       "U256",
       "ByteVec"
     ],
-    "isMutable": [false, false, false, false, false, false, false, false, true, true, false]
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false
+    ]
   },
   "eventsSig": [
     {
       "name": "Mint",
-      "fieldNames": ["address", "amountHodlToken"],
-      "fieldTypes": ["Address", "U256"]
+      "fieldNames": [
+        "address",
+        "amountHodlToken"
+      ],
+      "fieldTypes": [
+        "Address",
+        "U256"
+      ]
     },
     {
       "name": "Burn",
-      "fieldNames": ["address", "amountHodlToken", "newPrice"],
-      "fieldTypes": ["Address", "U256", "U256"]
+      "fieldNames": [
+        "address",
+        "amountHodlToken",
+        "newPrice"
+      ],
+      "fieldTypes": [
+        "Address",
+        "U256",
+        "U256"
+      ]
     },
     {
       "name": "Deposit",
-      "fieldNames": ["address", "amountHodlToken", "newPrice"],
-      "fieldTypes": ["Address", "U256", "U256"]
+      "fieldNames": [
+        "address",
+        "amountHodlToken",
+        "newPrice"
+      ],
+      "fieldTypes": [
+        "Address",
+        "U256",
+        "U256"
+      ]
     }
   ],
   "functions": [
@@ -58,7 +92,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["ByteVec"]
+      "returnTypes": [
+        "ByteVec"
+      ]
     },
     {
       "name": "getName",
@@ -68,7 +104,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["ByteVec"]
+      "returnTypes": [
+        "ByteVec"
+      ]
     },
     {
       "name": "getDecimals",
@@ -78,7 +116,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getTotalSupply",
@@ -88,7 +128,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getbaseTokenId",
@@ -98,7 +140,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["ByteVec"]
+      "returnTypes": [
+        "ByteVec"
+      ]
     },
     {
       "name": "getBankFeeNum",
@@ -108,7 +152,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getCreatorFeeNum",
@@ -118,7 +164,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getMinBankValue",
@@ -128,7 +176,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getBaseBalance",
@@ -138,7 +188,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getHodlTokenBalance",
@@ -148,7 +200,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getDevFeeNum",
@@ -158,7 +212,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getFeeDenom",
@@ -168,7 +224,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getCirculatingSupply",
@@ -178,7 +236,9 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "getPrice",
@@ -188,16 +248,24 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": ["U256"]
+      "returnTypes": [
+        "U256"
+      ]
     },
     {
       "name": "mint",
       "usePreapprovedAssets": true,
       "useAssetsInContract": true,
       "isPublic": true,
-      "paramNames": ["amountHodlTokenDesired"],
-      "paramTypes": ["U256"],
-      "paramIsMutable": [false],
+      "paramNames": [
+        "amountHodlTokenDesired"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
       "returnTypes": []
     },
     {
@@ -205,9 +273,15 @@
       "usePreapprovedAssets": true,
       "useAssetsInContract": true,
       "isPublic": true,
-      "paramNames": ["amountHodlTokenToBurn"],
-      "paramTypes": ["U256"],
-      "paramIsMutable": [false],
+      "paramNames": [
+        "amountHodlTokenToBurn"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
       "returnTypes": []
     },
     {
@@ -215,9 +289,15 @@
       "usePreapprovedAssets": true,
       "useAssetsInContract": true,
       "isPublic": true,
-      "paramNames": ["amountTokenToDeposit"],
-      "paramTypes": ["U256"],
-      "paramIsMutable": [false],
+      "paramNames": [
+        "amountTokenToDeposit"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
       "returnTypes": []
     },
     {
@@ -225,9 +305,15 @@
       "usePreapprovedAssets": true,
       "useAssetsInContract": false,
       "isPublic": false,
-      "paramNames": ["amountToDistribute"],
-      "paramTypes": ["U256"],
-      "paramIsMutable": [false],
+      "paramNames": [
+        "amountToDistribute"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
       "returnTypes": []
     },
     {
@@ -235,10 +321,21 @@
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": false,
-      "paramNames": ["dividend", "divisor"],
-      "paramTypes": ["U256", "U256"],
-      "paramIsMutable": [false, false],
-      "returnTypes": ["U256"]
+      "paramNames": [
+        "dividend",
+        "divisor"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
     }
   ],
   "constants": [

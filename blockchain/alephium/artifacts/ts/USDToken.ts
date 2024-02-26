@@ -22,10 +22,10 @@ import {
   multicallMethods,
   fetchContractState,
   ContractInstance,
-  getContractEventsCurrentCount
-} from '@alephium/web3';
-import { default as USDTokenContractJson } from '../tokens/USDToken.ral.json';
-import { getContractByCodeHash } from './contracts';
+  getContractEventsCurrentCount,
+} from "@alephium/web3";
+import { default as USDTokenContractJson } from "../tokens/USDToken.ral.json";
+import { getContractByCodeHash } from "./contracts";
 
 // Custom types for the contract
 export namespace USDTokenTypes {
@@ -40,30 +40,32 @@ export namespace USDTokenTypes {
 
   export interface CallMethodTable {
     getSymbol: {
-      params: Omit<CallContractParams<{}>, 'args'>;
+      params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<HexString>;
     };
     getName: {
-      params: Omit<CallContractParams<{}>, 'args'>;
+      params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<HexString>;
     };
     getDecimals: {
-      params: Omit<CallContractParams<{}>, 'args'>;
+      params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
     };
     getTotalSupply: {
-      params: Omit<CallContractParams<{}>, 'args'>;
+      params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
     };
   }
-  export type CallMethodParams<T extends keyof CallMethodTable> = CallMethodTable[T]['params'];
-  export type CallMethodResult<T extends keyof CallMethodTable> = CallMethodTable[T]['result'];
+  export type CallMethodParams<T extends keyof CallMethodTable> =
+    CallMethodTable[T]["params"];
+  export type CallMethodResult<T extends keyof CallMethodTable> =
+    CallMethodTable[T]["result"];
   export type MultiCallParams = Partial<{
-    [Name in keyof CallMethodTable]: CallMethodTable[Name]['params'];
+    [Name in keyof CallMethodTable]: CallMethodTable[Name]["params"];
   }>;
   export type MultiCallResults<T extends MultiCallParams> = {
     [MaybeName in keyof T]: MaybeName extends keyof CallMethodTable
-      ? CallMethodTable[MaybeName]['result']
+      ? CallMethodTable[MaybeName]["result"]
       : undefined;
   };
 }
@@ -79,30 +81,30 @@ class Factory extends ContractFactory<USDTokenInstance, USDTokenTypes.Fields> {
 
   tests = {
     getSymbol: async (
-      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, 'testArgs'>
+      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, 'getSymbol', params);
+      return testMethod(this, "getSymbol", params);
     },
     getName: async (
-      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, 'testArgs'>
+      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, 'getName', params);
+      return testMethod(this, "getName", params);
     },
     getDecimals: async (
-      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, 'testArgs'>
+      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, 'getDecimals', params);
+      return testMethod(this, "getDecimals", params);
     },
     getTotalSupply: async (
-      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, 'testArgs'>
+      params: Omit<TestContractParams<USDTokenTypes.Fields, never>, "testArgs">
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, 'getTotalSupply', params);
+      return testMethod(this, "getTotalSupply", params);
     },
     withdraw: async (
       params: TestContractParams<USDTokenTypes.Fields, { amount: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, 'withdraw', params);
-    }
+      return testMethod(this, "withdraw", params);
+    },
   };
 }
 
@@ -110,8 +112,8 @@ class Factory extends ContractFactory<USDTokenInstance, USDTokenTypes.Fields> {
 export const USDToken = new Factory(
   Contract.fromJson(
     USDTokenContractJson,
-    '',
-    '69324141d38ba40b9a9b64a650372b9c26b5db5b05e50b33b13447776c1ac587'
+    "",
+    "69324141d38ba40b9a9b64a650372b9c26b5db5b05e50b33b13447776c1ac587"
   )
 );
 
@@ -127,49 +129,49 @@ export class USDTokenInstance extends ContractInstance {
 
   methods = {
     getSymbol: async (
-      params?: USDTokenTypes.CallMethodParams<'getSymbol'>
-    ): Promise<USDTokenTypes.CallMethodResult<'getSymbol'>> => {
+      params?: USDTokenTypes.CallMethodParams<"getSymbol">
+    ): Promise<USDTokenTypes.CallMethodResult<"getSymbol">> => {
       return callMethod(
         USDToken,
         this,
-        'getSymbol',
+        "getSymbol",
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getName: async (
-      params?: USDTokenTypes.CallMethodParams<'getName'>
-    ): Promise<USDTokenTypes.CallMethodResult<'getName'>> => {
+      params?: USDTokenTypes.CallMethodParams<"getName">
+    ): Promise<USDTokenTypes.CallMethodResult<"getName">> => {
       return callMethod(
         USDToken,
         this,
-        'getName',
+        "getName",
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getDecimals: async (
-      params?: USDTokenTypes.CallMethodParams<'getDecimals'>
-    ): Promise<USDTokenTypes.CallMethodResult<'getDecimals'>> => {
+      params?: USDTokenTypes.CallMethodParams<"getDecimals">
+    ): Promise<USDTokenTypes.CallMethodResult<"getDecimals">> => {
       return callMethod(
         USDToken,
         this,
-        'getDecimals',
+        "getDecimals",
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getTotalSupply: async (
-      params?: USDTokenTypes.CallMethodParams<'getTotalSupply'>
-    ): Promise<USDTokenTypes.CallMethodResult<'getTotalSupply'>> => {
+      params?: USDTokenTypes.CallMethodParams<"getTotalSupply">
+    ): Promise<USDTokenTypes.CallMethodResult<"getTotalSupply">> => {
       return callMethod(
         USDToken,
         this,
-        'getTotalSupply',
+        "getTotalSupply",
         params === undefined ? {} : params,
         getContractByCodeHash
       );
-    }
+    },
   };
 
   async multicall<Calls extends USDTokenTypes.MultiCallParams>(
