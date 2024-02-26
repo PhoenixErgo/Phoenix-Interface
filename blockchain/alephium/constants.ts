@@ -28,7 +28,7 @@ export const ALPH_EXPLORER_URL = (network: string | null): string => {
 export const ALPH_NODE_URL = (network: string | null): string => {
     switch (network) {
         case '4':
-            return 'https://wallet.mainnet.alephium.org';
+            return 'https://lb-fullnode-alephium.notrustverify.ch';
         case '5':
             return 'https://wallet.testnet.alephium.org';
         case '6':
