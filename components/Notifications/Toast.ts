@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { EXPLORER_URL } from '@/blockchain/ergo/constants';
+import {ALPH_EXPLORER_URL} from "@/blockchain/alephium/constants";
 
 export const noti_option: any = {
   position: 'top-right',
@@ -63,18 +64,31 @@ export const installNautilus:any = {
   onClick: (props: any) => window.open(`https://chrome.google.com/webstore/detail/nautilus-wallet/gjlmehlldlphhljhpnlddaodbjjcchai/`, '_blank'),
 };
 
-export const txSubmmited = (txHash: string, isMainnet: boolean) =>
-  toast.success(`Transaction submitted (click me)`, {
-    position: 'top-right',
-    autoClose: false,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: true,
-    draggable: false,
-    progress: undefined,
-    theme: 'dark',
-    onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
-  });
+export const txSubmitted = (txHash: string, isMainnet: boolean) =>
+    toast.success(`Transaction submitted (click me)`, {
+      position: 'top-right',
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: 'dark',
+      onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
+    });
+
+export const ALPHTxSubmitted = (txHash: string, network: string | null) =>
+    toast.success(`Transaction submitted (click me)`, {
+      position: 'top-right',
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      theme: 'dark',
+      onClick: props => window.open(`${ALPH_EXPLORER_URL(network)}/transactions/${txHash}`, '_blank'),
+    });
 
 export const toaster_copy_text: any = {
   position: 'bottom-right',
