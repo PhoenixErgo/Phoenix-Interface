@@ -10,6 +10,10 @@
     "build:tailwind": "tailwindcss build ./styles/globals.css -o ./public/styles.css"
   },
   "dependencies": {
+    "@alephium/cli": "^0.31.1",
+    "@alephium/web3": "^0.31.1",
+    "@alephium/web3-react": "^0.31.1",
+    "@alephium/web3-wallet": "^0.31.1",
     "@chakra-ui/alert": "^2.0.6",
     "@coinbarn/ergo-ts": "^0.3.0",
     "@emotion/react": "^11.10.0",
@@ -27,6 +31,7 @@
     "antd": "^5.4.7",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0",
+    "big.js": "^6.2.1",
     "bignumber.js": "^9.1.1",
     "bootstrap": "^5.3.1",
     "date-fns-tz": "^2.0.0",
@@ -67,6 +72,7 @@
   },
   "devDependencies": {
     "@nautilus-js/eip12-types": "^0.1.9",
+    "@types/big.js": "^6.2.2",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "18.2.6",
     "@types/react-flatpickr": "^3.8.8",
