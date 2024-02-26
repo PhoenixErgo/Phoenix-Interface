@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { createFormData } from "../../../types/front";
+import { createFormData } from "@/types/front";
 
 interface TokenItemProps {
     tokenId: string;

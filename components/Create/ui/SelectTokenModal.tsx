@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import SearchBar from "./SearchBar";
 import TokenItem from "./TokenItem";
-import { createFormData } from "../../../types/front";
-// import { tokens } from './../../../assest/tokens';
-import rsADAimg from "./token_icons/rsADA.svg";
-import RSNimg from "./../../../public/token_icons/rsn.webp";
+import { createFormData } from "@/types/front";
+import axios from "axios";
 
-export const tokens = [
+interface CreationToken {
+    tokenId: string;
+    ticker: string;
+    tokenName: string;
+    imgPath: string;
+}
+
+export const tokens: CreationToken[] = [
     {
         tokenId: "",
         ticker: "ERG",
@@ -37,7 +42,22 @@ export const tokens = [
         tokenName: "rsADA",
         imgPath: "/token_icons/rsADA.svg",
     },
+    {
+        tokenId: "08e45c055160017c6346680b1400789e28a0d2d897f483535fe6b1baa6852f00",
+        ticker: "HUSD",
+        tokenName: "hodlUSD",
+        imgPath: "https://raw.githubusercontent.com/alephium/token-list/master/logos/TUSDT.png",
+    },
 ];
+
+export const testnetTokens: CreationToken[] = [
+    {
+        tokenId: "accf5a8446669a4597c7673c58e455e0dfc39a794b90801948e11bbddc577f00",
+        ticker: "HUSD",
+        tokenName: "hodlUSD",
+        imgPath: "https://raw.githubusercontent.com/alephium/token-list/master/logos/TUSDT.png",
+    },
+]
 
 interface Token {
     tokenId: string;
@@ -46,6 +66,7 @@ interface Token {
     imgPath: string;
 }
 interface SelectTokenModalProps {
+    network: string | null,
     createFormData: createFormData;
     setCreateFormData: React.Dispatch<React.SetStateAction<createFormData>>;
     displaySelectTokenModal: boolean;
@@ -55,6 +76,7 @@ interface SelectTokenModalProps {
 
 
 const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
+    network,
     createFormData,
     setCreateFormData,
     displaySelectTokenModal,
@@ -66,10 +88,57 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
 
     useEffect(() => {
         // Filter tokens based on ticker when searchQuery changes
-        const filteredTokens = tokens.filter((token) =>
-            token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchedTokens(filteredTokens);
+
+        switch (network) {
+            case '1':
+            case '3':
+            default: {
+                const filteredTokens = tokens.filter((token) =>
+                    token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+                setSearchedTokens(filteredTokens);
+                break;
+            }
+            case '4': {
+                axios.get('https://raw.githubusercontent.com/alephium/token-list/master/tokens/mainnet.json').then(res => {
+                    const alephiumTokens: CreationToken[] = res.data.tokens.map((item: { id: string; symbol: string; name: string; logoURI: string; }) => {
+                        return {
+                            tokenId: item.id,
+                            ticker: item.symbol,
+                            tokenName: item.name,
+                            imgPath: item.logoURI
+                        }
+                    }).slice(0, 10)
+
+                    const filteredTokens = alephiumTokens.filter((token) =>
+                        token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
+                    );
+
+                    setSearchedTokens([tokens[5]].concat(filteredTokens));
+                });
+                break;
+            }
+            case '5': {
+                axios.get('https://raw.githubusercontent.com/alephium/token-list/master/tokens/testnet.json').then(res => {
+                    const tokens: CreationToken[] = res.data.tokens.map((item: { id: string; symbol: string; name: string; logoURI: string; }) => {
+                        return {
+                            tokenId: item.id,
+                            ticker: item.symbol,
+                            tokenName: item.name,
+                            imgPath: item.logoURI
+                        }
+                    }).slice(0, 10) // TODO: implement scroll
+
+                    const filteredTokens = tokens.filter((token) =>
+                        token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
+                    );
+
+                    setSearchedTokens([testnetTokens[0]].concat(filteredTokens));
+                });
+                break;
+            }
+        }
+
     }, [searchQuery]);
 
 
@@ -111,7 +180,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             setSearchQuery={setSearchQuery} />
 
                         <div className="w-full mt-6 flex flex-col justify-start">
-                            {searchedTokens?.map((token) => (
+                            {searchedTokens.map((token) => (
                                 <TokenItem
                                     key={token.tokenId}
                                     tokenId={token.tokenId}

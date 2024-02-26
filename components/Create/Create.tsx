@@ -1,17 +1,17 @@
 import React from "react";
-import CreateForm from "./ui/CreateForm";
+import CreateForm from "./ui/alephium/CreateForm";
 
 interface IProps {
-    ergdata: any;
+    network: string | null
 }
 const Create = (props: IProps) => {
-    const { ergdata } = props;
+    const { network } = props;
 
     return (
         <>
             <div className="min-h-[70vh]">
                 <div className="lg:flex items-start px-2 sm:px-3 my-2 lg:my-10">
-                    <CreateForm />
+                    <CreateForm network={network}/>
                 </div>
             </div>
         </>

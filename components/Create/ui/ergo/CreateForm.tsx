@@ -2,26 +2,16 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
     OutputInfo,
 } from "@/blockchain/ergo/explorerApi";
-import {
-    BANK_SINGLETON_TOKEN_ID,
-    explorerClient,
-    precision,
-    precisionBigInt,
-    PROXY_ADDRESS,
-    UIMultiplier,
-} from "@/blockchain/ergo/constants";
-import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
-import { toast } from "react-toastify";
-import {
-    noti_option_close,
-} from "@/components/Notifications/Toast";
-import { hasDecimals, localStorageKeyExists } from "@/common/utils";
 import ErgoPayWalletModal from "@/components/wallet/ErgoPayWalletModal";
-import SelectTokenModal from "./SelectTokenModal";
+import SelectTokenModal from "../SelectTokenModal";
 import { createFormData } from "@/types/front";
 
+interface IProps {
+    network: string | null
+}
 
-const CreateForm = () => {
+
+const CreateForm = (props: IProps) => {
     const [isMainnet, setIsMainnet] = useState<boolean>(true);
     const [burnAmount, setBurnAmount] = useState<number>(0);
     const [bankBox, setBankBox] = useState<OutputInfo | null>(null);
@@ -34,58 +24,20 @@ const CreateForm = () => {
 
     const [displaySelectTokenModal, setDisplaySelectTokenModal] = useState<boolean>(false);
 
-    useEffect(() => {
-        const isMainnet = localStorage.getItem("IsMainnet")
-            ? (JSON.parse(localStorage.getItem("IsMainnet")!) as boolean)
-            : true;
-
-        setIsMainnet(isMainnet);
-        setProxyAddress(PROXY_ADDRESS(isMainnet));
-
-        explorerClient(isMainnet)
-            .getApiV1BoxesUnspentBytokenidP1(BANK_SINGLETON_TOKEN_ID(isMainnet))
-            .then((res) => {
-                setBankBox(res.data.items![0] as OutputInfo);
-            })
-            .catch((err) => {
-                toast.dismiss();
-                toast.warn("error getting bank box", noti_option_close("try-again"));
-                setBankBox(null);
-            });
-    }, []);
-
-    const minBoxValue = BigInt(1000000);
-
-    useEffect(() => {
-        if (
-            !isNaN(burnAmount) &&
-            burnAmount >= 0.001 &&
-            !hasDecimals(burnAmount * 1e9) &&
-            bankBox
-        ) {
-            const burnAmountBigInt = BigInt(burnAmount * 1e9);
-            const hodlBankContract = new HodlBankContract(bankBox);
-            const ep =
-                hodlBankContract.burnAmount(burnAmountBigInt).expectedAmountWithdrawn;
-            setErgPrice(Number((ep * precisionBigInt) / UIMultiplier) / precision);
-        } else {
-            toast.dismiss();
-            toast.warn("error calculating price", noti_option_close("try-again"));
-            setErgPrice(0);
-        }
-    }, [burnAmount]);
 
 
     const initialFormData: createFormData = {
         tokenId: '',
         ticker: '',
+        symbol: '',
+        name: '',
         tokenName: '',
         img: '',
         bankFee: 0,
         creatorFee: 0,
         uiPromotionFee: 0,
-        setupFee: 0,
     };
+
     const [createFormData, setCreateFormData] = useState<createFormData>(initialFormData);
 
 
@@ -201,21 +153,6 @@ const CreateForm = () => {
                         />
                     </div>
 
-                    {/* Setup Fee */}
-                    <div className="mb-2 mt-2 flex flex-row justify-between items-center w-full h-full">
-                        <label className="pl-5 font-bold">
-                            Setup Fee %
-                        </label>
-                        <input
-                            placeholder="Setup Fee"
-                            type="number"
-                            name="setupFee"
-                            value={createFormData.setupFee}
-                            onChange={handleChange}
-                            className="w-25 border-b-2 border-l-0 border-r-0 border-t-0 border-gray-300 bg-transparent text-gray-500 font-medium text-md h-14 focus:outline-none focus:ring-0 focus:border-primary focus-within:outline-none focus-within:shadow-none focus:shadow-none mr-4 ml-4 text-center"
-                        />
-                    </div>
-
                     <button disabled={initialFormData.tokenId === ""} type="submit" className="w-full focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md  px-4 py-3">Create</button>
 
                     {isModalErgoPayOpen && (
@@ -230,6 +167,7 @@ const CreateForm = () => {
                 </form>
             </div>
             <SelectTokenModal
+                network={props.network}
                 createFormData={createFormData}
                 setCreateFormData={setCreateFormData}
                 displaySelectTokenModal={displaySelectTokenModal}
