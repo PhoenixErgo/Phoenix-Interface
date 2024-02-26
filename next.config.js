@@ -4,12 +4,12 @@ const nextConfig = {
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i.ibb.co'],
+    domains: ['i.ibb.co']
   },
   // added below code
   // future: { webpack5: true },
@@ -17,7 +17,7 @@ const nextConfig = {
     const wasmExtensionRegExp = /\.wasm$/;
     config.experiments = {
       asyncWebAssembly: true,
-      layers: true,
+      layers: true
     };
 
     if (!dev && isServer) {
@@ -38,15 +38,15 @@ const nextConfig = {
     config.module.rules.push({
       test: wasmExtensionRegExp,
       include: path.resolve(__dirname, 'src'),
-      use: [{ loader: require.resolve('wasm-loader'), options: {} }],
+      use: [{ loader: require.resolve('wasm-loader'), options: {} }]
     });
 
     if (!isServer) {
-      config.resolve.fallback.fs = false
+      config.resolve.fallback.fs = false;
     }
 
     return config;
-  },
+  }
 };
 
 module.exports = nextConfig;
@@ -55,17 +55,15 @@ module.exports = nextConfig;
 class WasmChunksFixPlugin {
   apply(compiler) {
     compiler.hooks.thisCompilation.tap('WasmChunksFixPlugin', (compilation) => {
-      compilation.hooks.processAssets.tap(
-          { name: 'WasmChunksFixPlugin' },
-          (assets) =>
-              Object.entries(assets).forEach(([pathname, source]) => {
-                if (!pathname.match(/\.wasm$/)) return;
-                compilation.deleteAsset(pathname);
+      compilation.hooks.processAssets.tap({ name: 'WasmChunksFixPlugin' }, (assets) =>
+        Object.entries(assets).forEach(([pathname, source]) => {
+          if (!pathname.match(/\.wasm$/)) return;
+          compilation.deleteAsset(pathname);
 
-                const name = pathname.split('/')[1];
-                const info = compilation.assetsInfo.get(pathname);
-                compilation.emitAsset(name, source, info);
-              }),
+          const name = pathname.split('/')[1];
+          const info = compilation.assetsInfo.get(pathname);
+          compilation.emitAsset(name, source, info);
+        })
       );
     });
   }

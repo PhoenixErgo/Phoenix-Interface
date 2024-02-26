@@ -13,40 +13,14 @@
       "maxBankFeeNum",
       "maxCreatorFeeNum"
     ],
-    "types": [
-      "ByteVec",
-      "Address",
-      "U256",
-      "Bool",
-      "U256",
-      "U256",
-      "U256"
-    ],
-    "isMutable": [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true
-    ]
+    "types": ["ByteVec", "Address", "U256", "Bool", "U256", "U256", "U256"],
+    "isMutable": [true, true, true, true, true, true, true]
   },
   "eventsSig": [
     {
       "name": "Creation",
-      "fieldNames": [
-        "creator",
-        "contractId",
-        "baseTokenId",
-        "bankFeeNum"
-      ],
-      "fieldTypes": [
-        "Address",
-        "ByteVec",
-        "ByteVec",
-        "U256"
-      ]
+      "fieldNames": ["creator", "contractId", "baseTokenId", "bankFeeNum"],
+      "fieldTypes": ["Address", "ByteVec", "ByteVec", "U256"]
     }
   ],
   "functions": [
@@ -55,15 +29,9 @@
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": false,
-      "paramNames": [
-        "caller"
-      ],
-      "paramTypes": [
-        "Address"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["caller"],
+      "paramTypes": ["Address"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -71,15 +39,9 @@
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newOwner"
-      ],
-      "paramTypes": [
-        "Address"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newOwner"],
+      "paramTypes": ["Address"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -87,15 +49,9 @@
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newTemplateId"
-      ],
-      "paramTypes": [
-        "ByteVec"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newTemplateId"],
+      "paramTypes": ["ByteVec"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -106,24 +62,16 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "ByteVec"
-      ]
+      "returnTypes": ["ByteVec"]
     },
     {
       "name": "setFee",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newFee"
-      ],
-      "paramTypes": [
-        "U256"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newFee"],
+      "paramTypes": ["U256"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -134,24 +82,16 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "U256"
-      ]
+      "returnTypes": ["U256"]
     },
     {
       "name": "setActive",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "isActive"
-      ],
-      "paramTypes": [
-        "Bool"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["isActive"],
+      "paramTypes": ["Bool"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -162,24 +102,16 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "Bool"
-      ]
+      "returnTypes": ["Bool"]
     },
     {
       "name": "setMaxDecimals",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newMaxDecimals"
-      ],
-      "paramTypes": [
-        "U256"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newMaxDecimals"],
+      "paramTypes": ["U256"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -190,24 +122,16 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "U256"
-      ]
+      "returnTypes": ["U256"]
     },
     {
       "name": "setMaxBankFeeNum",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newMaxBankFeeNum"
-      ],
-      "paramTypes": [
-        "U256"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newMaxBankFeeNum"],
+      "paramTypes": ["U256"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -218,24 +142,16 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "U256"
-      ]
+      "returnTypes": ["U256"]
     },
     {
       "name": "setMaxCreatorFeeNum",
       "usePreapprovedAssets": false,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "newMaxCreatorFeeNum"
-      ],
-      "paramTypes": [
-        "U256"
-      ],
-      "paramIsMutable": [
-        false
-      ],
+      "paramNames": ["newMaxCreatorFeeNum"],
+      "paramTypes": ["U256"],
+      "paramIsMutable": [false],
       "returnTypes": []
     },
     {
@@ -246,42 +162,17 @@
       "paramNames": [],
       "paramTypes": [],
       "paramIsMutable": [],
-      "returnTypes": [
-        "U256"
-      ]
+      "returnTypes": ["U256"]
     },
     {
       "name": "createContract",
       "usePreapprovedAssets": true,
       "useAssetsInContract": false,
       "isPublic": true,
-      "paramNames": [
-        "baseTokenId",
-        "symbol",
-        "name",
-        "totalSupply",
-        "bankFeeNum",
-        "creatorFeeNum"
-      ],
-      "paramTypes": [
-        "ByteVec",
-        "ByteVec",
-        "ByteVec",
-        "U256",
-        "U256",
-        "U256"
-      ],
-      "paramIsMutable": [
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ],
-      "returnTypes": [
-        "ByteVec"
-      ]
+      "paramNames": ["baseTokenId", "symbol", "name", "totalSupply", "bankFeeNum", "creatorFeeNum"],
+      "paramTypes": ["ByteVec", "ByteVec", "ByteVec", "U256", "U256", "U256"],
+      "paramIsMutable": [false, false, false, false, false, false],
+      "returnTypes": ["ByteVec"]
     }
   ],
   "constants": [],

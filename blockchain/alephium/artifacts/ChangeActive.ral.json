@@ -3,18 +3,9 @@
   "name": "ChangeActive",
   "bytecodeTemplate": "01010300000005{1}0d0c{0}0106",
   "fieldsSig": {
-    "names": [
-      "factory",
-      "isActive"
-    ],
-    "types": [
-      "ByteVec",
-      "Bool"
-    ],
-    "isMutable": [
-      false,
-      false
-    ]
+    "names": ["factory", "isActive"],
+    "types": ["ByteVec", "Bool"],
+    "isMutable": [false, false]
   },
   "functions": [
     {

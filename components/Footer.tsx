@@ -1,6 +1,6 @@
-import React from "react";
-import { LogoFooter } from "./Logo";
-import KnowYourAssumptionsModal from "./KnowYourAssumptionsModal";
+import React from 'react';
+import { LogoFooter } from './Logo';
+import KnowYourAssumptionsModal from './KnowYourAssumptionsModal';
 
 const Footer = () => {
   return (
@@ -8,7 +8,9 @@ const Footer = () => {
       <footer className="primary-gradient py-8 lg:py-10 font-inter">
         <div className="grid w-full text-white place-content-center gap-5 lg:gap-5 grid-cols-2 lg:grid-cols-4 container mx-auto  px-2 sm:px-3 lg:px-5">
           <div>
-            <div className="p-2 bg-white flex items-center place-content-center"><LogoFooter /></div>
+            <div className="p-2 bg-white flex items-center place-content-center">
+              <LogoFooter />
+            </div>
 
             {/* <p className="mt-[18px] lg:ml-4 text-[13px] sm:text-base">
               The Phoenix Finance Team

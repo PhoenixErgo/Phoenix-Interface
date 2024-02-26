@@ -22,10 +22,10 @@ import {
   multicallMethods,
   fetchContractState,
   ContractInstance,
-  getContractEventsCurrentCount,
-} from "@alephium/web3";
-import { default as PhoenixFactoryContractJson } from "../PhoenixFactory.ral.json";
-import { getContractByCodeHash } from "./contracts";
+  getContractEventsCurrentCount
+} from '@alephium/web3';
+import { default as PhoenixFactoryContractJson } from '../PhoenixFactory.ral.json';
+import { getContractByCodeHash } from './contracts';
 
 // Custom types for the contract
 export namespace PhoenixFactoryTypes {
@@ -50,27 +50,27 @@ export namespace PhoenixFactoryTypes {
 
   export interface CallMethodTable {
     getPhoenixBankTemplateId: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<HexString>;
     };
     getFee: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<bigint>;
     };
     getActive: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<boolean>;
     };
     getMaxDecimals: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<bigint>;
     };
     getMaxBankFeeNum: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<bigint>;
     };
     getMaxCreatorFeeNum: {
-      params: Omit<CallContractParams<{}>, "args">;
+      params: Omit<CallContractParams<{}>, 'args'>;
       result: CallContractResult<bigint>;
     };
     createContract: {
@@ -85,24 +85,19 @@ export namespace PhoenixFactoryTypes {
       result: CallContractResult<HexString>;
     };
   }
-  export type CallMethodParams<T extends keyof CallMethodTable> =
-    CallMethodTable[T]["params"];
-  export type CallMethodResult<T extends keyof CallMethodTable> =
-    CallMethodTable[T]["result"];
+  export type CallMethodParams<T extends keyof CallMethodTable> = CallMethodTable[T]['params'];
+  export type CallMethodResult<T extends keyof CallMethodTable> = CallMethodTable[T]['result'];
   export type MultiCallParams = Partial<{
-    [Name in keyof CallMethodTable]: CallMethodTable[Name]["params"];
+    [Name in keyof CallMethodTable]: CallMethodTable[Name]['params'];
   }>;
   export type MultiCallResults<T extends MultiCallParams> = {
     [MaybeName in keyof T]: MaybeName extends keyof CallMethodTable
-      ? CallMethodTable[MaybeName]["result"]
+      ? CallMethodTable[MaybeName]['result']
       : undefined;
   };
 }
 
-class Factory extends ContractFactory<
-  PhoenixFactoryInstance,
-  PhoenixFactoryTypes.Fields
-> {
+class Factory extends ContractFactory<PhoenixFactoryInstance, PhoenixFactoryTypes.Fields> {
   getInitialFieldsWithDefaultValues() {
     return this.contract.getInitialFieldsWithDefaultValues() as PhoenixFactoryTypes.Fields;
   }
@@ -113,9 +108,9 @@ class Factory extends ContractFactory<
       NotActive: BigInt(1),
       MaxDecimalsExceeded: BigInt(2),
       MaxBankFeeNumExceeded: BigInt(3),
-      MaxCreatorFeeNumExceeded: BigInt(4),
+      MaxCreatorFeeNumExceeded: BigInt(4)
     },
-    OwnedError: { Forbidden: BigInt(90) },
+    OwnedError: { Forbidden: BigInt(90) }
   };
 
   at(address: string): PhoenixFactoryInstance {
@@ -124,113 +119,74 @@ class Factory extends ContractFactory<
 
   tests = {
     assertOwner: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { caller: Address }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { caller: Address }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "assertOwner", params);
+      return testMethod(this, 'assertOwner', params);
     },
     setOwner: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { newOwner: Address }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { newOwner: Address }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setOwner", params);
+      return testMethod(this, 'setOwner', params);
     },
     setPhoenixBankTemplateId: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { newTemplateId: HexString }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { newTemplateId: HexString }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setPhoenixBankTemplateId", params);
+      return testMethod(this, 'setPhoenixBankTemplateId', params);
     },
     getPhoenixBankTemplateId: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, "getPhoenixBankTemplateId", params);
+      return testMethod(this, 'getPhoenixBankTemplateId', params);
     },
     setFee: async (
       params: TestContractParams<PhoenixFactoryTypes.Fields, { newFee: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setFee", params);
+      return testMethod(this, 'setFee', params);
     },
     getFee: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getFee", params);
+      return testMethod(this, 'getFee', params);
     },
     setActive: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { isActive: boolean }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { isActive: boolean }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setActive", params);
+      return testMethod(this, 'setActive', params);
     },
     getActive: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<boolean>> => {
-      return testMethod(this, "getActive", params);
+      return testMethod(this, 'getActive', params);
     },
     setMaxDecimals: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { newMaxDecimals: bigint }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { newMaxDecimals: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setMaxDecimals", params);
+      return testMethod(this, 'setMaxDecimals', params);
     },
     getMaxDecimals: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getMaxDecimals", params);
+      return testMethod(this, 'getMaxDecimals', params);
     },
     setMaxBankFeeNum: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { newMaxBankFeeNum: bigint }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { newMaxBankFeeNum: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setMaxBankFeeNum", params);
+      return testMethod(this, 'setMaxBankFeeNum', params);
     },
     getMaxBankFeeNum: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getMaxBankFeeNum", params);
+      return testMethod(this, 'getMaxBankFeeNum', params);
     },
     setMaxCreatorFeeNum: async (
-      params: TestContractParams<
-        PhoenixFactoryTypes.Fields,
-        { newMaxCreatorFeeNum: bigint }
-      >
+      params: TestContractParams<PhoenixFactoryTypes.Fields, { newMaxCreatorFeeNum: bigint }>
     ): Promise<TestContractResult<null>> => {
-      return testMethod(this, "setMaxCreatorFeeNum", params);
+      return testMethod(this, 'setMaxCreatorFeeNum', params);
     },
     getMaxCreatorFeeNum: async (
-      params: Omit<
-        TestContractParams<PhoenixFactoryTypes.Fields, never>,
-        "testArgs"
-      >
+      params: Omit<TestContractParams<PhoenixFactoryTypes.Fields, never>, 'testArgs'>
     ): Promise<TestContractResult<bigint>> => {
-      return testMethod(this, "getMaxCreatorFeeNum", params);
+      return testMethod(this, 'getMaxCreatorFeeNum', params);
     },
     createContract: async (
       params: TestContractParams<
@@ -245,8 +201,8 @@ class Factory extends ContractFactory<
         }
       >
     ): Promise<TestContractResult<HexString>> => {
-      return testMethod(this, "createContract", params);
-    },
+      return testMethod(this, 'createContract', params);
+    }
   };
 }
 
@@ -254,8 +210,8 @@ class Factory extends ContractFactory<
 export const PhoenixFactory = new Factory(
   Contract.fromJson(
     PhoenixFactoryContractJson,
-    "",
-    "639cbaf85b0c751b96ec7dfef2cc0412a7c55bc9151be78c2df59e40c5bc1c33"
+    '',
+    '639cbaf85b0c751b96ec7dfef2cc0412a7c55bc9151be78c2df59e40c5bc1c33'
   )
 );
 
@@ -277,95 +233,81 @@ export class PhoenixFactoryInstance extends ContractInstance {
     options: EventSubscribeOptions<PhoenixFactoryTypes.CreationEvent>,
     fromCount?: number
   ): EventSubscription {
-    return subscribeContractEvent(
-      PhoenixFactory.contract,
-      this,
-      options,
-      "Creation",
-      fromCount
-    );
+    return subscribeContractEvent(PhoenixFactory.contract, this, options, 'Creation', fromCount);
   }
 
   methods = {
     getPhoenixBankTemplateId: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getPhoenixBankTemplateId">
-    ): Promise<
-      PhoenixFactoryTypes.CallMethodResult<"getPhoenixBankTemplateId">
-    > => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getPhoenixBankTemplateId'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getPhoenixBankTemplateId'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getPhoenixBankTemplateId",
+        'getPhoenixBankTemplateId',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getFee: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getFee">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"getFee">> => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getFee'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getFee'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getFee",
+        'getFee',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getActive: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getActive">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"getActive">> => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getActive'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getActive'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getActive",
+        'getActive',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getMaxDecimals: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getMaxDecimals">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"getMaxDecimals">> => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getMaxDecimals'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getMaxDecimals'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getMaxDecimals",
+        'getMaxDecimals',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getMaxBankFeeNum: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getMaxBankFeeNum">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"getMaxBankFeeNum">> => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getMaxBankFeeNum'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getMaxBankFeeNum'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getMaxBankFeeNum",
+        'getMaxBankFeeNum',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     getMaxCreatorFeeNum: async (
-      params?: PhoenixFactoryTypes.CallMethodParams<"getMaxCreatorFeeNum">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"getMaxCreatorFeeNum">> => {
+      params?: PhoenixFactoryTypes.CallMethodParams<'getMaxCreatorFeeNum'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'getMaxCreatorFeeNum'>> => {
       return callMethod(
         PhoenixFactory,
         this,
-        "getMaxCreatorFeeNum",
+        'getMaxCreatorFeeNum',
         params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
     createContract: async (
-      params: PhoenixFactoryTypes.CallMethodParams<"createContract">
-    ): Promise<PhoenixFactoryTypes.CallMethodResult<"createContract">> => {
-      return callMethod(
-        PhoenixFactory,
-        this,
-        "createContract",
-        params,
-        getContractByCodeHash
-      );
-    },
+      params: PhoenixFactoryTypes.CallMethodParams<'createContract'>
+    ): Promise<PhoenixFactoryTypes.CallMethodResult<'createContract'>> => {
+      return callMethod(PhoenixFactory, this, 'createContract', params, getContractByCodeHash);
+    }
   };
 
   async multicall<Calls extends PhoenixFactoryTypes.MultiCallParams>(

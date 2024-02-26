@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, ContractFactory } from "@alephium/web3";
-import { PhoenixBank, PhoenixFactory, USDToken } from ".";
+import { Contract, ContractFactory } from '@alephium/web3';
+import { PhoenixBank, PhoenixFactory, USDToken } from '.';
 
 let contracts: ContractFactory<any>[] | undefined = undefined;
 export function getContractByCodeHash(codeHash: string): Contract {
@@ -11,11 +11,10 @@ export function getContractByCodeHash(codeHash: string): Contract {
     contracts = [PhoenixBank, PhoenixFactory, USDToken];
   }
   const c = contracts.find(
-    (c) =>
-      c.contract.codeHash === codeHash || c.contract.codeHashDebug === codeHash
+    (c) => c.contract.codeHash === codeHash || c.contract.codeHashDebug === codeHash
   );
   if (c === undefined) {
-    throw new Error("Unknown code with code hash: " + codeHash);
+    throw new Error('Unknown code with code hash: ' + codeHash);
   }
   return c.contract;
 }

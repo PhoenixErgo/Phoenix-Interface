@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export * from "./PhoenixBank";
-export * from "./PhoenixFactory";
-export * from "./USDToken";
-export * from "./scripts";
+export * from './PhoenixBank';
+export * from './PhoenixFactory';
+export * from './USDToken';
+export * from './scripts';

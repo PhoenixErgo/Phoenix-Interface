@@ -9,20 +9,20 @@ import {
   ExecuteScriptResult,
   Script,
   SignerProvider,
-  HexString,
-} from "@alephium/web3";
-import { default as ChangeActiveScriptJson } from "../ChangeActive.ral.json";
-import { default as ChangeBankScriptJson } from "../ChangeBank.ral.json";
-import { default as ChangeFeeScriptJson } from "../ChangeFee.ral.json";
-import { default as ChangeMaxBankFeeNumScriptJson } from "../ChangeMaxBankFeeNum.ral.json";
-import { default as ChangeMaxCreatorFeeNumScriptJson } from "../ChangeMaxCreatorFeeNum.ral.json";
-import { default as ChangeMaxDecimalsScriptJson } from "../ChangeMaxDecimals.ral.json";
-import { default as ChangeOwnerScriptJson } from "../ChangeOwner.ral.json";
-import { default as CreateContractScriptJson } from "../CreateContract.ral.json";
-import { default as PhoenixBurnScriptJson } from "../PhoenixBurn.ral.json";
-import { default as PhoenixDepositScriptJson } from "../PhoenixDeposit.ral.json";
-import { default as PhoenixMintScriptJson } from "../PhoenixMint.ral.json";
-import { default as WithdrawScriptJson } from "../Withdraw.ral.json";
+  HexString
+} from '@alephium/web3';
+import { default as ChangeActiveScriptJson } from '../ChangeActive.ral.json';
+import { default as ChangeBankScriptJson } from '../ChangeBank.ral.json';
+import { default as ChangeFeeScriptJson } from '../ChangeFee.ral.json';
+import { default as ChangeMaxBankFeeNumScriptJson } from '../ChangeMaxBankFeeNum.ral.json';
+import { default as ChangeMaxCreatorFeeNumScriptJson } from '../ChangeMaxCreatorFeeNum.ral.json';
+import { default as ChangeMaxDecimalsScriptJson } from '../ChangeMaxDecimals.ral.json';
+import { default as ChangeOwnerScriptJson } from '../ChangeOwner.ral.json';
+import { default as CreateContractScriptJson } from '../CreateContract.ral.json';
+import { default as PhoenixBurnScriptJson } from '../PhoenixBurn.ral.json';
+import { default as PhoenixDepositScriptJson } from '../PhoenixDeposit.ral.json';
+import { default as PhoenixMintScriptJson } from '../PhoenixMint.ral.json';
+import { default as WithdrawScriptJson } from '../Withdraw.ral.json';
 
 export const ChangeActive = new ExecutableScript<{
   factory: HexString;

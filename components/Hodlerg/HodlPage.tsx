@@ -1,16 +1,16 @@
-import React, { Fragment } from "react";
-import HeaderCardsV2 from "../shared/HeaderCardsV2";
-import {getTicker} from "@/common/utils";
-import MintingHodlERG from "./HodlErg/MintingHodlERG";
-import BurningHodlERG from "@/components/Hodlerg/HodlErg/BurningHodlERG";
-import MintingHodlAlph from "@/components/Hodlerg/HodlAlph/MintingHodlAlph";
-import BurningHodlAlph from "@/components/Hodlerg/HodlAlph/BurningHodlAlph";
-import {ALPH_TOKEN_ID} from "@alephium/web3";
-import {getPhoenixConfig} from "@/blockchain/alephium/services/utils";
+import React, { Fragment } from 'react';
+import HeaderCardsV2 from '../shared/HeaderCardsV2';
+import { getTicker } from '@/common/utils';
+import MintingHodlERG from './HodlErg/MintingHodlERG';
+import BurningHodlERG from '@/components/Hodlerg/HodlErg/BurningHodlERG';
+import MintingHodlAlph from '@/components/Hodlerg/HodlAlph/MintingHodlAlph';
+import BurningHodlAlph from '@/components/Hodlerg/HodlAlph/BurningHodlAlph';
+import { ALPH_TOKEN_ID } from '@alephium/web3';
+import { getPhoenixConfig } from '@/blockchain/alephium/services/utils';
 
 interface IProps {
   gameData: any;
-  network: string | null
+  network: string | null;
 }
 const HodlPage = (props: IProps) => {
   const { gameData, network } = props;
@@ -21,19 +21,33 @@ const HodlPage = (props: IProps) => {
       case '3':
       default:
         return (
-            <Fragment>
-              <MintingHodlERG network={network} percent={percent} />
-              <BurningHodlERG network={network} percent={percent} />
-            </Fragment>
+          <Fragment>
+            <MintingHodlERG network={network} percent={percent} />
+            <BurningHodlERG network={network} percent={percent} />
+          </Fragment>
         );
       case '4':
       case '5':
       case '6':
         return (
-            <Fragment>
-              <MintingHodlAlph network={network} percent={percent} baseTokenTicker={'ALPH'} baseTokenId={ALPH_TOKEN_ID} contractId={getPhoenixConfig(network).contractId} decimals={18} />
-              <BurningHodlAlph network={network} percent={percent} baseTokenTicker={'ALPH'} baseTokenId={ALPH_TOKEN_ID} contractId={getPhoenixConfig(network).contractId} decimals={18} />
-            </Fragment>
+          <Fragment>
+            <MintingHodlAlph
+              network={network}
+              percent={percent}
+              baseTokenTicker={'ALPH'}
+              baseTokenId={ALPH_TOKEN_ID}
+              contractId={getPhoenixConfig(network).contractId}
+              decimals={18}
+            />
+            <BurningHodlAlph
+              network={network}
+              percent={percent}
+              baseTokenTicker={'ALPH'}
+              baseTokenId={ALPH_TOKEN_ID}
+              contractId={getPhoenixConfig(network).contractId}
+              decimals={18}
+            />
+          </Fragment>
         );
     }
   }
@@ -55,7 +69,9 @@ const HodlPage = (props: IProps) => {
                     overall dynamics of the ecosystem.
                   </p> */}
               <div className="container mx-auto flex flex-col justify-between">
-                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">{`HODL${getTicker(network)} 3%`}</div>
+                <div className="text-black mt-5 text-center text-2xl font-extrabold text-red-800">{`HODL${getTicker(
+                  network
+                )} 3%`}</div>
                 <HeaderCardsV2
                   title="Price"
                   amount={gameData.currentPrice}
@@ -64,18 +80,12 @@ const HodlPage = (props: IProps) => {
                 <HeaderCardsV2
                   title="Supply"
                   amount={gameData.circulatingSupply}
-                  token={"hodl" + getTicker(network)}
+                  token={'hodl' + getTicker(network)}
                 />
-                <HeaderCardsV2
-                  title="Reserve"
-                  amount={gameData.tvl}
-                  token={getTicker(network)}
-                />
+                <HeaderCardsV2 title="Reserve" amount={gameData.tvl} token={getTicker(network)} />
               </div>
               <div className="container mx-auto border lg:border-l-gray-300 flex flex-col items-center justify-between">
-                {
-                  getNetworkComponent(network, "3")
-                }
+                {getNetworkComponent(network, '3')}
               </div>
             </div>
           </div>
