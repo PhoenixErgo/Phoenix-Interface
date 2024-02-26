@@ -91,6 +91,11 @@ const DropDown: React.FC = () => {
     // @ts-ignore
     const key = e.item.props.customKey;
 
+    if(key === '4' || key === '6'){
+      console.log('disabled');
+      return;
+    }
+
     localStorage.setItem("network", key);
 
     setValue(selectedTitle);
@@ -111,16 +116,16 @@ const DropDown: React.FC = () => {
         setIcon(<ErgoIcon />);
         break;
       case '4':
-        setValue("Alephium Mainnet");
-        setIcon(<AlephiumIcon />);
+        // setValue("Alephium Mainnet");
+        // setIcon(<AlephiumIcon />);
         break;
       case '5':
         setValue("Alephium Testnet");
         setIcon(<AlephiumIcon />);
         break;
       case '6':
-        setValue("Alephium Devnet");
-        setIcon(<AlephiumIcon />);
+        // setValue("Alephium Devnet");
+        // setIcon(<AlephiumIcon />);
         break;
       default:
         setValue("Ergo");

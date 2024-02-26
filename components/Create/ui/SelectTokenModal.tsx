@@ -110,7 +110,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             tokenName: item.name,
                             imgPath: item.logoURI
                         }
-                    }).slice(0, 10)
+                    })
 
                     const filteredTokens = alephiumTokens.filter((token) =>
                         token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
@@ -129,7 +129,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
                             tokenName: item.name,
                             imgPath: item.logoURI
                         }
-                    }).slice(0, 10) // TODO: implement scroll
+                    })
 
                     const filteredTokens = tokens.filter((token) =>
                         token.ticker.toLowerCase().includes(searchQuery.toLowerCase())
