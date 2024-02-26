@@ -40,6 +40,11 @@ const nextConfig = {
       include: path.resolve(__dirname, 'src'),
       use: [{ loader: require.resolve('wasm-loader'), options: {} }],
     });
+
+    if (!isServer) {
+      config.resolve.fallback.fs = false
+    }
+
     return config;
   },
 };
@@ -51,16 +56,16 @@ class WasmChunksFixPlugin {
   apply(compiler) {
     compiler.hooks.thisCompilation.tap('WasmChunksFixPlugin', (compilation) => {
       compilation.hooks.processAssets.tap(
-        { name: 'WasmChunksFixPlugin' },
-        (assets) =>
-          Object.entries(assets).forEach(([pathname, source]) => {
-            if (!pathname.match(/\.wasm$/)) return;
-            compilation.deleteAsset(pathname);
+          { name: 'WasmChunksFixPlugin' },
+          (assets) =>
+              Object.entries(assets).forEach(([pathname, source]) => {
+                if (!pathname.match(/\.wasm$/)) return;
+                compilation.deleteAsset(pathname);
 
-            const name = pathname.split('/')[1];
-            const info = compilation.assetsInfo.get(pathname);
-            compilation.emitAsset(name, source, info);
-          }),
+                const name = pathname.split('/')[1];
+                const info = compilation.assetsInfo.get(pathname);
+                compilation.emitAsset(name, source, info);
+              }),
       );
     });
   }
