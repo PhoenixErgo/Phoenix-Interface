@@ -16,18 +16,14 @@ import {
 import { HodlBankContract } from "@/blockchain/ergo/phoenixContracts/BankContracts/HodlBankContract";
 import {
     checkWalletConnection,
-    outputInfoToErgoTransactionOutput,
     signAndSubmitTx,
 } from "@/blockchain/ergo/walletUtils/utils";
 import { toast } from "react-toastify";
 import {
     noti_option,
     noti_option_close,
-    txSubmmited,
 } from "@/components/Notifications/Toast";
 import {
-    Amount,
-    Box,
     ErgoAddress,
     OutputBuilder,
     SConstant,
@@ -77,7 +73,7 @@ const BurningHoldERG10 = ({ token }: { token: string }) => {
         if (
             !isNaN(burnAmount) &&
             burnAmount >= 0.001 &&
-            !hasDecimals(burnAmount * 1e9) &&
+            !hasDecimals(burnAmount, 9) &&
             bankBox
         ) {
             const burnAmountBigInt = BigInt(burnAmount * 1e9);
@@ -111,7 +107,7 @@ const BurningHoldERG10 = ({ token }: { token: string }) => {
             toast.warn("min 0.001 ERG", noti_option_close("try-again"));
             return;
         }
-        if (hasDecimals(burnAmount * 1e9)) {
+        if (hasDecimals(burnAmount, 9)) {
             toast.dismiss();
             toast.warn("max 9 decimals", noti_option_close("try-again"));
             return;
