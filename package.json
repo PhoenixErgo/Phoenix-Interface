@@ -43,7 +43,6 @@
     "ergo-lib-wasm-browser": "^0.23.0",
     "eslint-plugin-next": "^0.0.0",
     "framer-motion": "^7.0.0",
-    "gsap": "^3.12.5",
     "json-bigint": "^1.0.0",
     "moment": "^2.29.4",
     "next": "13.1.6",
