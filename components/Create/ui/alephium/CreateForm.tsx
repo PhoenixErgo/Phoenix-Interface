@@ -9,6 +9,7 @@ import { hasDecimals } from '@/common/utils';
 import { PhoenixFactory } from '@/blockchain/alephium/artifacts/ts';
 import { getFactoryConfig } from '@/blockchain/alephium/services/utils';
 import { CREATE_UI_FEE } from '@/blockchain/alephium/constants';
+import Image from 'next/image';
 
 function validateInputs(inputs: createFormData): boolean {
   if (inputs.tokenId === '') {
@@ -187,6 +188,8 @@ const CreateForm = (props: IProps) => {
                 className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex"
               >
                 <img className="w-6 h-6 mr-2" src={createFormData.img} alt="Token Img" />
+                {/* <Image className="w-6 h-6 mr-2" src={createFormData.img} alt="Token Img" width={24} height={24} /> */}
+
                 <div>{createFormData.ticker}</div>
                 <svg
                   width="24px"

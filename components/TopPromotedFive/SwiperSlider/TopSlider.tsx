@@ -105,12 +105,11 @@ const TopSlider: React.FC = () => {
         onMouseLeave={handleMouseUp}
         className="slider-container flex w-[90vw] lg:w-[1090px] overflow-x-auto"
         style={{
-          paddingBottom: '20px', // Adjust this value according to your scrollbar width
-          WebkitOverflowScrolling: 'touch', // Enable smooth scrolling on iOS
-          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
-          scrollbarWidth: 'none', // Hide scrollbar for Firefox
-          '-webkit-scrollbar': 'none' // Hide scrollbar for Chrome, Safari, and Opera
-        }}
+          paddingBottom: '20px',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          '-webkit-scrollbar': 'none'
+        } as React.CSSProperties}
       >
         {top5Data.map((item) => (
           <div key={item.id} className='mx-2'>
