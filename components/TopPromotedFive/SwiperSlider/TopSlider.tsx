@@ -21,6 +21,7 @@ const top5Data: TopData[] = [
 const TopSlider: React.FC = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [startX, setStartX] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -43,6 +44,22 @@ const TopSlider: React.FC = () => {
   const handleMouseUp = () => {
     setIsDragging(false);
   };
+
+  const handleScroll = () => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const scrollWidth = slider.scrollWidth - slider.clientWidth;
+    const scrolled = slider.scrollLeft;
+    const progress = (scrolled / scrollWidth) * 100;
+    setScrollProgress(progress);
+  };
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+    slider.addEventListener('scroll', handleScroll);
+    return () => slider.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handlePrevClick = () => {
     if (sliderRef.current) {
@@ -78,9 +95,6 @@ const TopSlider: React.FC = () => {
     }
   };
 
-
-
-
   return (
     <section className='top-slider py-5 relative'>
       <div
@@ -89,11 +103,13 @@ const TopSlider: React.FC = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className="slider-container flex w-[90vw] lg:w-[1090px] overflow-x-auto "
+        className="slider-container flex w-[90vw] lg:w-[1090px] overflow-x-auto"
         style={{
           paddingBottom: '20px', // Adjust this value according to your scrollbar width
           WebkitOverflowScrolling: 'touch', // Enable smooth scrolling on iOS
-          '-ms-overflow-style': 'none' // Hide scrollbar for Internet Explorer and Edge
+          '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
+          scrollbarWidth: 'none', // Hide scrollbar for Firefox
+          '-webkit-scrollbar': 'none' // Hide scrollbar for Chrome, Safari, and Opera
         }}
       >
         {top5Data.map((item) => (
@@ -106,7 +122,12 @@ const TopSlider: React.FC = () => {
             />
           </div>
         ))}
-
+      </div>
+      <div className="progress-bar" style={{ position: 'absolute', bottom: '0', left: '0', width: '100%', height: '5px', backgroundColor: 'lightgray' }}>
+        <div
+          className="progress"
+          style={{ width: `${scrollProgress}%`, height: '100%', backgroundColor: 'red' }}
+        ></div>
       </div>
       <button
         className="absolute top-[50px] -left-[60px] hidden lg:block w-20 h-10 rounded-full bg-red-500 hover:bg-red-600 text-white"
@@ -122,6 +143,6 @@ const TopSlider: React.FC = () => {
       </button>
     </section>
   );
-}
+};
 
 export default TopSlider;
