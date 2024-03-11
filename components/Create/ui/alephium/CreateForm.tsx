@@ -187,8 +187,8 @@ const CreateForm = (props: IProps) => {
                 onClick={() => setDisplaySelectTokenModal(!displaySelectTokenModal)}
                 className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex"
               >
+                {/* eslint-disable-next-line */}
                 <img className="w-6 h-6 mr-2" src={createFormData.img} alt="Token Img" />
-                {/* <Image className="w-6 h-6 mr-2" src={createFormData.img} alt="Token Img" width={24} height={24} /> */}
 
                 <div>{createFormData.ticker}</div>
                 <svg

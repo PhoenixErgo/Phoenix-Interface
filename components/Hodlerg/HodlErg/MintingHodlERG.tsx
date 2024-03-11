@@ -53,6 +53,7 @@ const MintingHodlERG = (props: IProps) => {
         toast.warn('error getting bank box', noti_option_close('try-again'));
         setBankBox(null);
       });
+    {/* eslint-disable-next-line */ }
   }, []);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ const MintingHodlERG = (props: IProps) => {
       toast.warn('error calculating price', noti_option_close('try-again'));
       setErgPrice(0);
     }
+    {/* eslint-disable-next-line */ }
   }, [mintAmount]);
 
   const handleClick = async () => {
@@ -126,15 +128,14 @@ const MintingHodlERG = (props: IProps) => {
 
     const balance = isErgoPay
       ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data
-          .nanoErgs
+        .nanoErgs
       : BigInt(await ergo!.get_balance());
 
     if (balance < targetWithfee) {
       toast.dismiss();
       toast.warn(
-        `insufficient balance missing ${
-          Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) /
-          precision
+        `insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) /
+        precision
         } ERGs`,
         noti_option_close('try-again')
       );

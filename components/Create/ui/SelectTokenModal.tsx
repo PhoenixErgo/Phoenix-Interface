@@ -91,6 +91,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
 
   const modalRef = useRef<HTMLDivElement>(null);
 
+
   useEffect(() => {
     // Filter tokens based on ticker when searchQuery changes
 
@@ -151,6 +152,7 @@ const SelectTokenModal: React.FC<SelectTokenModalProps> = ({
         break;
       }
     }
+    {/* eslint-disable-next-line */ }
   }, [searchQuery]);
 
   useEffect(() => {

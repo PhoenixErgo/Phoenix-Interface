@@ -9,7 +9,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i.ibb.co']
+    domains: ['i.ibb.co', 'raw.githubusercontent.com'] // Added 'raw.githubusercontent.com'
   },
   // added below code
   // future: { webpack5: true },

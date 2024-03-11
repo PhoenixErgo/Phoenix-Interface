@@ -50,6 +50,7 @@ const ErgoPayButton = ({ setIsModalOpen, connectErgoPay, activeKey, isMainnet }:
     return () => {
       clearInterval(intervalId);
     };
+    {/* eslint-disable-next-line */ }
   }, [activeKey]);
 
   let uuid = sessionStorage.getItem('uuid');

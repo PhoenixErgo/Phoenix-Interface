@@ -228,6 +228,7 @@ const Hodltoken = (props: IProps) => {
                 break;
             }
         }
+        {/* eslint-disable-next-line */ }
     }, []);
 
 
