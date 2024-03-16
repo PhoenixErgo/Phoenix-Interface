@@ -45,6 +45,7 @@ const MintingHodlAlph = (props: IProps) => {
       toast.warn('error calculating price', noti_option_close('try-again'));
       setALPHUIPrice('0');
     }
+    {/* eslint-disable-next-line */ }
   }, [mintAmount]);
 
   const handleClick = async () => {

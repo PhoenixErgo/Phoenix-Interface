@@ -3,6 +3,7 @@ import { OutputInfo } from '@/blockchain/ergo/explorerApi';
 import ErgoPayWalletModal from '@/components/wallet/ErgoPayWalletModal';
 import SelectTokenModal from '../SelectTokenModal';
 import { createFormData } from '@/types/front';
+import Image from 'next/image';
 
 interface IProps {
   network: string | null;
@@ -94,6 +95,7 @@ const CreateForm = (props: IProps) => {
                 onClick={() => setDisplaySelectTokenModal(!displaySelectTokenModal)}
                 className="focus:outline-none text-white primary-gradient hover:opacity-80 focus:ring-4 focus:ring-purple-300 font-medium rounded text-md px-12 py-3 mr-4 cursor-pointer flex"
               >
+                {/* eslint-disable-next-line */}
                 <img className="w-6 h-6 mr-2" src={createFormData.img} alt="Token Img" />
                 <div>{createFormData.ticker}</div>
                 <svg

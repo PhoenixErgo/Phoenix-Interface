@@ -65,6 +65,7 @@ const DepositingHoldTOKEN = ({ token }: { token: string }) => {
       toast.warn('error calculating price', noti_option_close('try-again'));
       setErgPrice(0);
     }
+    {/* eslint-disable-next-line */ }
   }, [burnAmount]);
 
   const handleClick = async () => {
@@ -116,15 +117,14 @@ const DepositingHoldTOKEN = ({ token }: { token: string }) => {
 
     const balance = isErgoPay
       ? (await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)).data
-          .nanoErgs
+        .nanoErgs
       : BigInt(await ergo!.get_balance());
 
     if (balance < targetWithfee) {
       toast.dismiss();
       toast.warn(
-        `insufficient balance missing ${
-          Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) /
-          precision
+        `insufficient balance missing ${Number(((BigInt(targetWithfee) - BigInt(balance)) * precisionBigInt) / UIMultiplier) /
+        precision
         } ERGs`,
         noti_option_close('try-again')
       );
@@ -133,18 +133,17 @@ const DepositingHoldTOKEN = ({ token }: { token: string }) => {
 
     const tokenBalance = isErgoPay
       ? (
-          await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)
-        ).data.tokens!.filter((t) => t.tokenId === HODL_ERG_TOKEN_ID(isMainnet))[0].amount
+        await explorerClient(isMainnet).getApiV1AddressesP1BalanceConfirmed(changeAddress)
+      ).data.tokens!.filter((t) => t.tokenId === HODL_ERG_TOKEN_ID(isMainnet))[0].amount
       : BigInt(await ergo!.get_balance(HODL_ERG_TOKEN_ID(isMainnet)));
     const burnAmountBigInt = BigInt(burnAmount * 1e9);
 
     if (tokenBalance < burnAmountBigInt) {
       toast.dismiss();
       toast.warn(
-        `insufficient token balance missing ${
-          Number(
-            ((BigInt(burnAmountBigInt) - BigInt(tokenBalance)) * precisionBigInt) / UIMultiplier
-          ) / precision
+        `insufficient token balance missing ${Number(
+          ((BigInt(burnAmountBigInt) - BigInt(tokenBalance)) * precisionBigInt) / UIMultiplier
+        ) / precision
         } hodlERGs`,
         noti_option_close('try-again')
       );

@@ -67,7 +67,7 @@ export default function KnowYourAssumptionsModal() {
                       <div className="">
                         <span className="font-bold">Notice that:</span>
                         <ul className="list-inside">
-                          <li>- We don't log, collect, profile, share or sell your data.</li>
+                          <li>- We don&apos;t log, collect, profile, share or sell your data.</li>
                           <li>
                             {' '}
                             - Phoenix operates on a live blockchain, thus transactions are final,
@@ -101,7 +101,7 @@ export default function KnowYourAssumptionsModal() {
                         </ul>
                       </div>
                       <p className="font-bold">
-                        The Phoenix Finance doesn't guarantee the absence of bugs and errors.
+                        The Phoenix Finance doesn&apos;t guarantee the absence of bugs and errors.
                       </p>
                       <p className="font-bold">
                         {' '}

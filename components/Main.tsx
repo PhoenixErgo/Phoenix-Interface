@@ -51,6 +51,7 @@ const Main = () => {
     return () => {
       msgSubscription.unsubscribe();
     };
+    {/* eslint-disable-next-line */ }
   }, []);
 
   useEffect(() => {
@@ -76,6 +77,7 @@ const Main = () => {
         setALPHNetwork('devnet');
         break;
     }
+    {/* eslint-disable-next-line */ }
   }, []);
 
   useEffect(() => {
@@ -138,6 +140,7 @@ const Main = () => {
         break;
       }
     }
+    {/* eslint-disable-next-line */ }
   }, [lastBlock]);
 
   if (!gameData) {
