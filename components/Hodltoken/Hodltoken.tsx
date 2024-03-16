@@ -234,7 +234,7 @@ const Hodltoken = (props: IProps) => {
 
     return (
         <div className="flex flex-col items-center">
-            <TopSlider />
+            {/*<TopSlider />*/}
             {/*<div className="relative bg-gray-200 shadow-lg flex content-between items-center rounded-md w-[350px] lg:w-[800px]">*/}
             {/*    <SearchBarHodl searchQuery={searchQuery} setSearchQuery={setSearchQuery} />*/}
             {/*    <div*/}
