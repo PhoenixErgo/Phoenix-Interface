@@ -1,13 +1,12 @@
-import axios from "axios";
-import axiosRetry from "axios-retry";
-import { uniqWith } from "lodash";
-import BigNumber from "bignumber.js";
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
+import { uniqWith } from 'lodash';
+import BigNumber from 'bignumber.js';
 
-const ERG_TOKEN_ID = "0000000000000000000000000000000000000000000000000000000000000000";
+const ERG_TOKEN_ID = '0000000000000000000000000000000000000000000000000000000000000000';
 function asDict<T>(array: T[]) {
   return Object.assign({}, ...array);
 }
-
 
 export type ErgoDexPool = {
   id: string;
@@ -28,7 +27,7 @@ export type AssetPriceRate = {
   [tokenId: string]: { erg: number };
 };
 
-const BASE_URL = "https://api.spectrum.fi/v1";
+const BASE_URL = 'https://api.spectrum.fi/v1';
 axiosRetry(axios, { retries: 3, retryDelay: axiosRetry.exponentialDelay });
 
 export class ErgoDexService {

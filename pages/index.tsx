@@ -1,7 +1,7 @@
-import Head from "next/head";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Main from "../components/Main";
+import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Main from '../components/Main';
 
 export default function Home() {
   return (

@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { EXPLORER_URL } from '@/blockchain/ergo/constants';
+import { ALPH_EXPLORER_URL } from '@/blockchain/alephium/constants';
 
 export const noti_option: any = {
   position: 'top-right',
@@ -9,10 +10,10 @@ export const noti_option: any = {
   pauseOnHover: true,
   draggable: false,
   progress: undefined,
-  theme: 'dark',
+  theme: 'dark'
 };
 
-export const noti_option_form_error = (id: string | number) :any => {
+export const noti_option_form_error = (id: string | number): any => {
   return {
     toastId: id,
     position: 'top-right',
@@ -23,7 +24,7 @@ export const noti_option_form_error = (id: string | number) :any => {
     draggable: false,
     progress: undefined,
     theme: 'dark'
-  }
+  };
 };
 
 interface NotificationOptions {
@@ -46,12 +47,12 @@ export const noti_option_close: any = (id: any): NotificationOptions => {
     draggable: false,
     hideProgressBar: true,
     autoClose: 3000,
-    theme: 'dark',
+    theme: 'dark'
   };
   return data;
 };
 
-export const installNautilus:any = {
+export const installNautilus: any = {
   position: 'top-right',
   toastId: 'wallet -not-found',
   closeOnClick: false,
@@ -60,10 +61,14 @@ export const installNautilus:any = {
   hideProgressBar: true,
   theme: 'dark',
   autoClose: 5000,
-  onClick: (props: any) => window.open(`https://chrome.google.com/webstore/detail/nautilus-wallet/gjlmehlldlphhljhpnlddaodbjjcchai/`, '_blank'),
+  onClick: (props: any) =>
+    window.open(
+      `https://chrome.google.com/webstore/detail/nautilus-wallet/gjlmehlldlphhljhpnlddaodbjjcchai/`,
+      '_blank'
+    )
 };
 
-export const txSubmmited = (txHash: string, isMainnet: boolean) =>
+export const txSubmitted = (txHash: string, isMainnet: boolean) =>
   toast.success(`Transaction submitted (click me)`, {
     position: 'top-right',
     autoClose: false,
@@ -73,7 +78,22 @@ export const txSubmmited = (txHash: string, isMainnet: boolean) =>
     draggable: false,
     progress: undefined,
     theme: 'dark',
-    onClick: props => window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank'),
+    onClick: (props) =>
+      window.open(`${EXPLORER_URL(isMainnet)}/en/transactions/${txHash}`, '_blank')
+  });
+
+export const ALPHTxSubmitted = (txHash: string, network: string | null) =>
+  toast.success(`Transaction submitted (click me)`, {
+    position: 'top-right',
+    autoClose: false,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: true,
+    draggable: false,
+    progress: undefined,
+    theme: 'dark',
+    onClick: (props) =>
+      window.open(`${ALPH_EXPLORER_URL(network)}/transactions/${txHash}`, '_blank')
   });
 
 export const toaster_copy_text: any = {
@@ -84,5 +104,5 @@ export const toaster_copy_text: any = {
   closeOnClick: true,
   pauseOnHover: false,
   draggable: false,
-  theme: 'dark',
+  theme: 'dark'
 };

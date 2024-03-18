@@ -1,13 +1,13 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState, useEffect } from "react";
-const KYA_STORAGE_KEY = "knowYourAssumptionsAccepted";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useState, useEffect } from 'react';
+const KYA_STORAGE_KEY = 'knowYourAssumptionsAccepted';
 
 export default function KnowYourAssumptionsModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
-    localStorage.setItem(KYA_STORAGE_KEY, "true");
+    localStorage.setItem(KYA_STORAGE_KEY, 'true');
   }
 
   function openModal() {
@@ -32,11 +32,7 @@ export default function KnowYourAssumptionsModal() {
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => console.log("")}
-        >
+        <Dialog as="div" className="relative z-10" onClose={() => console.log('')}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -62,34 +58,25 @@ export default function KnowYourAssumptionsModal() {
               >
                 <Dialog.Panel className="w-full max-w-[920px] transform overflow-hidden rounded-xl lg:rounded-2xl bg-white p-3 lg:p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex flex-col tracking-normal text-black">
-                    <h2 className="font-bold text-2xl">
-                      Know Your Assumptions
-                    </h2>
+                    <h2 className="font-bold text-2xl">Know Your Assumptions</h2>
                     <div className="space-y-4 px-2 py-6">
                       <p>
-                        <span className="font-bold">Phoenix</span> is an open
-                        source UI for interacting with contracts on the Ergo
-                        Blockchain.{" "}
+                        <span className="font-bold">Phoenix</span> is an open source UI for
+                        interacting with contracts on the Ergo and Alephium Blockchain.{' '}
                       </p>
                       <div className="">
                         <span className="font-bold">Notice that:</span>
                         <ul className="list-inside">
+                          <li>- We don&apos;t log, collect, profile, share or sell your data.</li>
                           <li>
-                            - We don't log, collect, profile, share or sell your
-                            data.
+                            {' '}
+                            - Phoenix operates on a live blockchain, thus transactions are final,
+                            and irreversible once they have status «
+                            <span className="font-semibold">confirmed</span>».{' '}
                           </li>
                           <li>
-                            {" "}
-                            - Phoenix operates on a live blockchain, thus
-                            transactions are final, and irreversible once they
-                            have status «
-                            <span className="font-semibold">
-                              confirmed
-                            </span>».{" "}
-                          </li>
-                          <li>
-                            {" "}
-                            - Every transaction can be viewed via{" "}
+                            {' '}
+                            - Every transaction can be viewed via{' '}
                             <a
                               href="https://explorer.ergoplatform.com"
                               target="_blank"
@@ -97,63 +84,56 @@ export default function KnowYourAssumptionsModal() {
                             >
                               explorer
                             </a>
-                            .{" "}
+                            .{' '}
                           </li>
                           <li>
-                            {" "}
-                            -{" "}
+                            {' '}
+                            -{' '}
                             <a
                               href="https://github.com/PhoenixErgo"
                               target="_blank"
                               className="transition-all duration-200 ease-in-out hover:text-opacity-80 text-primary"
                             >
                               All code is open source and available
-                            </a>{" "}
-                            for public review.{" "}
+                            </a>{' '}
+                            for public review.{' '}
                           </li>
                         </ul>
                       </div>
                       <p className="font-bold">
-                        The Phoenix Finance doesn't guarantee the absence of
-                        bugs and errors.
+                        The Phoenix Finance doesn&apos;t guarantee the absence of bugs and errors.
                       </p>
                       <p className="font-bold">
-                        {" "}
-                        NO assistance can offered if a user is hacked or cheated
-                        out of passwords, currency or private keys.{" "}
+                        {' '}
+                        NO assistance can offered if a user is hacked or cheated out of passwords,
+                        currency or private keys.{' '}
                       </p>
                       <div>
-                        <span className="font-bold">
-                          By accepting these KYA, you agree that:{" "}
-                        </span>
+                        <span className="font-bold">By accepting these KYA, you agree that: </span>
                         <ul className="list-decimal list-inside indent-xs">
                           <li>You will use the product at your own risk.</li>
                           <li>Only YOU are responsible for your assets.</li>
                           <li>
-                            Only YOU are responsible for securely storing your
-                            recovery phrase.
+                            Only YOU are responsible for securely storing your recovery phrase.
                           </li>
                           <li>
-                            Our UI does not provide the option for slippage
-                            tolerance, you will receive the corresponding amount
-                            of hodlERG/ERG based on the price calculated at
-                            transaction execution time.
+                            Our UI does not provide the option for slippage tolerance, you will
+                            receive the corresponding amount of coins/tokens based on the price
+                            calculated at transaction execution time.
                           </li>
                           <li>
-                            Our UI uses a proxy contract to interact with the
-                            hodlERG bank, not your wallet UTxOs. This means that
-                            we have a transaction execution bot which processes
-                            all transactions that interact with the bank.
+                            Our **ERG** UI uses a proxy contract to interact with the hodlERG bank,
+                            not your wallet UTxOs. This means that we have a transaction execution
+                            bot which processes all transactions that interact with the bank.
                           </li>
                           <li>
-                            If funds are stuck in the proxy, there is the option
-                            to refund ERG/hodlERG as long as our bot does not
-                            use the proxy to execute a transaction before you
-                            are able to execute the refund.
+                            If **ERG** funds are stuck in the proxy, there is the option to refund
+                            ERG/hodlERG as long as our bot does not use the proxy to execute a
+                            transaction before you are able to execute the refund.
                           </li>
                           <li>
-                            If you would prefer to interact with the bank box
-                            directly, use this UI:{" "}
+                            If you would prefer to interact with the **ERG** bank box directly, use
+                            this UI:{' '}
                             <a
                               className="text-primary font-medium"
                               href="https://app.hodlcoin.co.in/"

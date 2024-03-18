@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
-import { Button } from "antd";
-import { v4 as uuidv4 } from "uuid";
-import { addressConnectionQuery } from "@/blockchain/ergo/ergopay/addressConnectionQuery";
-import { ErgoAddress, Network } from "@fleet-sdk/core";
-import { toast } from "react-toastify";
-import { noti_option_close } from "../Notifications/Toast";
-import { handleCopyText } from "@/blockchain/ergo/wallet/utils";
-import { NEXT_PUBLIC_NEST_API_URL } from "@/blockchain/ergo/constants";
+import React, { useEffect, useState } from 'react';
+import QRCode from 'react-qr-code';
+import { Button } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
+import { addressConnectionQuery } from '@/blockchain/ergo/ergopay/addressConnectionQuery';
+import { ErgoAddress, Network } from '@fleet-sdk/core';
+import { toast } from 'react-toastify';
+import { noti_option_close } from '../Notifications/Toast';
+import { handleCopyText } from '@/blockchain/ergo/wallet/utils';
+import { NEXT_PUBLIC_NEST_API_URL } from '@/blockchain/ergo/constants';
 
-const ErgoPayButton = ({
-  setIsModalOpen,
-  connectErgoPay,
-  activeKey,
-  isMainnet,
-}: any) => {
+const ErgoPayButton = ({ setIsModalOpen, connectErgoPay, activeKey, isMainnet }: any) => {
   useEffect(() => {
     let intervalId: string | number | NodeJS.Timer | undefined;
 
-    if (activeKey === "2") {
+    if (activeKey === '2') {
       intervalId = setInterval(() => {
-        const uuid = sessionStorage.getItem("uuid");
+        const uuid = sessionStorage.getItem('uuid');
         if (uuid) {
           addressConnectionQuery(uuid, isMainnet).then((address) => {
             if (address) {
@@ -29,16 +24,16 @@ const ErgoPayButton = ({
                   ErgoAddress.getNetworkType(address) !==
                   (isMainnet ? Network.Mainnet : Network.Testnet)
                 ) {
-                  sessionStorage.removeItem("uuid");
+                  sessionStorage.removeItem('uuid');
                   toast.dismiss();
-                  toast.warn("wrong network", noti_option_close("try-again"));
+                  toast.warn('wrong network', noti_option_close('try-again'));
                 } else {
-                  connectErgoPay("ergopay", address);
+                  connectErgoPay('ergopay', address);
                 }
               } else {
-                sessionStorage.removeItem("uuid");
+                sessionStorage.removeItem('uuid');
                 toast.dismiss();
-                toast.warn("invalid address", noti_option_close("try-again"));
+                toast.warn('invalid address', noti_option_close('try-again'));
               }
               setIsModalOpen(false);
               if (intervalId) {
@@ -55,16 +50,17 @@ const ErgoPayButton = ({
     return () => {
       clearInterval(intervalId);
     };
+    {/* eslint-disable-next-line */ }
   }, [activeKey]);
 
-  let uuid = sessionStorage.getItem("uuid");
+  let uuid = sessionStorage.getItem('uuid');
   if (!uuid) {
     uuid = uuidv4();
-    sessionStorage.setItem("uuid", uuid);
+    sessionStorage.setItem('uuid', uuid);
   }
 
   const apiUrl = NEXT_PUBLIC_NEST_API_URL(isMainnet);
-  const strippedUrl = apiUrl.replace(/^https?:\/\//, "");
+  const strippedUrl = apiUrl.replace(/^https?:\/\//, '');
 
   const link = `ergopay://${strippedUrl}/ergopay/generateAddressLink/${uuid}/#P2PK_ADDRESS#/`;
   const openLink = () => {
@@ -98,14 +94,14 @@ const ErgoPayButton = ({
 
       {/*  qr code*/}
       <div className="flex justify-center">
-        <div style={{ background: "white", padding: "16px", maxWidth: 290 }}>
+        <div style={{ background: 'white', padding: '16px', maxWidth: 290 }}>
           {<QRCode value={link} />}
         </div>
       </div>
       <div className="text-center mt-2">
         <a
           href="https://ergoplatform.org/en/get-erg/#Wallets"
-          style={{ color: "#6E64BF", textDecoration: "none" }}
+          style={{ color: '#6E64BF', textDecoration: 'none' }}
           target="_blank"
           rel="noreferrer"
         >
@@ -119,7 +115,7 @@ const ErgoPayButton = ({
           style={{ fontFamily: `'Space Grotesk', sans-serif` }}
           onClick={() => {
             navigator.clipboard.writeText(link);
-            handleCopyText("Copied to clipboard!");
+            handleCopyText('Copied to clipboard!');
           }}
           className="mr-2"
         >
@@ -129,10 +125,10 @@ const ErgoPayButton = ({
         <Button
           block
           style={{
-            border: "none",
-            color: "white",
-            background: "#6F65C5",
-            fontFamily: `'Space Grotesk', sans-serif`,
+            border: 'none',
+            color: 'white',
+            background: '#6F65C5',
+            fontFamily: `'Space Grotesk', sans-serif`
           }}
           onClick={openLink}
           className="ml-2"

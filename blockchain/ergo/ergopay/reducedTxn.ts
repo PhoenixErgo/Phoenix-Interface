@@ -4,14 +4,11 @@ import { UnsignedTransaction } from '@nautilus-js/eip12-types';
 
 let ergolib: any;
 
-if (typeof window !== "undefined") {
-  ergolib = require("ergo-lib-wasm-browser");
+if (typeof window !== 'undefined') {
+  ergolib = require('ergo-lib-wasm-browser');
 }
 
-export async function getTxReducedB64Safe(
-  json: UnsignedTransaction,
-  explorerClient: any,
-) {
+export async function getTxReducedB64Safe(json: UnsignedTransaction, explorerClient: any) {
   /*
    * Name: getTxReducedB64Safe
    * Type: async function
@@ -37,10 +34,7 @@ export async function getTxReducedB64Safe(
   let reducedTx;
 
   try {
-    [txId, reducedTx] = await getTxReduced(
-      json,
-      explorerClient,
-    );
+    [txId, reducedTx] = await getTxReduced(json, explorerClient);
   } catch (e) {
     console.log('error', e);
   }
@@ -78,7 +72,7 @@ function byteArrayToBase64(byteArray: any) {
 
 async function getTxReduced(
   json: UnsignedTransaction,
-  explorerClient: any,
+  explorerClient: any
 ): Promise<[string, any]> {
   /*
    * Name: getTxReduced
@@ -98,9 +92,7 @@ async function getTxReduced(
    * - used to create a ReducedTransaction object
    */
 
-  const unsignedTx = (await ergolib).UnsignedTransaction.from_json(
-    JSONBigInt.stringify(json),
-  );
+  const unsignedTx = (await ergolib).UnsignedTransaction.from_json(JSONBigInt.stringify(json));
   const inputBoxes = (await ergolib).ErgoBoxes.from_boxes_json(json.inputs);
   const inputDataBoxes = (await ergolib).ErgoBoxes.from_boxes_json(json.dataInputs);
   let ctx: any;
@@ -115,7 +107,7 @@ async function getTxReduced(
     unsignedTx,
     inputBoxes,
     inputDataBoxes,
-    ctx,
+    ctx
   );
   return [id, reducedTx];
 }
@@ -139,16 +131,12 @@ async function getErgoStateContext(explorerClient: any): Promise<any> {
 
   let explorerHeaders: any = [];
   try {
-    explorerHeaders = (
-      await explorerClient.getApiV1BlocksHeaders()
-    ).data.items.slice(0, 10);
+    explorerHeaders = (await explorerClient.getApiV1BlocksHeaders()).data.items.slice(0, 10);
   } catch (e) {
     console.log('error', e);
   }
   console.log('explorerHeaders', explorerHeaders);
   const block_headers = (await ergolib).BlockHeaders.from_json(explorerHeaders);
-  const pre_header = (await ergolib).PreHeader.from_block_header(
-    block_headers.get(0),
-  );
+  const pre_header = (await ergolib).PreHeader.from_block_header(block_headers.get(0));
   return new (await ergolib).ErgoStateContext(pre_header, block_headers);
 }

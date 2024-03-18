@@ -7,9 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build:tailwind": "tailwindcss build ./styles/globals.css -o ./public/styles.css"
+    "build:tailwind": "tailwindcss build ./styles/globals.css -o ./public/styles.css",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@alephium/cli": "^0.36.1",
+    "@alephium/web3": "^0.36.1",
+    "@alephium/web3-react": "^0.36.1",
+    "@alephium/web3-wallet": "^0.36.1",
     "@chakra-ui/alert": "^2.0.6",
     "@coinbarn/ergo-ts": "^0.3.0",
     "@emotion/react": "^11.10.0",
@@ -27,6 +33,7 @@
     "antd": "^5.4.7",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0",
+    "big.js": "^6.2.1",
     "bignumber.js": "^9.1.1",
     "bootstrap": "^5.3.1",
     "date-fns-tz": "^2.0.0",
@@ -66,6 +73,7 @@
   },
   "devDependencies": {
     "@nautilus-js/eip12-types": "^0.1.9",
+    "@types/big.js": "^6.2.2",
     "@types/react-copy-to-clipboard": "^5.0.4",
     "@types/react-dom": "18.2.6",
     "@types/react-flatpickr": "^3.8.8",
@@ -73,6 +81,7 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.8",
+    "eslint-config-prettier": "^9.1.0",
     "flowbite": "^1.7.0",
     "flowbite-react": "^0.4.10",
     "prettier": "2.8.4",

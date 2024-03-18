@@ -8,25 +8,20 @@ import Link from 'next/link';
 
 const MyNavbar = () => {
   return (
-    <Navbar bg='transparent' expand='lg' className={styles.container}>
+    <Navbar bg="transparent" expand="lg" className={styles.container}>
       <Navbar.Brand>
-        <Link href='/' className={styles.navLinks}>
-          <Image
-            src={logo}
-            alt='logo'
-            width={300}
-            height={50}
-          />
+        <Link href="/" className={styles.navLinks}>
+          <Image src={logo} alt="logo" width={300} height={50} />
         </Link>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls='basic-navbar-nav' />
-      <Navbar.Collapse id='basic-navbar-nav' className='d-flex justify-content-end'>
-        <Nav className='ml-auto d-flex align-items-center'>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav" className="d-flex justify-content-end">
+        <Nav className="ml-auto d-flex align-items-center">
           <Nav.Item className={styles.navContainer}>
-            <Link href='/' className={styles.navLinks}>
+            <Link href="/" className={styles.navLinks}>
               <Image
                 src={lightIcon}
-                alt='Picture of the author'
+                alt="Picture of the author"
                 className={styles.lightIconStyle}
                 width={32}
                 height={32}
@@ -35,10 +30,10 @@ const MyNavbar = () => {
           </Nav.Item>
 
           <Nav.Item>
-            <Nav.Link href='#about' className={styles.navLinks}>
+            <Nav.Link href="#about" className={styles.navLinks}>
               <Image
                 src={walletButton}
-                alt='Picture of the author'
+                alt="Picture of the author"
                 className={styles.walletButton}
                 width={300}
               />
@@ -47,7 +42,6 @@ const MyNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-
   );
 };
 

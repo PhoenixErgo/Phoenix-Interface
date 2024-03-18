@@ -1,46 +1,37 @@
-import {
-  faArrowUpRightFromSquare,
-  faCopy,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Modal, Space, Tabs, TabsProps, Tooltip } from "antd";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { toast } from "react-toastify";
-import NautilusLogo from "../../public/NautilusLogo.png";
-import ErgoLogoDark from "../../public/ergo-icon.png";
-import commonStyle from "../../styles/common.module.css";
-import DisconnectNautilusWalletButton from "./DisconnectNautilusWalletButton";
-import ErgoPayButton from "./ErgoPayButton";
-import NautilusWalletButton from "./NautilusWalletButton";
-import { EXPLORER_API_URL, EXPLORER_URL } from "@/blockchain/ergo/constants";
-import {
-  Configuration,
-  DefaultApiFactory,
-} from "@/blockchain/ergo/explorerApi";
+import { faArrowUpRightFromSquare, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Modal, Space, Tabs, TabsProps, Tooltip } from 'antd';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { toast } from 'react-toastify';
+import NautilusLogo from '../../public/NautilusLogo.png';
+import ErgoLogoDark from '../../public/ergo-icon.png';
+import commonStyle from '../../styles/common.module.css';
+import DisconnectNautilusWalletButton from './DisconnectNautilusWalletButton';
+import ErgoPayButton from './ErgoPayButton';
+import NautilusWalletButton from './NautilusWalletButton';
+import { EXPLORER_API_URL, EXPLORER_URL } from '@/blockchain/ergo/constants';
+import { Configuration, DefaultApiFactory } from '@/blockchain/ergo/explorerApi';
 import {
   WrongNetworkException,
   connectErgoPayWallet,
   connectNautilusWallet,
-  disconnectWallet,
-} from "@/blockchain/ergo/wallet/connection";
-import {
-  syncAssetBalance,
-  syncErgBalance,
-} from "@/blockchain/ergo/wallet/sync";
+  disconnectWallet
+} from '@/blockchain/ergo/wallet/connection';
+import { syncAssetBalance, syncErgBalance } from '@/blockchain/ergo/wallet/sync';
 import {
   handleCopyText,
   numberWithCommas,
   rateLimitedCoinGeckoERGUSD,
-  reduceAddress,
-} from "@/blockchain/ergo/wallet/utils";
-import ErgoIconModal from "@/components/Common/ErgoIconModal";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
-import { fromEvent, Subscription } from "rxjs";
-import { Socket } from "socket.io-client";
-import { noti_option_close } from "../Notifications/Toast";
-import { CopyOutlined } from "@ant-design/icons";
+  reduceAddress
+} from '@/blockchain/ergo/wallet/utils';
+import ErgoIconModal from '@/components/Common/ErgoIconModal';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { fromEvent, Subscription } from 'rxjs';
+import { Socket } from 'socket.io-client';
+import { noti_option_close } from '../Notifications/Toast';
+import { CopyOutlined } from '@ant-design/icons';
 
 interface Token {
   tokenId: string;
@@ -61,23 +52,23 @@ interface IProps {
 }
 
 function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 const ConnectWallet: React.FC<IProps> = (props) => {
   const { socket } = props;
 
-  const [activeTabValue, setActiveTabValue] = useState("1"); // Initial value for desktop
+  const [activeTabValue, setActiveTabValue] = useState('1'); // Initial value for desktop
 
   useEffect(() => {
     const handleResize = () => {
       // Check if the window object is available
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         // Update the value based on screen width
         if (window.innerWidth <= 768) {
-          setActiveTabValue("2"); // Mobile value
+          setActiveTabValue('2'); // Mobile value
         } else {
-          setActiveTabValue("1"); // Desktop value
+          setActiveTabValue('1'); // Desktop value
         }
       }
     };
@@ -86,11 +77,11 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     handleResize();
 
     // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     // Clean up the event listener
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []); // Empty dependency array ensures the effect runs only once
 
@@ -101,19 +92,15 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [isMainnet, setIsMainnet] = useState<boolean | undefined>(undefined);
-  const [walletConnected, setWalletConnected] = useState<boolean | undefined>(
-    undefined
-  );
+  const [walletConnected, setWalletConnected] = useState<boolean | undefined>(undefined);
   const [walletName, setWalletName] = useState<string | undefined>(undefined);
-  const [walletAddress, setWalletAddress] = useState<string[] | undefined>(
-    undefined
-  );
+  const [walletAddress, setWalletAddress] = useState<string[] | undefined>(undefined);
   const [walletAssets, setWalletAssets] = useState<Token[]>([]);
 
   const [explorerApiClient, setExplorerApiClient] = useState<any>(null);
   const [usdOracle, setUsdOracle] = useState<number>(0);
-  const [ergBalance, setErgBalance] = useState<string>("0");
-  const [ergUSDValue, setErgUSDValue] = useState<any>("0");
+  const [ergBalance, setErgBalance] = useState<string>('0');
+  const [ergUSDValue, setErgUSDValue] = useState<any>('0');
   const [isEyeOpen, setEyeOpen] = useState<boolean | undefined>(false);
 
   useEffect(() => {
@@ -124,16 +111,17 @@ const ConnectWallet: React.FC<IProps> = (props) => {
         });
       });
     }
+    {/* eslint-disable-next-line */ }
   }, [walletAddress]);
 
   useEffect(() => {
     let msgSubscription: Subscription;
     if (walletConnected && walletAddress) {
       rateLimitedCoinGeckoERGUSD().then((res: () => Promise<number>) => {
-        msgSubscription = fromEvent(socket!, "new_block").subscribe((msg) => {
+        msgSubscription = fromEvent(socket!, 'new_block').subscribe((msg) => {
           res().then((oracle) => {
             syncWallet(oracle);
-            console.log("syncing:", msg);
+            console.log('syncing:', msg);
           });
         });
       });
@@ -144,19 +132,18 @@ const ConnectWallet: React.FC<IProps> = (props) => {
         }
       };
     }
+    {/* eslint-disable-next-line */ }
   }, [walletConnected]);
 
   useEffect(() => {
-    const isMainnet = localStorage.getItem("IsMainnet")
-      ? (JSON.parse(localStorage.getItem("IsMainnet")!) as boolean)
+    const isMainnet = localStorage.getItem('IsMainnet')
+      ? (JSON.parse(localStorage.getItem('IsMainnet')!) as boolean)
       : true;
 
     setIsMainnet(isMainnet);
 
-    const walletConfig = localStorage.getItem("walletConfig")
-      ? (JSON.parse(
-          localStorage.getItem("walletConfig")!
-        ) as walletLocalStorage)
+    const walletConfig = localStorage.getItem('walletConfig')
+      ? (JSON.parse(localStorage.getItem('walletConfig')!) as walletLocalStorage)
       : undefined;
 
     if (walletConfig) {
@@ -170,7 +157,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     });
 
     const explorerConf = new Configuration({
-      basePath: EXPLORER_API_URL(isMainnet),
+      basePath: EXPLORER_API_URL(isMainnet)
     });
     const explorerClient = DefaultApiFactory(explorerConf);
     setExplorerApiClient(explorerClient);
@@ -178,32 +165,32 @@ const ConnectWallet: React.FC<IProps> = (props) => {
 
   const showModal = () => {
     setIsModalOpen(true);
-    window.document.documentElement.classList.add("overflow-hidden");
+    window.document.documentElement.classList.add('overflow-hidden');
     setActiveKey(activeTabValue);
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
-    window.document.documentElement.classList.remove("overflow-hidden");
+    window.document.documentElement.classList.remove('overflow-hidden');
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    window.document.documentElement.classList.remove("overflow-hidden");
+    window.document.documentElement.classList.remove('overflow-hidden');
   };
 
   const showNautilusModal = () => {
     setIsNautilusOpen(true);
-    window.document.documentElement.classList.add("overflow-hidden");
+    window.document.documentElement.classList.add('overflow-hidden');
   };
   const handleNautilusOk = () => {
     setIsNautilusOpen(false);
-    window.document.documentElement.classList.remove("overflow-hidden");
+    window.document.documentElement.classList.remove('overflow-hidden');
   };
 
   const handleNautilusCancel = () => {
     setIsNautilusOpen(false);
-    window.document.documentElement.classList.remove("overflow-hidden");
+    window.document.documentElement.classList.remove('overflow-hidden');
   };
 
   const onChange = (key: any) => {
@@ -215,23 +202,12 @@ const ConnectWallet: React.FC<IProps> = (props) => {
   };
 
   const syncWallet = async (oracle: number) => {
-    syncErgBalance(
-      walletAddress!,
-      explorerApiClient,
-      oracle,
-      setErgBalance,
-      setErgUSDValue
-    );
-    syncAssetBalance(
-      walletAddress!,
-      explorerApiClient,
-      oracle,
-      setWalletAssets
-    );
+    syncErgBalance(walletAddress!, explorerApiClient, oracle, setErgBalance, setErgUSDValue);
+    syncAssetBalance(walletAddress!, explorerApiClient, oracle, setWalletAssets);
   };
 
   const connectWallet = async (walletName: string, address?: string) => {
-    if (walletName === "nautilus") {
+    if (walletName === 'nautilus') {
       try {
         await connectNautilusWallet(
           setWalletConnected,
@@ -244,12 +220,12 @@ const ConnectWallet: React.FC<IProps> = (props) => {
       } catch (error) {
         if (error instanceof WrongNetworkException) {
           toast.dismiss();
-          toast.warn("wrong network", noti_option_close("try-again"));
+          toast.warn('wrong network', noti_option_close('try-again'));
         }
         console.log(error);
       }
       setIsModalOpen(false);
-    } else if (walletName === "ergopay") {
+    } else if (walletName === 'ergopay') {
       connectErgoPayWallet(
         address!,
         setWalletConnected,
@@ -261,20 +237,20 @@ const ConnectWallet: React.FC<IProps> = (props) => {
     }
   };
 
-  const items: TabsProps["items"] = [
+  const items: TabsProps['items'] = [
     {
-      key: "1",
+      key: '1',
       label: `Browser wallet`,
       children: (
         <NautilusWalletButton
-          connectNautilus={() => connectWallet("nautilus")}
+          connectNautilus={() => connectWallet('nautilus')}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
         />
-      ),
+      )
     },
     {
-      key: "2",
+      key: '2',
       // disabled: true,
       label: `ErgoPay`,
       children: (
@@ -284,18 +260,15 @@ const ConnectWallet: React.FC<IProps> = (props) => {
           activeKey={activeKey}
           isMainnet={isMainnet!}
         />
-      ),
-    },
+      )
+    }
   ];
 
   return (
     <>
       <div
-        className={`flex items-center space-x-2 mx-2 sm:mx-3 sm:ml-6 mb-4 sm:mb-0  ${
-          walletConnected
-            ? "py-1 px-2 sm:px-[10px] border-[#d9d9d9] border rounded-[5px] "
-            : ""
-        }`}
+        className={`flex items-center space-x-2 mx-2 sm:mx-3 sm:ml-6 mb-4 sm:mb-0  ${walletConnected ? 'py-1 px-2 sm:px-[10px] border-[#d9d9d9] border rounded-[5px] ' : ''
+          }`}
       >
         <Space
           className="site-button-ghost-wrapper   connectWalletBtn w-full"
@@ -304,13 +277,12 @@ const ConnectWallet: React.FC<IProps> = (props) => {
           style={{ fontFamily: `'Space Grotesk', sans-serif` }}
         >
           {walletConnected ? (
-            walletName && walletName === "ergopay" ? (
+            walletName && walletName === 'ergopay' ? (
               <div className="flex w-full">
                 <button className="w-full  space-x-2 font-VelaSansRegular flex  text-black rounded-[5px] font-normal">
                   <p
-                    className={`${
-                      isEyeOpen ? "blur-sm" : ""
-                    }  font-VelaSansRegular text-black font-normal`}
+                    className={`${isEyeOpen ? 'blur-sm' : ''
+                      }  font-VelaSansRegular text-black font-normal`}
                   >
                     {numberWithCommas(parseInt(ergBalance), 9)} ERG
                   </p>
@@ -329,41 +301,29 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       ></path>
                     </svg>
                   </span>
-                  <p
-                    className={`font-VelaSansRegular ${
-                      isEyeOpen ? "blur-sm" : ""
-                    } `}
-                  >
+                  <p className={`font-VelaSansRegular ${isEyeOpen ? 'blur-sm' : ''} `}>
                     {reduceAddress(walletAddress![0])}
                   </p>
                 </button>
               </div>
             ) : (
               <div className="flex w-full items-center whitespace-nowrap">
-                <span
-                  className={`${
-                    isEyeOpen ? "blur-sm" : ""
-                  } font-VelaSansRegular py-1`}
-                >
+                <span className={`${isEyeOpen ? 'blur-sm' : ''} font-VelaSansRegular py-1`}>
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </span>
                 <button
                   className="w-full font-VelaSansRegular"
                   style={{
                     borderRadius: 5,
-                    background: "#FAFAFA",
-                    color: "black",
+                    background: '#FAFAFA',
+                    color: 'black',
                     marginLeft: 10,
-                    padding: "3px 10px",
+                    padding: '3px 10px'
                   }}
                 >
                   <div className="flex w-full font-VelaSansRegular space-x-3">
                     <Image alt="img" width="25" src={NautilusLogo} />
-                    <p
-                      className={`${
-                        isEyeOpen ? "blur-sm" : ""
-                      } font-VelaSansRegular`}
-                    >
+                    <p className={`${isEyeOpen ? 'blur-sm' : ''} font-VelaSansRegular`}>
                       {reduceAddress(walletAddress![0])}
                     </p>
                   </div>
@@ -443,10 +403,10 @@ const ConnectWallet: React.FC<IProps> = (props) => {
         footer={null}
         style={{ fontFamily: `'Space Grotesk', sans-serif`, maxWidth: 464 }}
       >
-        {walletName && walletName === "ergopay" ? (
+        {walletName && walletName === 'ergopay' ? (
           <div
             style={{
-              fontFamily: `'Space Grotesk', sans-serif`,
+              fontFamily: `'Space Grotesk', sans-serif`
             }}
           >
             <div className="flex items-center">
@@ -463,9 +423,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                   fill="white"
                 ></path>
               </svg>
-              <h3 className="mx-2.5 m-0 font-bold text-darkblack text-[20px]">
-                ErgoPay
-              </h3>
+              <h3 className="mx-2.5 m-0 font-bold text-darkblack text-[20px]">ErgoPay</h3>
 
               <button
                 onClick={() => setEyeOpen(!isEyeOpen)}
@@ -506,27 +464,25 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}
               className={`${commonStyle.ergoBalanceDiv} font-VelaSansRegular`}
             >
               <div className="flex items-center">
                 <ErgoIconModal />
                 <p
-                  className={`${commonStyle.ergoBalanceText} ${
-                    isEyeOpen ? "blur-sm" : ""
-                  } font-SpaceGrotesk`}
+                  className={`${commonStyle.ergoBalanceText} ${isEyeOpen ? 'blur-sm' : ''
+                    } font-SpaceGrotesk`}
                 >
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </p>
               </div>
               <div>
                 <p
-                  className={`${
-                    isEyeOpen ? "blur-sm" : ""
-                  } m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]`}
+                  className={`${isEyeOpen ? 'blur-sm' : ''
+                    } m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]`}
                 >
                   ${numberWithCommas(parseInt(ergBalance), 9)}
                 </p>
@@ -535,7 +491,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             <div className="flex items-center mb-2 mt-4">
               <p className="text-[14px] font-semibold text-darkblack ont-VelaSanSemiBold">
                 Active address
-              </p>{" "}
+              </p>{' '}
               <Tooltip
                 placement="top"
                 title="Assets will be received at this address"
@@ -556,40 +512,30 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 </svg>
               </Tooltip>
             </div>
-            <div
-              className={`${commonStyle.ergoBalanceDiv} flex items-center justify-between`}
-            >
+            <div className={`${commonStyle.ergoBalanceDiv} flex items-center justify-between`}>
               {/* FOR DESKTOP  */}
               <p
-                className={`${commonStyle.ergoBalanceAdd} ${
-                  isEyeOpen ? "blur-sm" : ""
-                } font-SpaceGrotesk hidden sm:inline-block`}
+                className={`${commonStyle.ergoBalanceAdd} ${isEyeOpen ? 'blur-sm' : ''
+                  } font-SpaceGrotesk hidden sm:inline-block`}
               >
                 {walletAddress
-                  ? walletAddress[0].slice(0, 18) +
-                    "..." +
-                    walletAddress[0].slice(-8)
-                  : ""}
+                  ? walletAddress[0].slice(0, 18) + '...' + walletAddress[0].slice(-8)
+                  : ''}
               </p>
               {/* FOR MOBILE  */}
               <p
-                className={`${commonStyle.ergoBalanceAdd} ${
-                  isEyeOpen ? "blur-sm" : ""
-                } font-SpaceGrotesk sm:hidden`}
+                className={`${commonStyle.ergoBalanceAdd} ${isEyeOpen ? 'blur-sm' : ''
+                  } font-SpaceGrotesk sm:hidden`}
               >
                 {walletAddress
-                  ? walletAddress[0].slice(0, 13) +
-                    "..." +
-                    walletAddress[0].slice(-6)
-                  : ""}
+                  ? walletAddress[0].slice(0, 13) + '...' + walletAddress[0].slice(-6)
+                  : ''}
               </p>
               <div className="flex items-center space-x-1.5">
                 <div className="cursor-pointer">
                   <CopyToClipboard
                     text={walletAddress![0]}
-                    onCopy={(e) =>
-                      handleCopyText("Address successfully copied!")
-                    }
+                    onCopy={(e) => handleCopyText('Address successfully copied!')}
                   >
                     <Tooltip placement="top" title="Copy Address to clipboard.">
                       <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
@@ -612,9 +558,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
 
                 <div className="cursor-pointer">
                   <a
-                    href={`${EXPLORER_URL(isMainnet!)}/addresses/${
-                      walletAddress![0]
-                    }`}
+                    href={`${EXPLORER_URL(isMainnet!)}/addresses/${walletAddress![0]}`}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -647,11 +591,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             )}
 
             <div
-              style={
-                walletAssets.length > 4
-                  ? { maxHeight: 275, overflowY: "scroll" }
-                  : undefined
-              }
+              style={walletAssets.length > 4 ? { maxHeight: 275, overflowY: 'scroll' } : undefined}
             >
               {walletAssets.map((item: Token) => (
                 <div
@@ -670,22 +610,18 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       height={25}
                     />
                     <div>
-                      <p className={commonStyle.ergoBalanceTokenP}>
-                        {item.name}
-                      </p>
+                      <p className={commonStyle.ergoBalanceTokenP}>{item.name}</p>
                     </div>
                   </div>
-                  <div className={`${isEyeOpen ? "blur-sm" : ""}`}>
-                    <p className="m-0">
-                      {numberWithCommas(item.amount, item.decimals)}
-                    </p>
+                  <div className={`${isEyeOpen ? 'blur-sm' : ''}`}>
+                    <p className="m-0">{numberWithCommas(item.amount, item.decimals)}</p>
                     <small
                       className="m-0 flex justify-end"
                       style={{
-                        color: "#A6A6A6",
+                        color: '#A6A6A6'
                       }}
                     >
-                      ${item.usdValue === 0 ? "0.00" : item.usdValue}
+                      ${item.usdValue === 0 ? '0.00' : item.usdValue}
                     </small>
                   </div>
                 </div>
@@ -693,12 +629,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             <DisconnectNautilusWalletButton
               disconnectWallet={() =>
-                disconnectWallet(
-                  setWalletConnected,
-                  walletName,
-                  setWalletName,
-                  setWalletAddress
-                )
+                disconnectWallet(setWalletConnected, walletName, setWalletName, setWalletAddress)
               }
               setIsNautilusOpen={setIsNautilusOpen}
             />
@@ -750,27 +681,22 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             </div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
               }}
               className={`${commonStyle.ergoBalanceDiv}`}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <ErgoIconModal />
-                <p
-                  className={`${commonStyle.ergoBalanceText} ${
-                    isEyeOpen ? "blur-sm" : ""
-                  } `}
-                >
+                <p className={`${commonStyle.ergoBalanceText} ${isEyeOpen ? 'blur-sm' : ''} `}>
                   {numberWithCommas(parseInt(ergBalance), 9)} ERG
                 </p>
               </div>
               <div>
                 <p
-                  className={`${
-                    isEyeOpen ? "blur-sm" : ""
-                  } m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]`}
+                  className={`${isEyeOpen ? 'blur-sm' : ''
+                    } m-0 text-[12px] font-semibold font-VelaSanSemiBold text-[#595959]`}
                 >
                   ${ergUSDValue}
                 </p>
@@ -806,36 +732,28 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             >
               <div>
                 <p
-                  className={`${commonStyle.ergoBalanceAdd} ${
-                    isEyeOpen ? "blur-sm" : ""
-                  } hidden sm:block`}
+                  className={`${commonStyle.ergoBalanceAdd} ${isEyeOpen ? 'blur-sm' : ''
+                    } hidden sm:block`}
                 >
                   {walletAddress
-                    ? walletAddress[0].slice(0, 18) +
-                      "..." +
-                      walletAddress[0].slice(-8)
-                    : ""}
-                </p>{" "}
+                    ? walletAddress[0].slice(0, 18) + '...' + walletAddress[0].slice(-8)
+                    : ''}
+                </p>{' '}
                 <p
-                  className={`${commonStyle.ergoBalanceAdd} ${
-                    isEyeOpen ? "blur-sm" : ""
-                  } sm:hidden`}
+                  className={`${commonStyle.ergoBalanceAdd} ${isEyeOpen ? 'blur-sm' : ''
+                    } sm:hidden`}
                 >
                   {walletAddress
-                    ? walletAddress[0].slice(0, 14) +
-                      "..." +
-                      walletAddress[0].slice(-6)
-                    : ""}
+                    ? walletAddress[0].slice(0, 14) + '...' + walletAddress[0].slice(-6)
+                    : ''}
                 </p>
               </div>
 
               <div className="flex items-start">
                 <div className="mr-3 cursor-pointer">
                   <CopyToClipboard
-                    text={walletAddress ? walletAddress[0] : ""}
-                    onCopy={(e) =>
-                      handleCopyText("Address successfully copied!")
-                    }
+                    text={walletAddress ? walletAddress[0] : ''}
+                    onCopy={(e) => handleCopyText('Address successfully copied!')}
                   >
                     <Tooltip placement="top" title="Copy Address to clipboard.">
                       <span className="w-6 h-6 rounded-lg flex items-center justify-center border border-[#d9d9d9] group">
@@ -857,9 +775,8 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                 </div>
                 <div className="cursor-pointer">
                   <a
-                    href={`${EXPLORER_URL(isMainnet!)}/addresses/${
-                      walletAddress ? walletAddress[0] : ""
-                    }`}
+                    href={`${EXPLORER_URL(isMainnet!)}/addresses/${walletAddress ? walletAddress[0] : ''
+                      }`}
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -892,23 +809,19 @@ const ConnectWallet: React.FC<IProps> = (props) => {
             )}
 
             <div
-              style={
-                walletAssets.length > 4
-                  ? { maxHeight: 275, overflowY: "scroll" }
-                  : undefined
-              }
+              style={walletAssets.length > 4 ? { maxHeight: 275, overflowY: 'scroll' } : undefined}
             >
               {walletAssets.map((item: Token) => (
                 <div
                   key={item.tokenId}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                   }}
                   className={`${commonStyle.ergoTokenBalanceDiv} font-VelaSansRegular`}
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Image
                       src={`https://raw.githubusercontent.com/spectrum-finance/token-logos/master/logos/ergo/${item.tokenId}.svg`}
                       onError={({ currentTarget }) => {
@@ -920,22 +833,18 @@ const ConnectWallet: React.FC<IProps> = (props) => {
                       height={25}
                     />
                     <div>
-                      <p className={commonStyle.ergoBalanceTokenP}>
-                        {item.name}
-                      </p>
+                      <p className={commonStyle.ergoBalanceTokenP}>{item.name}</p>
                     </div>
                   </div>
-                  <div className={`${isEyeOpen ? "blur-sm" : ""}`}>
-                    <p className="m-0 font-bold">
-                      {numberWithCommas(item.amount, item.decimals)}
-                    </p>
+                  <div className={`${isEyeOpen ? 'blur-sm' : ''}`}>
+                    <p className="m-0 font-bold">{numberWithCommas(item.amount, item.decimals)}</p>
                     <small
                       className="m-0 flex justify-end"
                       style={{
-                        color: "#949494",
+                        color: '#949494'
                       }}
                     >
-                      ${item.usdValue === 0 ? "0.00" : item.usdValue}
+                      ${item.usdValue === 0 ? '0.00' : item.usdValue}
                     </small>
                   </div>
                 </div>
@@ -944,12 +853,7 @@ const ConnectWallet: React.FC<IProps> = (props) => {
 
             <DisconnectNautilusWalletButton
               disconnectWallet={() =>
-                disconnectWallet(
-                  setWalletConnected,
-                  walletName,
-                  setWalletName,
-                  setWalletAddress
-                )
+                disconnectWallet(setWalletConnected, walletName, setWalletName, setWalletAddress)
               }
               setIsNautilusOpen={setIsNautilusOpen}
             />

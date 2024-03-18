@@ -1,10 +1,7 @@
-import React from "react";
-import { Button } from "antd";
+import React from 'react';
+import { Button } from 'antd';
 
-const DisconnectNautilusWalletButton = ({
-  disconnectWallet,
-  setIsNautilusOpen,
-}: any) => {
+const DisconnectNautilusWalletButton = ({ disconnectWallet, setIsNautilusOpen }: any) => {
   const handleDisconnect = () => {
     disconnectWallet();
     setIsNautilusOpen(false);
@@ -16,8 +13,8 @@ const DisconnectNautilusWalletButton = ({
         block
         className="font-VelaSansRegular"
         style={{
-          color: "black",
-          marginTop: 15,
+          color: 'black',
+          marginTop: 15
         }}
         onClick={handleDisconnect}
       >

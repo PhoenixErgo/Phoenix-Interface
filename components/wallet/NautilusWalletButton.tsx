@@ -3,11 +3,7 @@ import Image from 'next/image';
 import commonStyle from '../../styles/common.module.css';
 import NautilusLogo from '../../public/NautilusLogo.png';
 
-const NautilusWalletButton = ({
-  connectNautilus,
-  isLoading,
-  setIsLoading,
-}: any) => {
+const NautilusWalletButton = ({ connectNautilus, isLoading, setIsLoading }: any) => {
   return (
     <div className={commonStyle.walletButton} onClick={connectNautilus}>
       <div className={`flex items-center  justify-between`}>

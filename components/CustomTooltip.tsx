@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 interface CustomTooltipProps {
   text: string;
@@ -14,7 +14,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ text, children }) => {
         <span
           className="absolute w-4 h-4 bg-gray-600 transform top-[32px] rotate-[151deg] left-[-10px] -mt-1"
           style={{
-            clipPath: "polygon(50% 0%, 0 100%, 100% 100%)",
+            clipPath: 'polygon(50% 0%, 0 100%, 100% 100%)'
           }}
         />
       </span>
