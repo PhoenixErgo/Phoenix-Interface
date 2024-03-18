@@ -30,7 +30,7 @@ export const ALPH_NODE_URL = (network: string | null): string => {
     case '4':
       return 'https://lb-fullnode-alephium.notrustverify.ch';
     case '5':
-      return 'https://wallet.testnet.alephium.org';
+      return 'https://alephium-testnet.phoenixfi.app';
     case '6':
       return 'http://localhost:22973';
     default:
