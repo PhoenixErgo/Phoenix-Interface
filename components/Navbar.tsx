@@ -59,17 +59,17 @@ const Navbar = (props: IProps) => {
         >
           {`HODL${getTicker(network)} 3%`}
         </button>
-        {!network || network === '1' || network === '3' ? null : (
-          <button
-            onClick={() => setActiveTab('hodltoken')}
-            className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
-           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${
-             activeTab === 'hodltoken' ? 'after:w-[130%] ' : 'after:w-0'
-           }`}
-          >
-            HODLTOKEN
-          </button>
-        )}
+        {/*{!network || network === '1' || network === '3' ? null : (*/}
+        {/*  <button*/}
+        {/*    onClick={() => setActiveTab('hodltoken')}*/}
+        {/*    className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all*/}
+        {/*   after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${*/}
+        {/*     activeTab === 'hodltoken' ? 'after:w-[130%] ' : 'after:w-0'*/}
+        {/*   }`}*/}
+        {/*  >*/}
+        {/*    HODLTOKEN*/}
+        {/*  </button>*/}
+        {/*)}*/}
         {!network || network === '1' || network === '3' ? (
           <button
             onClick={() => setActiveTab('refund')}
@@ -81,17 +81,17 @@ const Navbar = (props: IProps) => {
             Refund
           </button>
         ) : null}
-        {!network || network === '1' || network === '3' ? null : (
-          <button
-            onClick={() => setActiveTab('create')}
-            className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all
-           after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${
-             activeTab === 'create' ? 'after:w-[130%] ' : ''
-           }`}
-          >
-            Create
-          </button>
-        )}
+        {/*{!network || network === '1' || network === '3' ? null : (*/}
+        {/*  <button*/}
+        {/*    onClick={() => setActiveTab('create')}*/}
+        {/*    className={`text-white font-medium font-inter text-lg uppercase transition-all duration-200 ease-in-out after:transition-all*/}
+        {/*   after:ease-in-out after:duration-200 relative after:absolute after:-bottom-[11px] after:left-1/2 after:-translate-x-1/2 after:bg-white after:h-1 ${*/}
+        {/*     activeTab === 'create' ? 'after:w-[130%] ' : ''*/}
+        {/*   }`}*/}
+        {/*  >*/}
+        {/*    Create*/}
+        {/*  </button>*/}
+        {/*)}*/}
       </div>
     </>
   );
