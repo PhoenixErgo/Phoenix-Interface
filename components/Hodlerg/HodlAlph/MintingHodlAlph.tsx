@@ -97,6 +97,7 @@ const MintingHodlAlph = (props: IProps) => {
           );
         }
       } catch (error) {
+        console.log(error)
         toast.dismiss();
         toast.warn('issue signing tx', noti_option_close('try-again'));
         return;
@@ -122,7 +123,7 @@ const MintingHodlAlph = (props: IProps) => {
             onChange={(event) => setMintAmount(parseFloat(event.target.value))}
           />
           <span className="text-black font-medium text-md pl-4 mt-2 h-1/2">
-            {`${ALPHUIprice} ${props.baseTokenTicker}`}
+            {`${ALPHUIprice} ${props.baseTokenTicker} + UI Fee`}
           </span>
         </div>
 
