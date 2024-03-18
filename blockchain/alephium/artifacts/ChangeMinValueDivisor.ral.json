@@ -1,11 +1,11 @@
 {
   "version": "v2.10.1",
-  "name": "ChangeMaxDecimals",
-  "bytecodeTemplate": "01010300000005{1}0d0c{0}0108",
+  "name": "ChangeMinValueDivisor",
+  "bytecodeTemplate": "01010300000005{1}0d0c{0}010e",
   "fieldsSig": {
     "names": [
       "factory",
-      "newMaxDecimals"
+      "newMinValueDivisor"
     ],
     "types": [
       "PhoenixFactory",

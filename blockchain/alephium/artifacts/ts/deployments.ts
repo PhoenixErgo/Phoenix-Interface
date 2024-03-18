@@ -9,9 +9,8 @@ import {
   PhoenixBankInstance,
   PhoenixFactory,
   PhoenixFactoryInstance,
-  USDToken,
-  USDTokenInstance,
 } from ".";
+import { default as mainnetDeployments } from "../.deployments.mainnet.json";
 import { default as testnetDeployments } from "../.deployments.testnet.json";
 
 export type Deployments = {
@@ -19,7 +18,6 @@ export type Deployments = {
   contracts: {
     PhoenixBank: DeployContractExecutionResult<PhoenixBankInstance>;
     PhoenixFactory: DeployContractExecutionResult<PhoenixFactoryInstance>;
-    USDToken: DeployContractExecutionResult<USDTokenInstance>;
   };
 };
 
@@ -37,12 +35,6 @@ function toDeployments(json: any): Deployments {
         json.contracts["PhoenixFactory"].contractInstance.address
       ),
     },
-    USDToken: {
-      ...json.contracts["USDToken"],
-      contractInstance: USDToken.at(
-        json.contracts["USDToken"].contractInstance.address
-      ),
-    },
   };
   return {
     ...json,
@@ -55,7 +47,9 @@ export function loadDeployments(
   deployerAddress?: string
 ): Deployments {
   const deployments =
-    networkId === "testnet"
+    networkId === "mainnet"
+      ? mainnetDeployments
+      : networkId === "testnet"
       ? testnetDeployments
       : undefined;
   if (deployments === undefined) {
