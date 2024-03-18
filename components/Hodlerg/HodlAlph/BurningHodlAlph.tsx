@@ -48,6 +48,11 @@ const BurningHodlAlph = (props: IProps) => {
   }, [burnAmount]);
 
   const handleClick = async () => {
+    if(!burnAmount || burnAmount === 0){
+      toast.dismiss();
+      toast.warn(`enter amount greater than zero`, noti_option_close('try-again'));
+      return;
+    }
     if (hasDecimals(burnAmount, decimals)) {
       toast.dismiss();
       toast.warn(`max ${decimals} decimals`, noti_option_close('try-again'));
@@ -101,7 +106,7 @@ const BurningHodlAlph = (props: IProps) => {
               onChange={(event) => setBurnAmount(parseFloat(event.target.value))}
             />
             <span className="text-black font-medium text-md pl-4 mt-2 h-1/2">
-              {`${ALPHUIPrice} ${props.baseTokenTicker}`}
+              {`${ALPHUIPrice} ${props.baseTokenTicker} + UI Fee`}
             </span>
           </div>
 
