@@ -91,7 +91,7 @@ const DropDown: React.FC = () => {
     // @ts-ignore
     const key = e.item.props.customKey;
 
-    if (key === '4' || key === '6') {
+    if (key === '6') {
       console.log('disabled');
       return;
     }
@@ -116,8 +116,8 @@ const DropDown: React.FC = () => {
         setIcon(<ErgoIcon />);
         break;
       case '4':
-        // setValue("Alephium Mainnet");
-        // setIcon(<AlephiumIcon />);
+        setValue("Alephium Mainnet");
+        setIcon(<AlephiumIcon />);
         break;
       case '5':
         setValue('Alephium Testnet');
