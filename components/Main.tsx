@@ -112,8 +112,8 @@ const Main = () => {
       case '5':
       case '6': {
         const hodlBankContract = new AlephiumHodlBankContract(
-          getPhoenixConfig(network).bankAddress,
-          network
+          getPhoenixConfig(storedNetwork).bankAddress,
+          storedNetwork
         );
 
         Promise.all([
