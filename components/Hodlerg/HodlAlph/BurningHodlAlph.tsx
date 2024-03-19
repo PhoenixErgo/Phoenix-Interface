@@ -37,7 +37,8 @@ const BurningHodlAlph = (props: IProps) => {
       const burnAmountBigInt = convertBigToBigInt(shiftedNum);
       const hodlBankContract = new HodlBankContract(contractAddress, network);
       hodlBankContract.burnAmount(burnAmountBigInt).then((ep) => {
-        setALPHUIPrice(formatBigIntWithDecimalsRounded(ep.expectedAmountWithdrawn, decimals, 3));
+        const uiFee = parseFloat(formatBigIntWithDecimalsRounded(HODL_ALPH_UI_FEE(burnAmountBigInt), decimals, 3))
+        setALPHUIPrice((parseFloat(formatBigIntWithDecimalsRounded(ep.expectedAmountWithdrawn, decimals, 3)) + uiFee).toString());
       });
     } else {
       toast.dismiss();
@@ -106,7 +107,7 @@ const BurningHodlAlph = (props: IProps) => {
               onChange={(event) => setBurnAmount(parseFloat(event.target.value))}
             />
             <span className="text-black font-medium text-md pl-4 mt-2 h-1/2">
-              {`${ALPHUIPrice} ${props.baseTokenTicker} + UI Fee`}
+              {`${ALPHUIPrice} ${props.baseTokenTicker}`}
             </span>
           </div>
 

@@ -38,7 +38,8 @@ const MintingHodlAlph = (props: IProps) => {
       hodlBankContract.mintAmount(mintAmountBigInt).then((ep) => {
         console.log(ep);
         setALPHPrice(ep);
-        setALPHUIPrice(formatBigIntWithDecimalsRounded(ep, decimals, 3));
+        const uiFee = parseFloat(formatBigIntWithDecimalsRounded(HODL_ALPH_UI_FEE(ALPHPrice), decimals, 3))
+        setALPHUIPrice((parseFloat(formatBigIntWithDecimalsRounded(ep, decimals, 3)) + uiFee).toString());
       });
     } else {
       toast.dismiss();
@@ -123,7 +124,7 @@ const MintingHodlAlph = (props: IProps) => {
             onChange={(event) => setMintAmount(parseFloat(event.target.value))}
           />
           <span className="text-black font-medium text-md pl-4 mt-2 h-1/2">
-            {`${ALPHUIprice} ${props.baseTokenTicker} + UI Fee`}
+            {`${ALPHUIprice} ${props.baseTokenTicker}`}
           </span>
         </div>
 
