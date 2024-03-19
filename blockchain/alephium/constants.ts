@@ -5,7 +5,7 @@ export const HODL_TOKEN_UI_FEE = (ONE_ALPH * BigInt(50)) / BigInt(1000);
 export const HODL_ALPH_UI_FEE = (amount: bigint) => {
   let fee: bigint;
   try {
-    fee = (amount * BigInt(50)) / BigInt(1000);
+    fee = (amount * BigInt(5)) / BigInt(1000);
   } catch (error) {
     return DUST_AMOUNT;
   }
